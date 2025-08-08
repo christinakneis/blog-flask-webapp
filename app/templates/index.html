@@ -1,11 +1,175 @@
-<!-- Basic HTML template for homepage -->
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Christina Kneis</title>
-</head>
-<body>
-    <h1>Hello, world — it's Christina.</h1>
+{% block content %}
+    <!-------------------------------------------------------------------------->
+    <!-- Page header with logo and tagline + image -->
+     <!-------------------------------------------------------------------------->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left side: Image (1/3 width on medium+ screens) -->
+                <div class="col-md-4 mb-4 mb-md-0 text-center">
+                    <img src="{{ url_for('static', filename='assets/home/me.png') }}"
+                        alt="Your photo"
+                        class="img-fluid rounded-circle shadow"
+                        style="max-height: 250px;" />
+                </div>
+                <!-- Right side: Text (2/3 width on medium+ screens) -->
+                <div class="col-md-8 text-center text-md-start">
+                    <h1 class="fw-bolder">Christina Kneis</h1>
+                    <p class="lead mb-0">Elegant Problem Solving. Engineering Complex Systems. Driving Opertional Excellence.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-------------------------------------------------------------------------->
+    <!-- Page content -->
+    <!-------------------------------------------------------------------------->
+    <div class="container">
+        <div class="row">
+            <!-- Blog entries-->
+            <div class="col-lg-8">
+                <!-------------------------------------------------------------------------->
+                <!-- Intro Section (left column only) -->
+                 <!-------------------------------------------------------------------------->
+                <div class="mb-4">
+                    <p class="lead text-center text-md-start">
+                        Hey, I'm Christina 👋. I'm a systems engineer and product developer with a decade of experience launching complex missions into space 🚀, scaling & automating infrastructure 🛠️, and solving high-stakes problems with clarity and grit 💡. This site is a launch pad (pun intended) for sharing my thoughts, projects, and lessons learned across tech 💻, ops ⚙️, and life 💫. 
+                    </p>
+                </div>
+                <!-------------------------------------------------------------------------->
+                <!-- Blog Grid-->
+                 <!-------------------------------------------------------------------------->
+                <!-- Blog Grid -->
+                <div class="row">
+                    {% for post in posts %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="{{ url_for('post', slug=post.slug) }}">
+                                <img class="card-img-top" src="{{ url_for('static', filename=post.image) }}" alt="..." />
+                            </a>
+                            <div class="card-body">
+                                <div class="small text-muted">{{ post.date }}</div>
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text">{{ post.preview }}</p>
+                                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('post', slug=post.slug) }}">Read more →</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- More blog posts (shortened for brevity) -->
+                <!-- You can keep all your existing cards here unchanged -->
+
+                <!-- Pagination -->
+               <!--  <nav aria-label="Pagination">
+                    <hr class="my-0" />
+                    <ul class="pagination justify-content-center my-4">
+                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
+                        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                    </ul>
+                </nav> -->
+            </div>
+
+            <!-------------------------------------------------------------------------->
+            <!-- Sidebar widgets ------------------------------------------------------->
+            <!-------------------------------------------------------------------------->
+            <div class="col-lg-4">
+                <!-------------------------------------------------------------------------->
+                <!-- Connect widget -->
+                <!-------------------------------------------------------------------------->
+                <div class="card mb-4">
+                    <div class="card-header">Let's Connect</div>
+                    <div class="card-body text-center">
+                        <a href="https://www.linkedin.com/in/christina-kneis" target="_blank" class="btn btn-outline-primary mb-2" style="width: 90%;">
+                            <i class="bi bi-linkedin me-2"></i>LinkedIn
+                        </a><br>
+                        <a href="https://discord.gg/BaRFPtDJ" target="_blank" class="btn btn-outline-info mb-2" style="width: 90%;">
+                            <i class="bi bi-discord me-2"></i>Discord
+                        </a><br>
+                        <a href="https://calendly.com/christina-m-kneis" target="_blank" class="btn btn-outline-success" style="width: 90%;">
+                            <i class="bi bi-calendar me-2"></i>Calendly
+                        </a>
+                    </div>
+                </div>
+                <!-------------------------------------------------------------------------->
+                <!-- Publictions Widget -->
+                <!-------------------------------------------------------------------------->
+                <div class="card mb-4">
+                    <div class="card-header">Publications and Articles</div>
+                    <div class="card-body text-center">
+                        <a href="https://link.springer.com/chapter/10.1007/978-3-031-51928-4_96" target="_blank" class="btn btn-outline-dark mb-2" style="width: 90%;">
+                            <i class="bi bi-journal-text"></i> Mars MIMUs (AAS ’22)
+                        </a><br>
+                        <a href="https://ntrs.nasa.gov/citations/20240003411" target="_blank" class="btn btn-outline-secondary mb-2" style="width: 90%;">
+                            <i class="bi bi-journal-text"></i> Lunar Ops (NASA '24)
+                        </a><br>
+                        <a href="https://www.jpl.nasa.gov/images/pia23723-cheering-for-perseverance-landing/" target="_blank" class="btn btn-outline-primary" style="width: 90%;">
+                            <i class="bi bi-newspaper"></i> Mars 2020 Landing
+                        </a>
+                    </div>
+                </div>
+                <!-------------------------------------------------------------------------->
+                <!-- Work widget -->
+                <!-------------------------------------------------------------------------->
+                <div class="card mb-4">
+                    <div class="card-header">More Links</div>
+                    <div class="card-body text-center">
+                        <a href="https://github.com/christinakneis" target="_blank" class="btn btn-outline-dark mb-2" style="width: 90%;">
+                            <i class="bi bi-github me-2"></i>GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal Photo Row -->
+        <div class="container mt-5">
+            <h3 class="text-center mb-4">Some Special Moments from my Space Adventures</h3>
+            <div class="row justify-content-center text-center gap-5">
+                <div class="col-6 col-sm-4 col-md-3 mb-3">
+                    <img src="{{ url_for('static', filename='assets/home/mars2020.png') }}"
+                        alt="Christina 1"
+                        class="shadow"
+                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 mb-3">
+                    <img src="{{ url_for('static', filename='assets/home/incus.png') }}"
+                        alt="Christina 2"
+                        class="shadow"
+                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 mb-3">
+                    <img src="{{ url_for('static', filename='assets/home/clipper.png') }}"
+                        alt="Christina 3"
+                        class="shadow"
+                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 mb-3">
+                    <img src="{{ url_for('static', filename='assets/home/rocket.png') }}"
+                        alt="Christina 4"
+                        class="shadow"
+                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 mb-3">
+                    <img src="{{ url_for('static', filename='assets/home/bunny.png') }}"
+                        alt="Christina 5"
+                        class="shadow"
+                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                </div>
+            </div>
+        </div>
+
+
 </body>
 </html>
+
+{% endblock %}
