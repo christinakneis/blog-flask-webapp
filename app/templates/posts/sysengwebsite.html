@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Page Header -->
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <h1 class="fw-bolder text-center">Product Development Engineering in Action: A Demo</h1>
+        <p class="lead text-center mb-0">A walkthrough of systems thinking, design, and implementation behind this very website.</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+
+    <!-- Intro -->
+    <div class="row">
+        <div class="col-lg-12">
+            <p>
+                Welcome to a behind-the-scenes walkthrough of how I built this site as a live demo of my systems engineering and product development workflow.
+                What started as a personal branding project quickly became a hands-on exercise in structured, intentional design.
+                Rather than just throwing together a portfolio, I treated the site like a real product: shaped by stakeholder needs, trade studies, functional requirements, and iterative implementation.
+                This post walks through how I applied formal engineering practices—typically used for spacecraft and mission-critical systems—to something deeply personal and purpose-driven.
+            </p>
+        </div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="container my-5">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h2>1. Starting with the Abstract</h2>
+                <h5><i>Assess Stakeholders and Product Context</i></h5>
+                <p>Before diving into design or code, I started with the foundation: understanding who this product serves, why it exists, and how it should behave across use cases. This mirrors the front-end of any robust systems engineering or product development effort. This simple step grounds the system in purpose—anchoring all downstream design, architecture, and implementation choices in clearly defined intent. </p>
+                <h6>Stakeholders</h6>
+                <ul>
+                    <li><strong>Me (Project Owner):</strong> Show skills, build credibility, iterate easily</li>
+                    <li><strong>Clients / Employers / Collaborators:</strong> Evaluate skillset, tone, and fit</li>
+                    <li><strong>Scrapers / Scanners:</strong> Extract structured, keyword-friendly info</li>
+                </ul>
+                <h6>Representative Use Cases</h6>
+                <ul>
+                    <li>User lands on home page, scans for fit, and decides to connect</li>
+                    <li>I update the site via Git + deployment</li>
+                    <li>Scrapers index content for search visibility</li>
+                </ul>
+                <h6>Context Considerations</h6>
+                <ul>
+                    <li><strong>Personal Goals:</strong> Needs to reflect my experience, values, and capabilities</li>
+                    <li><strong>Professional Alignment:</strong> Flask + AWS stack aligns with how I build in production</li>
+                    <li><strong>Scalability:</strong> Should be lightweight enough to iterate; structured enough to grow</li>
+                </ul>
+            </div>
+            <div class="col-md-5 text-center">
+                <img src="{{ url_for('static', filename='assets/sysengwebsite/context-diagram.png') }}" alt="Context Diagram" class="img-fluid rounded shadow" />
+                <p class="text-muted small mt-2">Context, stakeholders, use cases, and needs</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Customer Needs → Functional Requirements → Design Parameters -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-7">
+                <h2>2. Order From Chaos</h2>
+                <h5><i>Customer Needs → Functional Requirements → Design Parameters</i></h5>
+                <p>
+                    To treat this website like a real product, I began by translating diverse stakeholder needs into a traceable engineering model. 
+                    This included a top-level functional goal, hierarchical decomposition into functional requirements (FRs), and logical mappings to design parameters (DPs)—a process rooted in axiomatic design principles.
+                </p>
+
+                <h5>Axiomatic Design Method</h5>
+                <p>
+                    To identify feasible and elegant solutions, I employed the <strong>Axiomatic Design "zig-zag" method</strong>: 
+                    alternating between the functional domain (FRs) and physical domain (DPs) as we moved down 
+                    each level of the hierarchy. This technique preserves independence between sibling functions 
+                    and avoids over-coupling design responses. Each FR was matched to exactly one DP, <strong>ensuring modularity, 
+                    clarity, and forward-traceability </strong>from stakeholder intent all the way to implementation.
+                </p>
+                <p>
+                    This (for me, at least) is the fun part. <strong>terating between "what" the system must do and "how" it should be 
+                    implemented </strong>Ihelps surface hidden assumptions, avoid premature technical decisions, and 
+                    uncover better architectural solutions. The result is a satisfying, elegant ordering of elements from which 
+                    we can finally (and confidently) design our system architecture. 
+                </p>
+
+                <h5>Making Trades</h5>
+                <p>
+                    In order to further decompose DP-1.1.3.3 (deployment to public-facing infrastructure), I conducted a 
+                    <strong>comparative trade study</strong> across four hosting strategies: GitHub Pages, Vercel, S3 + CloudFront, and 
+                    EC2 + ALB. Each was evaluated against key criteria including cost, speed to deploy, code complexity 
+                    (for showcasing implementation skills), and long-term flexibility. While GitHub Pages and S3 + CloudFront 
+                    offered simplicity and minimal cost, they were limited in backend capabilities. Vercel came close, with 
+                    serverless support and an elegant developer experience. However, I ultimately selected the EC2 + ALB path. 
+                    Despite its higher initial complexity and cost, this option aligned best with my functional goals, offering 
+                    full backend control, custom domain routing, HTTPS via AWS ACM, and a richer opportunity to demonstrate 
+                    systems-level infrastructure expertise in a way that scales with future project growth. It was the right 
+                    tradeoff: architecturally flexible, professionally credible, and consistent with my broader design intent.
+                </p>
+
+                <h5>System Building Blocks</h5>
+                <p>
+                    The result of this axiomatic design process was a clear, <strong>traceable set of design elements</strong> 
+                    that satisfy stakeholder intent across both user experience and backend infrastructure. 
+                    On the user-facing side, I mapped functional needs to structured content, including a 
+                    curated narrative of my experience and direct links to writing samples and GitHub repositories. 
+                    On the backend, I designed a modular, Flask-based architecture with clean routing, version 
+                    control via GitHub, and deployment to an AWS EC2 instance secured by a load balancer, 
+                    Route 53 DNS, and SSL via AWS ACM. By <strong>ensuring each Design Parameter satisfied only one 
+                    Functional Requirement</strong>, and decomposing each layer to preserve modular independence, I 
+                    built a solution that is extensible, traceable, and maintainable over time.
+                </p>
+
+            </div>
+
+            <div class="col-lg-5 text-center">
+                <img src="{{ url_for('static', filename='assets/sysengwebsite/fr-decomposition.png') }}" 
+                    alt="Functional Requirements to Design Parameters Mapping" 
+                    class="img-fluid rounded shadow mb-2">
+                    <p class="text-muted small">Extrapolating high level functional requirements from customer needs</p>
+                <img src="{{ url_for('static', filename='assets/sysengwebsite/FRDP.png') }}" 
+                    alt="Axiomatic Design: Iteratively Decomposing & Mapping Functional Requirements to Design Parameters" 
+                    class="img-fluid rounded shadow mb-2">
+                    <p class="text-muted small">Axiomatic Design: Iteratively Decomposing & Mapping Functional Requirements to Design Parameters</p>
+                <img src="{{ url_for('static', filename='assets/sysengwebsite/tradestudy.png') }}" 
+                    alt="Trade Study for the Public Facing Infrastructure" 
+                    class="img-fluid rounded shadow mb-2">
+                    <p class="text-muted small">Trade study for the public facing infrastructure</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="container my-5">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h2>3. System Architecture</h2>
+                <h5><i>Organizing Design Parameters into a System Design</i></h5>
+
+                    <p>
+                        Next, we move into system synthesis: translating abstract design logic into concrete architecture. 
+                        This is where the rubber meets the road, and we start to see how our design parameters manifest in 
+                        a real-world system.
+                    </p>
+
+                <h5>Grouping by Function</h5>
+                    <p>
+                        Once each Design Parameter was defined, I <strong>grouped them by functional domain</strong>: content, logic, and 
+                        infrastructure. This made it easy to isolate components that belonged to the user experience (like 
+                        narrative, work samples, and contact links) versus those that defined backend structure and deployment 
+                        flow.
+                    </p>
+
+                <h5>Organized by Interaction</h5>
+                    <p>
+                        The architecture diagram reflects <strong>how these elements interact</strong>. Content lives within a modular Flask app, 
+                        structured for version control and clarity. That app is deployed via EC2, exposed through an ALB, mapped 
+                        using Route 53, and secured with SSL via ACM. Each element is purposefully placed according to how it 
+                        supports or enables the others — no overlaps, no orphan nodes.
+                    </p>
+
+            </div>
+
+            <div class="col-lg-5 text-center">
+                <img src="{{ url_for('static', filename='assets/sysengwebsite/dpsysarchitecture.png') }}" 
+                    alt="System architecture diagram" 
+                    class="img-fluid rounded shadow mb-2">
+                    <p class="text-muted small">System architecture diagram</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-7">
+                <h2>4. Implementation</h2>
+                <h5><i>Bringing the Design to Life</i></h5>
+                <p>
+                    With a clear architecture in place, I moved into implementation. This is where the design becomes reality, 
+                    and we see how well our planning holds up under real-world constraints.
+                </p>
+
+                <h5>Iterative Development</h5>
+                <p>
+                    I built the site iteratively, starting with the core Flask app and basic routing. From there, I added 
+                    content, implemented the AWS infrastructure, and finally deployed everything to production. You can check out 
+                    my GitHub repos below, and my next post will dive deeper into the specific implementation details and all the fun of DevOps.
+                    <ul>
+                        <li><a href="https://github.com/christinakneis/blog-terraform-infrastructure" target="_blank">Backend: blog-terraform-infrastructure</a></li>
+                        <li><a href="https://github.com/christinakneis/blog-flask-webapp" target="_blank">Frontend: blog-flask-webapp</a></li>
+
+                    </ul>
+
+                </p>
+
+
+            </div>
+
+            <div class="col-lg-5 text-center">
+                <img src="{{ url_for('static', filename='assets/sysengwebsite/github.png') }}" 
+                    alt="GitHub implementation of the system architecture" 
+                    class="img-fluid rounded shadow mb-2">
+                    <p class="text-muted small">GitHub implementation of the system architecture</p>
+            </div>
+
+    <!-- SECTION 4 -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-7">
+                <h2>Final Thoughts</h2>
+                <p>
+                While this project may seem simple on the surface—a personal website with a few pages and a blog—its structure is anything but arbitrary. 
+                Every component, from infrastructure choices to content layout, was driven by an intentional process rooted in systems thinking and product development discipline. 
+                </p>
+                <p>
+                    By framing the site as a system with stakeholders, functional requirements, and design constraints, I ensured that what was built wasn’t just functional, 
+                    but purposeful. Even a small-scale demo like this becomes a powerful illustration of how structured thinking can lead to clearer decisions, more maintainable code, 
+                    and a final product that directly serves its intended goals.
+                </p>
+                <p>
+                    As projects grow in complexity, this approach becomes even more essential. Systems engineering doesn’t just help you "build the thing right", it helps ensure you're "building the right thing".
+                </p>
+
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

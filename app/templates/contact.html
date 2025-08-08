@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Page header -->
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <h1 class="fw-bolder text-center">Let's Connect</h1>
+        <p class="lead text-center mb-0">Have a project, opportunity, or question? Reach out below!</p>
+    </div>
+</header>
+
+<!-- Contact page content -->
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <!-- Left column: Contact form -->
+        <div class="col-lg-8 col-xl-7">
+            <form action="https://formspree.io/f/xgvzpzjq" method="POST">
+                <input type="hidden" name="_next" value="{{ url_for('thankyou') }}">
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="name" name="name" type="text" placeholder="Your Name" required />
+                    <label for="name">Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" name="_replyto" type="email" placeholder="name@example.com" required />
+                    <label for="email">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="message" name="message" placeholder="Your message here..." style="height: 200px" required></textarea>
+                    <label for="message">Message</label>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg" type="submit">Send Message</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right column: Connect widget -->
+        <div class="col-lg-4 mt-5 mt-lg-0">
+            <div class="card mb-4">
+                <div class="card-header">Connect on Other Platforms</div>
+                <div class="card-body text-center">
+                    <a href="https://www.linkedin.com/in/christina-kneis" target="_blank" class="btn btn-outline-primary mb-2" style="width: 90%;">
+                        <i class="bi bi-linkedin me-2"></i>LinkedIn
+                    </a><br>
+                    <a href="https://discord.gg/BaRFPtDJ" target="_blank" class="btn btn-outline-info mb-2" style="width: 90%;">
+                        <i class="bi bi-discord me-2"></i>Discord
+                    </a><br>
+                    <a href="https://calendly.com/christina-m-kneis" target="_blank" class="btn btn-outline-success" style="width: 90%;">
+                        <i class="bi bi-calendar me-2"></i>Calendly
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
