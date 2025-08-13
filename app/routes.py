@@ -1,54 +1,52 @@
 # Define the routes for the web app
 
-from app import app
-from flask import render_template
+from flask import Blueprint, render_template, request, redirect, url_for, abort
+from app.models import Post, SiteConfig
+from app import db
 
-@app.route('/')
+main_bp = Blueprint('main', __name__)
+
+@main_bp.route('/')
 def home():
-    #posts 
-    posts = [
-        {
-            "title": "Why Do You Need a Systems Engineer?",
-            "date": "",
-            "slug": "why-systems-engineering-matters",
-            "image": "assets/home/MS_sys.png",
-            "preview": "In an age of AI that can build anything, systems engineers contextualize, connect the dots, trace intent, and ensure we’re building the right thing — and that it actually works...."
-        },
-        {
-            "title": "Product Development Engineering in Action: A Demo (for this website!)",
-            "date": "",
-            "slug": "systems-engineering-in-action",
-            "image": "assets/home/FRDP2.png",
-            "preview": "From stakeholder needs to deployed infrastructure; a systems engineer’s approach to personal web design..."
-        }
-    ]   
+    # Get posts per page from configuration (default: 6)
+    posts_per_page = int(SiteConfig.get_config('posts_per_page', '6'))
+    
+    # Get published posts, ordered by display_order first, then by creation date
+    posts = Post.query.filter_by(published=True).order_by(Post.display_order, Post.created_at.desc()).limit(posts_per_page).all()
+    
     # Pass posts to the template
     return render_template('index.html', posts=posts)
-    # Render the homepage
-    #return render_template('index.html')
 
-@app.route("/about")
+@main_bp.route("/about")
 def about():
     return render_template("about.html")
 
-@app.route("/contact")
+@main_bp.route("/contact")
 def contact():
     return render_template("contact.html")
 
-@app.route("/thankyou")
+@main_bp.route("/thankyou")
 def thankyou():
     return render_template("thankyou.html")
 
-@app.route("/posts/<slug>")
+@main_bp.route("/posts/<slug>")
 def post(slug):
-    # Map slugs to templates
-    templates = {
-        "why-systems-engineering-matters": "posts/whysysengmatters.html",
-        "systems-engineering-in-action": "posts/sysengwebsite.html"
-    }
-
-    template_name = templates.get(slug)
-    if template_name:
-        return render_template(template_name)
+    # Find post by slug
+    post = Post.query.filter_by(slug=slug, published=True).first()
+    
+    if post:
+        return render_template('post.html', post=post)
     else:
-        return render_template("404.html"), 404
+        abort(404)
+
+@main_bp.route("/blog")
+def blog():
+    # Get all published posts for the blog page
+    page = request.args.get('page', 1, type=int)
+    per_page = int(SiteConfig.get_config('blog_posts_per_page', '10'))
+    
+    posts = Post.query.filter_by(published=True).order_by(Post.display_order, Post.created_at.desc()).paginate(
+        page=page, per_page=per_page, error_out=False
+    )
+    
+    return render_template('blog.html', posts=posts)

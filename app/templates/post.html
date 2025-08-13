@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Main content -->
+        <div class="col-lg-10">
+            <!-- Post header -->
+            <header class="mb-4">
+                <!-- {% if post.image %}
+                <div class="text-center mb-3">
+                    <img class="img-fluid rounded header-image" src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" style="max-width: 500px; height: 200px;" />
+                </div>
+                {% endif %} -->
+                
+                <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                
+                {% if post.show_dates %}
+                <div class="text-muted fst-italic mb-2">
+                    Published on {{ post.created_at.strftime('%B %d, %Y') }}
+                    {% if post.updated_at != post.created_at %}
+                        • Updated on {{ post.updated_at.strftime('%B %d, %Y') }}
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                {% if post.featured %}
+                <div class="mb-3">
+                    <span class="badge bg-warning">
+                        <i class="bi bi-star-fill me-1"></i>Featured Post
+                    </span>
+                </div>
+                {% endif %}
+            </header>
+
+            <!-- Post content -->
+            <article class="mb-4">
+                <div class="post-content">
+                    {{ post.content_html|safe }}
+                </div>
+            </article>
+
+            <!-- Navigation -->
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                <a href="{{ url_for('main.home') }}" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Home
+                </a>
+                <a href="{{ url_for('main.blog') }}" class="btn btn-outline-secondary">
+                    <i class="bi bi-journal-text me-2"></i>View All Posts
+                </a>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-2">
+            <!-- About the author -->
+            <div class="card mb-3">
+                <div class="card-header py-2">
+                    <h6 class="mb-0">About the Author</h6>
+                </div>
+                <div class="card-body text-center py-3">
+                    <img src="{{ url_for('static', filename='assets/home/me.png') }}"
+                         alt="Christina Kneis"
+                         class="img-fluid rounded-circle mb-2"
+                         style="max-height: 60px;" />
+                    <h6 class="card-title mb-2">Christina Kneis</h6>
+                    <p class="card-text small">
+                        Systems engineer and product developer with a decade of experience 
+                        launching complex missions into space, scaling & automating infrastructure, 
+                        and solving high-stakes problems with clarity and grit.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Recent posts widget -->
+            <div class="card mb-3">
+                <div class="card-header py-2">
+                    <h6 class="mb-0">Recent Posts</h6>
+                </div>
+                <div class="card-body py-3">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-1">
+                            <a href="{{ url_for('main.home') }}" class="text-decoration-none small">
+                                <i class="bi bi-arrow-right me-2"></i>View All Posts
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.post-content h1, .post-content h2, .post-content h3, 
+.post-content h4, .post-content h5, .post-content h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.post-content h1 { font-size: 2.5rem; }
+.post-content h2 { font-size: 2rem; }
+.post-content h3 { font-size: 1.75rem; }
+.post-content h4 { font-size: 1.5rem; }
+.post-content h5 { font-size: 1.25rem; }
+.post-content h6 { font-size: 1rem; }
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content ul, .post-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+.post-content blockquote {
+    border-left: 4px solid #0d6efd;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #6c757d;
+}
+
+.post-content code {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+}
+
+.post-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+/* Header image styling - easily adjustable */
+.header-image {
+    max-width: 600px !important; /* Change this value to resize */
+    height: auto !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Alternative header image sizes - uncomment the one you want */
+/* .header-image { max-width: 400px !important; } */ /* Small */
+/* .header-image { max-width: 800px !important; } */ /* Large */
+/* .header-image { max-width: 100% !important; } */ /* Full width */
+
+/* Styled image containers */
+.post-content div[style*="text-align"] {
+    margin: 1.5rem 0;
+}
+
+.post-content div[style*="text-align"] img {
+    margin: 0;
+    display: block;
+}
+
+.post-content div[style*="text-align: left"] {
+    float: left;
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-content div[style*="text-align: right"] {
+    float: right;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-content div[style*="text-align: center"] {
+    clear: both;
+    text-align: center;
+}
+
+/* Caption styling */
+.post-content div[style*="text-align"] p[style*="color: #6c757d"] {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.post-content table {
+    width: 100%;
+    margin: 1.5rem 0;
+    border-collapse: collapse;
+}
+
+.post-content th, .post-content td {
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+}
+
+.post-content th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+</style>
+{% endblock %}

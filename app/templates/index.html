@@ -46,18 +46,25 @@
                     {% for post in posts %}
                     <div class="col-md-6 mb-4">
                         <div class="card h-100">
-                            <a href="{{ url_for('post', slug=post.slug) }}">
+                            <a href="{{ url_for('main.post', slug=post.slug) }}">
                                 <img class="card-img-top" src="{{ url_for('static', filename=post.image) }}" alt="..." />
                             </a>
                             <div class="card-body">
-                                <div class="small text-muted">{{ post.date }}</div>
+                                <div class="small text-muted">{{ post.created_at.strftime('%B %d, %Y') }}</div>
                                 <h5 class="card-title">{{ post.title }}</h5>
                                 <p class="card-text">{{ post.preview }}</p>
-                                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('post', slug=post.slug) }}">Read more →</a>
+                                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.post', slug=post.slug) }}">Read more →</a>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+                
+                <!-- View All Posts Link -->
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('main.blog') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-journal-text me-2"></i>View All Posts
+                    </a>
                 </div>
 
                 <!-- More blog posts (shortened for brevity) -->
