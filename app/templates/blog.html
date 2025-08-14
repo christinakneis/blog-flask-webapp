@@ -30,6 +30,7 @@
                         <div class="col-12">
                         {% endif %}
                             <div class="card-body">
+                                {% if post.show_dates %}
                                 <div class="small text-muted mb-2">
                                     {{ post.created_at.strftime('%B %d, %Y') }}
                                     {% if post.featured %}
@@ -38,6 +39,7 @@
                                         </span>
                                     {% endif %}
                                 </div>
+                                {% endif %}
                                 
                                 <h2 class="card-title h4">{{ post.title }}</h2>
                                 <p class="card-text">{{ post.preview }}</p>
