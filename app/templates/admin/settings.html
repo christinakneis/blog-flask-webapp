@@ -1,0 +1,147 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Settings - Blog Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Site Settings</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Site Configuration -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Display Settings</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="posts_per_page" class="form-label">
+                                    <strong>Posts on Homepage</strong>
+                                </label>
+                                <input type="number" class="form-control" id="posts_per_page" 
+                                       name="posts_per_page" value="{{ posts_per_page }}" 
+                                       min="1" max="20">
+                                <small class="text-muted">
+                                    Number of blog posts to display on the main homepage
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="blog_posts_per_page" class="form-label">
+                                    <strong>Posts per Page (Blog)</strong>
+                                </label>
+                                <input type="number" class="form-control" id="blog_posts_per_page" 
+                                       name="blog_posts_per_page" value="{{ blog_posts_per_page }}" 
+                                       min="5" max="50">
+                                <small class="text-muted">
+                                    Number of posts to show per page on the blog listing page
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-2"></i>Save Settings
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary ms-2">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Current Configuration -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Current Configuration</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                            <div>
+                                <strong>Homepage Posts:</strong><br>
+                                <small class="text-muted">Number of posts shown on main page</small>
+                            </div>
+                            <span class="badge bg-primary fs-6">{{ posts_per_page }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                            <div>
+                                <strong>Blog Posts/Page:</strong><br>
+                                <small class="text-muted">Posts per page on blog listing</small>
+                            </div>
+                            <span class="badge bg-info fs-6">{{ blog_posts_per_page }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <!-- Help & Tips -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-question-circle me-2"></i>Help & Tips</h5>
+            </div>
+            <div class="card-body">
+                <h6>Homepage Posts</h6>
+                <p class="small text-muted">
+                    This controls how many blog posts are displayed on your main homepage. 
+                    Consider your page layout and user experience when setting this value.
+                </p>
+                
+                <h6>Blog Posts per Page</h6>
+                <p class="small text-muted">
+                    This affects the blog listing page pagination. More posts per page means 
+                    fewer page loads but longer scrolling.
+                </p>
+                
+                <hr>
+                
+                <div class="alert alert-info">
+                    <i class="bi bi-lightbulb me-2"></i>
+                    <strong>Tip:</strong> You can always adjust these settings later based on 
+                    your content and user feedback.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                    </a>
+                    <a href="{{ url_for('admin.posts') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-file-text me-2"></i>Manage Posts
+                    </a>
+                    <a href="{{ url_for('main.home') }}" target="_blank" class="btn btn-outline-info">
+                        <i class="bi bi-eye me-2"></i>View Site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

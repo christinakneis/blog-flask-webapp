@@ -10,7 +10,7 @@
                 <!-- Left side: Image (1/3 width on medium+ screens) -->
                 <div class="col-md-4 mb-4 mb-md-0 text-center">
                     <img src="{{ url_for('static', filename='assets/home/me.png') }}"
-                        alt="Your photo"
+                        alt="Christina Kneis"
                         class="img-fluid rounded-circle shadow"
                         style="max-height: 250px;" />
                 </div>
@@ -46,18 +46,27 @@
                     {% for post in posts %}
                     <div class="col-md-6 mb-4">
                         <div class="card h-100">
-                            <a href="{{ url_for('post', slug=post.slug) }}">
+                            <a href="{{ url_for('main.post', slug=post.slug) }}">
                                 <img class="card-img-top" src="{{ url_for('static', filename=post.image) }}" alt="..." />
                             </a>
                             <div class="card-body">
-                                <div class="small text-muted">{{ post.date }}</div>
+                                {% if post.show_dates %}
+                                <div class="small text-muted">{{ post.created_at.strftime('%B %d, %Y') }}</div>
+                                {% endif %}
                                 <h5 class="card-title">{{ post.title }}</h5>
                                 <p class="card-text">{{ post.preview }}</p>
-                                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('post', slug=post.slug) }}">Read more →</a>
+                                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.post', slug=post.slug) }}">Read more →</a>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+                
+                <!-- View All Posts Link -->
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('main.blog') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-chevron-right me-2"></i>View All Posts
+                    </a>
                 </div>
 
                 <!-- More blog posts (shortened for brevity) -->
@@ -133,35 +142,35 @@
 
     <!-- Personal Photo Row -->
         <div class="container mt-5">
-            <h3 class="text-center mb-4">Some Special Moments from my Space Adventures</h3>
+            <h3 class="text-center mb-4">🚀 Photo Highlights</h3>
             <div class="row justify-content-center text-center gap-5">
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <img src="{{ url_for('static', filename='assets/home/mars2020.png') }}"
-                        alt="Christina 1"
+                        alt="Christina Kneis"
                         class="shadow"
                         style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
                 </div>
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <img src="{{ url_for('static', filename='assets/home/incus.png') }}"
-                        alt="Christina 2"
+                        alt="Christina Kneis"
                         class="shadow"
                         style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
                 </div>
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <img src="{{ url_for('static', filename='assets/home/clipper.png') }}"
-                        alt="Christina 3"
+                        alt="Christina Kneis"
                         class="shadow"
                         style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
                 </div>
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <img src="{{ url_for('static', filename='assets/home/rocket.png') }}"
-                        alt="Christina 4"
+                        alt="Christina Kneis"
                         class="shadow"
                         style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
                 </div>
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <img src="{{ url_for('static', filename='assets/home/bunny.png') }}"
-                        alt="Christina 5"
+                        alt="Christina Kneis"
                         class="shadow"
                         style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
                 </div>

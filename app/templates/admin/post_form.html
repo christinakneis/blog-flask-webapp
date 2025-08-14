@@ -1,0 +1,398 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} - Blog Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ title }}</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('admin.posts') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Posts
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Title -->
+                    <div class="mb-3">
+                        {{ form.title.label(class="form-label") }}
+                        {{ form.title(class="form-control form-control-lg", placeholder="Enter post title") }}
+                        {% if form.title.errors %}
+                            <div class="text-danger">
+                                {% for error in form.title.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Content Type -->
+                    <div class="mb-3">
+                        {{ form.content_type.label(class="form-label") }}
+                        {{ form.content_type(class="form-select") }}
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="mb-3">
+                        {{ form.content.label(class="form-label") }}
+                        <div class="border rounded">
+                            <div class="bg-light p-2 border-bottom">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted" id="contentTypeInfo">
+                                        <i class="bi bi-markdown me-1"></i>Markdown supported
+                                    </small>
+                                    <div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary me-2" id="imageHelperBtn">
+                                            <i class="bi bi-image me-1"></i>Image Helper
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="previewBtn">
+                                            <i class="bi bi-eye me-1"></i>Preview
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form.content(class="form-control border-0", rows="20", placeholder="Write your post content...") }}
+                        </div>
+                        {% if form.content.errors %}
+                            <div class="text-danger">
+                                {% for error in form.content.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <!-- Preview -->
+                    <div class="mb-3">
+                        <label class="form-label">Preview</label>
+                        <div id="contentPreview" class="border rounded p-3 bg-light" style="min-height: 200px;">
+                            <p class="text-muted text-center">Content preview will appear here</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Post Settings -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="bi bi-gear me-2"></i>Post Settings</h6>
+                        </div>
+                        <div class="card-body">
+                            <!-- Preview Text -->
+                            <div class="mb-3">
+                                {{ form.preview.label(class="form-label") }}
+                                {{ form.preview(class="form-control", rows="3", placeholder="Brief preview text for the homepage") }}
+                                {% if form.preview.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.preview.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Image Path -->
+                            <div class="mb-3">
+                                {{ form.image.label(class="form-label") }}
+                                {{ form.image(class="form-control", placeholder="e.g., assets/home/image.png") }}
+                                {% if form.image.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.image.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <small class="text-muted">Path relative to static folder</small>
+                            </div>
+                            
+                            <!-- Published Status -->
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    {{ form.published(class="form-check-input") }}
+                                    {{ form.published.label(class="form-check-label") }}
+                                </div>
+                            </div>
+                            
+                            <!-- Featured Status -->
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    {{ form.featured(class="form-check-input") }}
+                                    {{ form.featured.label(class="form-check-label") }}
+                                </div>
+                            </div>
+                            
+                            <!-- Show Dates -->
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    {{ form.show_dates(class="form-check-input") }}
+                                    {{ form.show_dates.label(class="form-check-label") }}
+                                </div>
+                                <small class="text-muted">Control whether publication and update dates are displayed on the post</small>
+                            </div>
+                            
+                            <!-- Display Order -->
+                            <div class="mb-3">
+                                {{ form.display_order.label(class="form-label") }}
+                                {{ form.display_order(class="form-control", placeholder="0", type="number", min="0") }}
+                                <small class="text-muted">Lower numbers appear first. Use 0, 1, 2, etc.</small>
+                                {% if form.display_order.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.display_order.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Markdown Help -->
+                    <div class="card">
+                        <card class="card-header">
+                            <h6 class="mb-0"><i class="bi bi-question-circle me-2"></i>Markdown Help</h6>
+                        </card>
+                        <div class="card-body">
+                            <small class="text-muted">
+                                <strong>Headers:</strong> # H1, ## H2, ### H3<br>
+                                <strong>Bold:</strong> **text** or __text__<br>
+                                <strong>Italic:</strong> *text* or _text_<br>
+                                <strong>Links:</strong> [text](url)<br>
+                                <strong>Images:</strong> ![alt](url)<br>
+                                <strong>Lists:</strong> - item or 1. item<br>
+                                <strong>Code:</strong> `inline` or ```block```
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Submit Buttons -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            {% if post %}
+                                <a href="{{ url_for('main.post', slug=post.slug) }}" target="_blank" class="btn btn-outline-info">
+                                    <i class="bi bi-eye me-2"></i>View Post
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <a href="{{ url_for('admin.posts') }}" class="btn btn-outline-secondary me-2">Cancel</a>
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Image Helper Modal -->
+<div class="modal fade" id="imageHelperModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Image Helper</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Image Settings</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Image Path</label>
+                            <input type="text" class="form-control" id="imagePath" placeholder="/static/assets/...">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Alt Text</label>
+                            <input type="text" class="form-control" id="imageAlt" placeholder="Description of image">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Size</label>
+                            <select class="form-select" id="imageSize">
+                                <option value="small">Small (200px)</option>
+                                <option value="medium" selected>Medium (400px)</option>
+                                <option value="large">Large (600px)</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="customSizeDiv" style="display: none;">
+                            <label class="form-label">Custom Width (px)</label>
+                            <input type="number" class="form-control" id="customWidth" placeholder="300">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Alignment</label>
+                            <select class="form-select" id="imageAlign">
+                                <option value="center" selected>Center</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Caption</label>
+                            <input type="text" class="form-control" id="imageCaption" placeholder="Optional caption">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Preview</h6>
+                        <div id="imagePreview" class="border rounded p-3 bg-light text-center">
+                            <p class="text-muted">Image preview will appear here</p>
+                        </div>
+                        <h6 class="mt-3">Generated Markdown</h6>
+                        <div class="border rounded p-2 bg-light">
+                            <code id="generatedMarkdown" class="text-muted">Markdown will appear here</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="insertImageBtn">Insert Image</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contentField = document.getElementById('content');
+    const previewDiv = document.getElementById('contentPreview');
+    const previewBtn = document.getElementById('previewBtn');
+    const imageHelperBtn = document.getElementById('imageHelperBtn');
+    const imageHelperModal = new bootstrap.Modal(document.getElementById('imageHelperModal'));
+    
+    // Configure marked options
+    marked.setOptions({
+        breaks: true,
+        gfm: true
+    });
+    
+    // Update preview function
+    function updatePreview() {
+        const content = contentField.value;
+        if (content.trim()) {
+            previewDiv.innerHTML = marked.parse(content);
+        } else {
+            previewDiv.innerHTML = '<p class="text-muted text-center">Content preview will appear here</p>';
+        }
+    }
+    
+    // Live preview on input
+    contentField.addEventListener('input', updatePreview);
+    
+    // Preview button click
+    previewBtn.addEventListener('click', function() {
+        updatePreview();
+        previewBtn.innerHTML = previewBtn.innerHTML.includes('Preview') ? 
+            '<i class="bi bi-eye-slash me-1"></i>Hide' : 
+            '<i class="bi bi-eye me-1"></i>Preview';
+        
+        const preview = previewDiv.style.display;
+        previewDiv.style.display = preview === 'none' ? 'block' : 'none';
+    });
+    
+    // Image Helper button click
+    imageHelperBtn.addEventListener('click', function() {
+        imageHelperModal.show();
+    });
+    
+    // Image size change
+    document.getElementById('imageSize').addEventListener('change', function() {
+        const customDiv = document.getElementById('customSizeDiv');
+        if (this.value === 'custom') {
+            customDiv.style.display = 'block';
+        } else {
+            customDiv.style.display = 'none';
+        }
+        updateImagePreview();
+    });
+    
+    // Update image preview
+    function updateImagePreview() {
+        const path = document.getElementById('imagePath').value;
+        const alt = document.getElementById('imageAlt').value;
+        const size = document.getElementById('imageSize').value;
+        const align = document.getElementById('imageAlign').value;
+        const caption = document.getElementById('imageCaption').value;
+        
+        if (path) {
+            let width = '400px';
+            if (size === 'small') width = '200px';
+            else if (size === 'large') width = '600px';
+            else if (size === 'custom') {
+                const customWidth = document.getElementById('customWidth').value;
+                width = customWidth ? customWidth + 'px' : '300px';
+            }
+            
+            const previewDiv = document.getElementById('imagePreview');
+            previewDiv.innerHTML = `
+                <img src="${path}" alt="${alt || 'Image'}" style="max-width: ${width}; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+                ${caption ? `<p class="text-muted mt-2 small">${caption}</p>` : ''}
+            `;
+            
+            // Generate markdown
+            let markdown = `![${alt || 'Image'}](${path})`;
+            if (size !== 'medium' || align !== 'center' || caption) {
+                markdown = `\n<div style="text-align: ${align}; margin: 1rem 0;">\n<img src="${path}" alt="${alt || 'Image'}" style="max-width: ${width}; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />\n${caption ? `<p style="color: #6c757d; font-style: italic; margin-top: 0.5rem;">${caption}</p>` : ''}\n</div>\n`;
+            }
+            
+            document.getElementById('generatedMarkdown').textContent = markdown;
+        }
+    }
+    
+    // Add event listeners for image helper inputs
+    ['imagePath', 'imageAlt', 'imageSize', 'customWidth', 'imageAlign', 'imageCaption'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateImagePreview);
+    });
+    
+    // Insert image button
+    document.getElementById('insertImageBtn').addEventListener('click', function() {
+        const markdown = document.getElementById('generatedMarkdown').textContent;
+        const cursorPos = contentField.selectionStart;
+        const textBefore = contentField.value.substring(0, cursorPos);
+        const textAfter = contentField.value.substring(cursorPos);
+        
+        contentField.value = textBefore + markdown + textAfter;
+        contentField.focus();
+        contentField.setSelectionRange(cursorPos + markdown.length, cursorPos + markdown.length);
+        
+        updatePreview();
+        imageHelperModal.hide();
+    });
+    
+    // Content type change handler
+    document.getElementById('content_type').addEventListener('change', function() {
+        const contentTypeInfo = document.getElementById('contentTypeInfo');
+        const contentField = document.getElementById('content');
+        const imageHelperBtn = document.getElementById('imageHelperBtn');
+        
+        if (this.value === 'html') {
+            contentTypeInfo.innerHTML = '<i class="bi bi-code me-1"></i>HTML mode - full control over layout and styling';
+            contentField.placeholder = 'Write your post content in HTML...';
+            imageHelperBtn.style.display = 'none'; // Hide image helper for HTML posts
+        } else {
+            contentTypeInfo.innerHTML = '<i class="bi bi-markdown me-1"></i>Markdown supported';
+            contentField.placeholder = 'Write your post content in Markdown...';
+            imageHelperBtn.style.display = 'inline-block'; // Show image helper for markdown posts
+        }
+    });
+    
+    // Initial preview
+    updatePreview();
+    
+    // Trigger initial content type change
+    document.getElementById('content_type').dispatchEvent(new Event('change'));
+});
+</script>
+{% endblock %}

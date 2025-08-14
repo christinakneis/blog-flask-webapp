@@ -1,0 +1,269 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Reorder Posts - Blog Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Reorder Posts</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('admin.posts') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Posts
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-arrow-down-up me-2"></i>Drag and Drop to Reorder
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">
+                    Drag posts to reorder them. Lower numbers appear first on your homepage and blog.
+                </p>
+                
+                <div id="postsContainer">
+                    {% for post in posts %}
+                    <div class="post-item mb-2 p-3 border rounded bg-light" 
+                         data-post-id="{{ post.id }}" 
+                         data-order="{{ post.display_order }}">
+                        <div class="d-flex align-items-center">
+                            <div class="drag-handle me-3">
+                                <i class="bi bi-grip-vertical text-muted" style="font-size: 1.2rem;"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">{{ post.title }}</h6>
+                                <small class="text-muted">
+                                    Current Order: {{ post.display_order }} | 
+                                    Status: {% if post.published %}Published{% else %}Draft{% endif %}
+                                </small>
+                            </div>
+                            <div class="order-badge">
+                                <span class="badge bg-primary">{{ post.display_order }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="mt-3">
+                    <button type="button" class="btn btn-primary" id="saveOrderBtn">
+                        <i class="bi bi-check-circle me-2"></i>Save New Order
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" id="resetOrderBtn">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Reset Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Reorder Instructions</h6>
+            </div>
+            <div class="card-body">
+                <ol class="mb-0">
+                    <li>Drag posts up or down to reorder them</li>
+                    <li>Lower numbers appear first</li>
+                    <li>Click "Save New Order" to apply changes</li>
+                    <li>Use "Reset Order" to revert changes</li>
+                </ol>
+                
+                <hr>
+                
+                <h6>Ordering Rules:</h6>
+                <ul class="mb-0 small">
+                    <li><strong>0</strong> = First position</li>
+                    <li><strong>1</strong> = Second position</li>
+                    <li><strong>2</strong> = Third position</li>
+                    <li>And so on...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const postsContainer = document.getElementById('postsContainer');
+    const saveOrderBtn = document.getElementById('saveOrderBtn');
+    const resetOrderBtn = document.getElementById('resetOrderBtn');
+    
+    let originalOrder = [];
+    let hasChanges = false;
+    
+    // Store original order
+    document.querySelectorAll('.post-item').forEach(item => {
+        originalOrder.push({
+            id: item.dataset.postId,
+            order: parseInt(item.dataset.order)
+        });
+    });
+    
+    // Initialize Sortable
+    const sortable = Sortable.create(postsContainer, {
+        animation: 150,
+        handle: '.drag-handle',
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
+        onEnd: function() {
+            hasChanges = true;
+            updateOrderNumbers();
+        }
+    });
+    
+    // Update order numbers after drag
+    function updateOrderNumbers() {
+        document.querySelectorAll('.post-item').forEach((item, index) => {
+            const badge = item.querySelector('.order-badge .badge');
+            badge.textContent = index;
+            item.dataset.order = index;
+        });
+    }
+    
+    // Save new order
+    saveOrderBtn.addEventListener('click', function() {
+        if (!hasChanges) {
+            alert('No changes to save!');
+            return;
+        }
+        
+        const posts = [];
+        document.querySelectorAll('.post-item').forEach((item, index) => {
+            posts.push({
+                id: item.dataset.postId,
+                order: index
+            });
+        });
+        
+        console.log('Sending reorder data:', posts); // Debug logging
+        
+        // Disable save button during request
+        saveOrderBtn.disabled = true;
+        saveOrderBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Saving...';
+        
+        // Send to server
+        fetch('{{ url_for("admin.reorder_posts") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ posts: posts })
+        })
+        .then(response => {
+            console.log('Response status:', response.status); // Debug logging
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data); // Debug logging
+            if (data.success) {
+                alert('Posts reordered successfully!');
+                hasChanges = false;
+                // Update original order
+                originalOrder = posts;
+                // Update order badges to reflect new order
+                updateOrderNumbers();
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error saving order: ' + error.message + '\n\nCheck the browser console for more details.');
+        })
+        .finally(() => {
+            // Re-enable save button
+            saveOrderBtn.disabled = false;
+            saveOrderBtn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Save New Order';
+        });
+    });
+    
+    // Reset order
+    resetOrderBtn.addEventListener('click', function() {
+        if (!hasChanges) {
+            alert('No changes to reset!');
+            return;
+        }
+        
+        if (confirm('Are you sure you want to reset the order?')) {
+            // Restore original order
+            originalOrder.forEach(item => {
+                const postElement = document.querySelector(`[data-post-id="${item.id}"]`);
+                if (postElement) {
+                    postElement.dataset.order = item.order;
+                    const badge = postElement.querySelector('.order-badge .badge');
+                    badge.textContent = item.order;
+                }
+            });
+            
+            // Reorder DOM elements
+            const posts = originalOrder.sort((a, b) => a.order - b.order);
+            posts.forEach(item => {
+                const postElement = document.querySelector(`[data-post-id="${item.id}"]`);
+                if (postElement) {
+                    postsContainer.appendChild(postElement);
+                }
+            });
+            
+            hasChanges = false;
+            alert('Order reset successfully!');
+        }
+    });
+    
+    // Warn before leaving if there are unsaved changes
+    window.addEventListener('beforeunload', function(e) {
+        if (hasChanges) {
+            e.preventDefault();
+            e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+        }
+    });
+});
+</script>
+
+<style>
+.post-item {
+    cursor: move;
+    transition: all 0.2s ease;
+}
+
+.post-item:hover {
+    background-color: #f8f9fa !important;
+    border-color: #dee2e6 !important;
+}
+
+.drag-handle {
+    cursor: grab;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.sortable-ghost {
+    opacity: 0.5;
+    background-color: #e9ecef !important;
+}
+
+.sortable-chosen {
+    background-color: #fff3cd !important;
+    border-color: #ffc107 !important;
+}
+
+.sortable-drag {
+    opacity: 0.8;
+    transform: rotate(5deg);
+}
+</style>
+{% endblock %}
