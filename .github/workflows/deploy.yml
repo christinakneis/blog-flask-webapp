@@ -1,0 +1,42 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Add SSH key
+      run: |
+        echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+        chmod 600 key.pem
+        
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
+          cd blog-flask-webapp
+          sudo git pull origin main
+          
+          # RESTORE DATABASE FROM S3
+          echo 'Restoring database from S3...'
+          aws s3 cp s3://christina-blog-backups-1ee49a27/blog_backups/\$(aws s3 ls s3://christina-blog-backups-1ee49a27/blog_backups/ | sort | tail -n 1 | awk '{print \$4}') instance/blog.db
+          echo 'Database restored!'
+          
+          # Start app
+          sudo pkill gunicorn || true
+          cd blog-flask-webapp
+          sudo nohup gunicorn -w 1 -b 0.0.0.0:5000 run:app > /tmp/app.log 2>&1 &
+          sleep 5
+          if pgrep gunicorn > /dev/null; then
+            echo 'Deployment successful!'
+          else
+            echo 'Deployment failed!'
+            exit 1
+          fi
+        "
