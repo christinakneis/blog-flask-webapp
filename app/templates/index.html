@@ -42,28 +42,58 @@
                 <!-------------------------------------------------------------------------->
                 <!-- Consulting & Custom Solutions Section -->
                 <!-------------------------------------------------------------------------->
-                <div class="mb-5">
-                    <h2 class="text-center mb-4">💼 Consulting & Custom Solutions</h2>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <p class="lead">
-                                Not everything fits neatly into a box — but sometimes you need a fresh set of eyes or a custom tool to cut through the chaos. I help teams, founders, and even small shops tame complexity, automate the boring stuff, and build systems that actually work for them.
-                            </p>
-                            <div class="text-center mt-3">
-                                <a href="{{ url_for('main.consulting') }}" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-lightbulb me-2"></i>Explore Services
-                                </a>
-                            </div>
+                <div class="card border-0 shadow-lg mb-5">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Consulting & Custom Solutions</h2>
+                        <p class="lead text-center mb-4">
+                            Not everything fits neatly into a box — but sometimes you need a fresh set of eyes or a custom tool to cut through the chaos. I help teams tame complexity, automate the boring stuff, and build systems that actually work for them.
+                        </p>
+                        
+                        <div class="text-center mb-5">
+                            <a href="{{ url_for('main.consulting') }}" class="btn btn-primary btn-lg">
+                                <i class="bi bi-lightbulb me-2"></i>Explore How We Can Work Together
+                            </a>
                         </div>
-                        <div class="col-md-4 text-center">
-                            <div class="card border-0 bg-light">
-                                <div class="card-body">
-                                    <h5 class="card-title">🌱 Quick Fix</h5>
-                                    <p class="card-text small">Short, sharp engagements to solve nagging problems</p>
-                                    <h5 class="card-title">⚙️ Level-Up</h5>
-                                    <p class="card-text small">Polish and streamline your current setup</p>
-                                    <h5 class="card-title">🚀 Big Build</h5>
-                                    <p class="card-text small">Ambitious projects with cloud hosting & security</p>
+                        
+                        <!-- Services Grid -->
+                        <div class="row g-4">
+                            <!-- Quick Fix -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card border-0 shadow-sm h-100">
+                                    <div class="card-body text-center p-4">
+                                        <h5 class="card-title text-dark mb-3">🌱 Quick Fix</h5>
+                                        <p class="card-text">Short, sharp engagements to solve nagging problems</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Level-Up -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card border-0 shadow-sm h-100">
+                                    <div class="card-body text-center p-4">
+                                        <h5 class="card-title text-dark mb-3">⚙️ Level-Up</h5>
+                                        <p class="card-text">Polish and streamline your current setup</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Big Build -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card border-0 shadow-sm h-100">
+                                    <div class="card-body text-center p-4">
+                                        <h5 class="card-title text-dark mb-3">🚀 Big Build</h5>
+                                        <p class="card-text">Ambitious projects with cloud hosting & security</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- On Call -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card border-0 shadow-sm h-100">
+                                    <div class="card-body text-center p-4">
+                                        <h5 class="card-title text-dark mb-3">🔮 On Call</h5>
+                                        <p class="card-text">Keep me in your corner as you grow</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -73,9 +103,9 @@
                 <!-------------------------------------------------------------------------->
                 <!-- Blog Section -->
                 <!-------------------------------------------------------------------------->
-                <div class="mb-5">
-                    <h2 class="text-center mb-4">📝 Latest Blog Posts</h2>
-                </div>
+                <div class="card border-0 shadow-lg mb-5">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Latest Blog Posts</h2>
                 <!-------------------------------------------------------------------------->
                 <!-- Blog Grid-->
                  <!-------------------------------------------------------------------------->
@@ -123,6 +153,8 @@
                         <li class="page-item"><a class="page-link" href="#!">Older</a></li>
                     </ul>
                 </nav> -->
+                    </div>
+                </div>
             </div>
 
             <!-------------------------------------------------------------------------->
@@ -180,7 +212,7 @@
 
     <!-- Personal Photo Row -->
         <div class="container mt-5">
-            <h3 class="text-center mb-4">🚀 Photo Highlights</h3>
+            <h3 class="text-center mb-4">Photo Highlights</h3>
             <div class="row justify-content-center text-center gap-5">
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <img src="{{ url_for('static', filename='assets/home/mars2020.png') }}"
