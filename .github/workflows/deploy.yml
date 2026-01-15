@@ -21,22 +21,46 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
           cd blog-flask-webapp
+
+          # BACKUP CURRENT DATABASE FIRST (prevent data loss!)
+          if [ -f instance/blog.db ]; then
+            echo 'Backing up current database before deployment...'
+            BACKUP_NAME=blog_pre_deploy_\$(date +%Y%m%d_%H%M%S).db
+            cp instance/blog.db instance/\$BACKUP_NAME
+            aws s3 cp instance/\$BACKUP_NAME s3://${{ secrets.S3_BACKUP_BUCKET }}/blog_backups/\$BACKUP_NAME || echo 'S3 backup failed, continuing with local backup'
+            echo 'Pre-deployment backup complete!'
+          fi
+
           sudo git pull origin main
-          
-          # RESTORE DATABASE FROM S3
-          echo 'Restoring database from S3...'
-          aws s3 cp s3://christina-blog-backups-1ee49a27/blog_backups/\$(aws s3 ls s3://christina-blog-backups-1ee49a27/blog_backups/ | sort | tail -n 1 | awk '{print \$4}') instance/blog.db
-          echo 'Database restored!'
-          
+
+          # Only restore from S3 if database doesn't exist or is empty
+          if [ ! -f instance/blog.db ] || [ ! -s instance/blog.db ]; then
+            echo 'No local database found, restoring from S3...'
+            LATEST=\$(aws s3 ls s3://${{ secrets.S3_BACKUP_BUCKET }}/blog_backups/ | sort | tail -n 1 | awk '{print \$4}')
+            if [ ! -z \"\$LATEST\" ]; then
+              aws s3 cp s3://${{ secrets.S3_BACKUP_BUCKET }}/blog_backups/\$LATEST instance/blog.db
+              echo 'Database restored from S3!'
+            else
+              echo 'No S3 backup found, will use fresh database'
+            fi
+          else
+            echo 'Existing database found, keeping current data'
+          fi
+
           # Start app
           sudo pkill gunicorn || true
-          cd blog-flask-webapp
-          sudo nohup gunicorn -w 1 -b 0.0.0.0:5000 run:app > /tmp/app.log 2>&1 &
+          source venv/bin/activate 2>/dev/null || true
+          nohup gunicorn -w 1 -b 0.0.0.0:5000 run:app > /tmp/app.log 2>&1 &
           sleep 5
           if pgrep gunicorn > /dev/null; then
             echo 'Deployment successful!'
           else
             echo 'Deployment failed!'
+            cat /tmp/app.log
             exit 1
           fi
         "
+
+
+
+
