@@ -149,14 +149,18 @@
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{{ url_for('admin.edit_post', id=post.id) }}" 
-                                       class="btn btn-outline-primary">
+                                    <a href="{{ url_for('admin.edit_post', id=post.id) }}"
+                                       class="btn btn-outline-primary" title="Edit">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-                                    <a href="{{ url_for('main.post', slug=post.slug) }}" 
-                                       target="_blank" class="btn btn-outline-info">
+                                    <a href="{{ url_for('main.post', slug=post.slug) }}"
+                                       target="_blank" class="btn btn-outline-info" title="View">
                                         <i class="bi bi-eye"></i>
                                     </a>
+                                    <button type="button" class="btn btn-outline-danger"
+                                            onclick="confirmDelete({{ post.id }}, '{{ post.title }}')" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -175,6 +179,41 @@
         {% endif %}
     </div>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the post "<strong id="deletePostTitle"></strong>"?</p>
+                <p class="text-danger"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" id="deleteForm" style="display: inline;">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-danger">Delete Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function confirmDelete(postId, postTitle) {
+    document.getElementById('deletePostTitle').textContent = postTitle;
+    document.getElementById('deleteForm').action = `/admin/posts/${postId}/delete`;
+
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    deleteModal.show();
+}
+</script>
 {% endblock %}
 
 
