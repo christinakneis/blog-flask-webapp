@@ -33,6 +33,13 @@ def logout():
     flash('Logged out successfully!', 'success')
     return redirect(url_for('admin.login'))
 
+@admin_bp.route('/posts/<int:id>/preview')
+@login_required
+def preview_post(id):
+    """Preview any post (published or draft) as admin"""
+    post = Post.query.get_or_404(id)
+    return render_template('post.html', post=post, is_preview=True)
+
 @admin_bp.route('/dashboard')
 @login_required
 def dashboard():
