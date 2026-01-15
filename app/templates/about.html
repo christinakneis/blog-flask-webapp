@@ -7,8 +7,8 @@
 <section class="about-header">
     <div class="container">
         <span class="overline label-amber">// About</span>
-        <h1 class="about-header__title h1">Christina Kneis</h1>
-        <p class="about-header__subtitle">Systems engineer, product developer, and mission operations specialist with a decade of experience at NASA/JPL.</p>
+        <h1 class="about-header__title h1">Christina Kneis Wolfenden</h1>
+        <p class="about-header__subtitle">Product and systems engineering leader. A decade of delivery at NASA/JPL.</p>
     </div>
 </section>
 
@@ -28,15 +28,10 @@
                     <h2 class="h3">What I'm Known For</h2>
                 </div>
                 <p class="about-section__text">
-                    I'm a systems thinker and creative problem-solver who transforms complexity into strategy,
-                    and strategy into tangible results.
+                    Driving project success through systems thinking, technical rigor, and operational excellence.
                 </p>
                 <p class="about-section__text">
-                    For the past decade, I've operated at the heart of NASA's most ambitious missions, building
-                    ground data systems, leading mission operations, and keeping spacecraft safe millions of miles
-                    from Earth. My work spans mission development, product development, and operations leadership, pairing deep
-                    technical expertise with the ability to communicate effectively, align stakeholders, and drive
-                    complex projects forward.
+                    For the past 10 years, I've operated at the heart of NASA's most ambitious missions: solving the right problems by developing deep context across the full lifecycle, solving them well with hands-on technical fluency from hardware to cloud, and delivering results by building trust and momentum across teams, leadership, and stakeholders.
                 </p>
             </div>
 
@@ -53,6 +48,13 @@
                 <div class="about-timeline">
                     <div class="about-timeline__item">
                         <div class="about-timeline__dot"></div>
+                        <div class="about-timeline__date">Mission Management</div>
+                        <div class="about-timeline__title">Mission Manager</div>
+                        <div class="about-timeline__org">Lunar Flashlight</div>
+                        <div class="about-timeline__description">Navigated a significant propulsion anomaly in-flight, protected scientific return, and championed innovation under pressure.</div>
+                    </div>
+                    <div class="about-timeline__item">
+                        <div class="about-timeline__dot"></div>
                         <div class="about-timeline__date">Mission Operations</div>
                         <div class="about-timeline__title">Systems Engineer</div>
                         <div class="about-timeline__org">Mars 2020, INCUS, MRO, Europa Clipper</div>
@@ -64,13 +66,6 @@
                         <div class="about-timeline__title">GDS Engineer</div>
                         <div class="about-timeline__org">MRO, INCUS Constellation</div>
                         <div class="about-timeline__description">Built ground data system infrastructure for handling mission telemetry, managed system readiness, cyber compliance, and system resilience.</div>
-                    </div>
-                    <div class="about-timeline__item">
-                        <div class="about-timeline__dot"></div>
-                        <div class="about-timeline__date">Mission Management</div>
-                        <div class="about-timeline__title">Mission Manager</div>
-                        <div class="about-timeline__org">Lunar Flashlight</div>
-                        <div class="about-timeline__description">Navigated a significant propulsion anomaly in-flight, protected scientific return, and championed innovation under pressure.</div>
                     </div>
                     <div class="about-timeline__item">
                         <div class="about-timeline__dot"></div>
@@ -182,6 +177,26 @@
 
         <!-- Sidebar -->
         <aside class="about-sidebar">
+            <!-- Resume & GitHub Widget -->
+            <div class="widget reveal">
+                <div class="widget__body">
+                    <div class="flex flex--col flex--gap-3">
+                        <a href="{{ url_for('main.resume') }}" class="btn btn--primary btn--full">
+                            <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            View Full Resume
+                        </a>
+                        <a href="https://github.com/christinakneis" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--github btn--full">
+                            <svg class="btn__icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            Check Out My GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Photo Gallery Widget -->
             <div class="widget reveal">
                 <div class="widget__header">
@@ -196,13 +211,16 @@
                             <img src="{{ url_for('static', filename='assets/home/incus.png') }}" alt="INCUS Development" />
                         </div>
                         <div class="about-gallery__item">
-                            <img src="{{ url_for('static', filename='assets/home/clipper.png') }}" alt="Europa Clipper Ops" />
+                            <img src="{{ url_for('static', filename='assets/home/clipper.png') }}" alt="Europa Clipper" />
                         </div>
                         <div class="about-gallery__item">
                             <img src="{{ url_for('static', filename='assets/home/rocket.png') }}" alt="Artemis Launch" />
                         </div>
-                        <div class="about-gallery__item about-gallery__item--large">
-                            <img src="{{ url_for('static', filename='assets/home/bunny.png') }}" alt="Lunar Flashlight Cleanroom" />
+                        <div class="about-gallery__item">
+                            <img src="{{ url_for('static', filename='assets/home/bunny.png') }}" alt="Lunar Flashlight" />
+                        </div>
+                        <div class="about-gallery__item">
+                            <img src="{{ url_for('static', filename='assets/home/MS_sys.png') }}" alt="USC M.S." />
                         </div>
                     </div>
                 </div>

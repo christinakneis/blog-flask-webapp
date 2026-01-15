@@ -37,14 +37,27 @@
                 <a href="/" class="nav__link {% if request.endpoint == 'main.home' %}nav__link--active{% endif %}">
                     Home
                 </a>
+                <div class="nav__dropdown">
+                    <button class="nav__link nav__dropdown-trigger {% if request.endpoint == 'main.about' or request.endpoint == 'main.resume' %}nav__link--active{% endif %}">
+                        About
+                        <svg class="nav__dropdown-arrow" width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="nav__dropdown-menu">
+                        <a href="{{ url_for('main.about') }}" class="nav__dropdown-item {% if request.endpoint == 'main.about' %}nav__dropdown-item--active{% endif %}">
+                            Summary
+                        </a>
+                        <a href="{{ url_for('main.resume') }}" class="nav__dropdown-item {% if request.endpoint == 'main.resume' %}nav__dropdown-item--active{% endif %}">
+                            Resume
+                        </a>
+                    </div>
+                </div>
                 <a href="{{ url_for('main.consulting') }}" class="nav__link {% if request.endpoint == 'main.consulting' %}nav__link--active{% endif %}">
                     Consulting
                 </a>
                 <a href="{{ url_for('main.blog') }}" class="nav__link {% if request.endpoint == 'main.blog' or request.endpoint == 'main.post' %}nav__link--active{% endif %}">
                     Blog
-                </a>
-                <a href="{{ url_for('main.about') }}" class="nav__link {% if request.endpoint == 'main.about' %}nav__link--active{% endif %}">
-                    About
                 </a>
                 <a href="{{ url_for('main.contact') }}" class="nav__link {% if request.endpoint == 'main.contact' %}nav__link--active{% endif %}">
                     Contact
@@ -61,6 +74,7 @@
                     {% elif request.endpoint == 'main.post' %}TRANSMISSION
                     {% elif request.endpoint == 'main.about' %}ABOUT
                     {% elif request.endpoint == 'main.contact' %}CONTACT
+                    {% elif request.endpoint == 'main.resume' %}RESUME
                     {% else %}NAVIGATION{% endif %}
                 </span>
             </div>
@@ -93,14 +107,27 @@
             <a href="/" class="nav__mobile-link {% if request.endpoint == 'main.home' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Home
             </a>
+            <div class="nav__mobile-dropdown">
+                <button class="nav__mobile-link nav__mobile-dropdown-trigger {% if request.endpoint == 'main.about' or request.endpoint == 'main.resume' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileDropdown(this)">
+                    About
+                    <svg class="nav__mobile-dropdown-arrow" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="nav__mobile-dropdown-menu">
+                    <a href="{{ url_for('main.about') }}" class="nav__mobile-dropdown-item {% if request.endpoint == 'main.about' %}nav__mobile-dropdown-item--active{% endif %}" onclick="toggleMobileNav()">
+                        Summary
+                    </a>
+                    <a href="{{ url_for('main.resume') }}" class="nav__mobile-dropdown-item {% if request.endpoint == 'main.resume' %}nav__mobile-dropdown-item--active{% endif %}" onclick="toggleMobileNav()">
+                        Resume
+                    </a>
+                </div>
+            </div>
             <a href="{{ url_for('main.consulting') }}" class="nav__mobile-link {% if request.endpoint == 'main.consulting' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Consulting
             </a>
             <a href="{{ url_for('main.blog') }}" class="nav__mobile-link {% if request.endpoint == 'main.blog' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Blog
-            </a>
-            <a href="{{ url_for('main.about') }}" class="nav__mobile-link {% if request.endpoint == 'main.about' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
-                About
             </a>
             <a href="{{ url_for('main.contact') }}" class="nav__mobile-link {% if request.endpoint == 'main.contact' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Contact
@@ -202,6 +229,12 @@
                 }
             }
         });
+
+        // Mobile dropdown toggle
+        function toggleMobileDropdown(button) {
+            const dropdown = button.parentElement;
+            dropdown.classList.toggle('nav__mobile-dropdown--open');
+        }
     </script>
 
     {% block scripts %}{% endblock %}

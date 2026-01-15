@@ -244,13 +244,20 @@
   bottom: var(--space-8);
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
   opacity: 0;
   animation: fadeIn 0.6s ease forwards;
   animation-delay: 1s;
+}
+
+/* Only show scroll indicator when there's enough vertical space */
+@media (min-height: 700px) {
+  .home-hero__scroll {
+    display: flex;
+  }
 }
 
 .home-hero__scroll-text {

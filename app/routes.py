@@ -33,6 +33,10 @@ def contact():
 def thankyou():
     return render_template("thankyou.html")
 
+@main_bp.route("/resume")
+def resume():
+    return render_template("resume.html")
+
 @main_bp.route("/posts/<slug>")
 def post(slug):
     # Find post by slug
