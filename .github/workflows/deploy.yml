@@ -47,10 +47,16 @@ jobs:
             echo 'Existing database found, keeping current data'
           fi
 
+          # Set up venv and install dependencies
+          if [ ! -d venv ]; then
+            sudo python3 -m venv venv
+          fi
+          source venv/bin/activate
+          sudo venv/bin/pip install -r requirements.txt
+
           # Start app
           sudo pkill gunicorn || true
-          source venv/bin/activate 2>/dev/null || true
-          nohup gunicorn -w 1 -b 0.0.0.0:5000 run:app > /tmp/app.log 2>&1 &
+          sudo nohup venv/bin/gunicorn -w 1 -b 0.0.0.0:5000 run:app > /tmp/app.log 2>&1 &
           sleep 5
           if pgrep gunicorn > /dev/null; then
             echo 'Deployment successful!'
