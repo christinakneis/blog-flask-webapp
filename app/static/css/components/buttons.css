@@ -98,8 +98,9 @@
 }
 
 .btn--primary:hover {
-  background-color: var(--accent-amber-bright);
-  border-color: var(--accent-amber-bright);
+  background-color: var(--accent-amber-dim);
+  border-color: var(--accent-amber-dim);
+  color: var(--text-bright);
   box-shadow: var(--shadow-glow-amber);
   transform: translateY(-2px);
 }
