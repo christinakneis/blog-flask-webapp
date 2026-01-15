@@ -37,14 +37,14 @@
                 <a href="/" class="nav__link {% if request.endpoint == 'main.home' %}nav__link--active{% endif %}">
                     Home
                 </a>
+                <a href="{{ url_for('main.about') }}" class="nav__link {% if request.endpoint == 'main.about' %}nav__link--active{% endif %}">
+                    About
+                </a>
                 <a href="{{ url_for('main.consulting') }}" class="nav__link {% if request.endpoint == 'main.consulting' %}nav__link--active{% endif %}">
                     Consulting
                 </a>
                 <a href="{{ url_for('main.blog') }}" class="nav__link {% if request.endpoint == 'main.blog' or request.endpoint == 'main.post' %}nav__link--active{% endif %}">
                     Blog
-                </a>
-                <a href="{{ url_for('main.about') }}" class="nav__link {% if request.endpoint == 'main.about' %}nav__link--active{% endif %}">
-                    About
                 </a>
                 <a href="{{ url_for('main.contact') }}" class="nav__link {% if request.endpoint == 'main.contact' %}nav__link--active{% endif %}">
                     Contact
@@ -61,6 +61,7 @@
                     {% elif request.endpoint == 'main.post' %}TRANSMISSION
                     {% elif request.endpoint == 'main.about' %}ABOUT
                     {% elif request.endpoint == 'main.contact' %}CONTACT
+                    {% elif request.endpoint == 'main.resume' %}RESUME
                     {% else %}NAVIGATION{% endif %}
                 </span>
             </div>
@@ -93,14 +94,14 @@
             <a href="/" class="nav__mobile-link {% if request.endpoint == 'main.home' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Home
             </a>
+            <a href="{{ url_for('main.about') }}" class="nav__mobile-link {% if request.endpoint == 'main.about' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
+                About
+            </a>
             <a href="{{ url_for('main.consulting') }}" class="nav__mobile-link {% if request.endpoint == 'main.consulting' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Consulting
             </a>
             <a href="{{ url_for('main.blog') }}" class="nav__mobile-link {% if request.endpoint == 'main.blog' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Blog
-            </a>
-            <a href="{{ url_for('main.about') }}" class="nav__mobile-link {% if request.endpoint == 'main.about' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
-                About
             </a>
             <a href="{{ url_for('main.contact') }}" class="nav__mobile-link {% if request.endpoint == 'main.contact' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Contact
