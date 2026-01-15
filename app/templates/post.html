@@ -1,227 +1,114 @@
 {% extends "base.html" %}
 
+{% block title %}{{ post.title }} - Christina Kneis{% endblock %}
+
 {% block content %}
-<div class="container-fluid mt-4">
-    <div class="row">
-        <!-- Main content -->
-        <div class="col-lg-10">
-            <!-- Post header -->
-            <header class="mb-4">
-                <!-- {% if post.image %}
-                <div class="text-center mb-3">
-                    <img class="img-fluid rounded header-image" src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" style="max-width: 500px; height: 200px;" />
-                </div>
-                {% endif %} -->
-                
-                <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
-                
-                {% if post.show_dates %}
-                <div class="text-muted fst-italic mb-2">
-                    Published on {{ post.created_at.strftime('%B %d, %Y') }}
-                    {% if post.updated_at != post.created_at %}
-                        • Updated on {{ post.updated_at.strftime('%B %d, %Y') }}
-                    {% endif %}
-                </div>
-                {% endif %}
-                
-                {% if post.featured %}
-                <div class="mb-3">
-                    <span class="badge bg-warning">
-                        <i class="bi bi-star-fill me-1"></i>Featured Post
-                    </span>
-                </div>
-                {% endif %}
-            </header>
-
-            <!-- Post content -->
-            <article class="mb-4">
-                <div class="post-content">
-                    {{ post.content_html|safe }}
-                </div>
-            </article>
-
-            <!-- Navigation -->
-            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                <a href="{{ url_for('main.home') }}" class="btn btn-outline-primary">
-                    <i class="bi bi-arrow-left me-2"></i>Back to Home
-                </a>
-                <a href="{{ url_for('main.blog') }}" class="btn btn-outline-secondary">
-                    <i class="bi bi-journal-text me-2"></i>View All Posts
-                </a>
+<!-- Post Header -->
+<header class="post-header">
+    <div class="container">
+        <div class="post-header__meta">
+            {% if post.show_dates %}
+            <div class="post-header__date">
+                <svg class="post-header__date-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <span>{{ post.created_at.strftime('%Y.%m.%d') }}</span>
             </div>
+            {% if post.updated_at != post.created_at %}
+            <span class="post-header__updated">
+                Updated {{ post.updated_at.strftime('%Y.%m.%d') }}
+            </span>
+            {% endif %}
+            {% endif %}
+
+            {% if post.featured %}
+            <span class="badge badge--primary badge--dot">Featured</span>
+            {% endif %}
         </div>
 
+        <h1 class="post-header__title">{{ post.title }}</h1>
+
+        {% if post.preview %}
+        <p class="post-header__excerpt">{{ post.preview }}</p>
+        {% endif %}
+    </div>
+</header>
+
+<!-- Post Content -->
+<div class="container">
+    <div class="post-layout">
+        <!-- Main Content -->
+        <article class="post-content">
+            {{ post.content_html|safe }}
+        </article>
+
         <!-- Sidebar -->
-        <div class="col-lg-2">
-            <!-- About the author -->
-            <div class="card mb-3">
-                <div class="card-header py-2">
-                    <h6 class="mb-0">About the Author</h6>
+        <aside class="post-sidebar">
+            <!-- Author Card -->
+            <div class="post-author">
+                <div class="post-author__image">
+                    <img src="{{ url_for('static', filename='assets/home/me.png') }}" alt="Christina Kneis" />
                 </div>
-                <div class="card-body text-center py-3">
-                    <img src="{{ url_for('static', filename='assets/home/me.png') }}"
-                         alt="Christina Kneis"
-                         class="img-fluid rounded-circle mb-2"
-                         style="max-height: 60px;" />
-                    <h6 class="card-title mb-2">Christina Kneis</h6>
-                    <p class="card-text small">
-                        Systems engineer and product developer with a decade of experience 
-                        launching complex missions into space, scaling & automating infrastructure, 
-                        and solving high-stakes problems with clarity and grit.
-                    </p>
-                </div>
+                <h3 class="post-author__name">Christina Kneis</h3>
+                <p class="post-author__bio">
+                    Systems engineer and product developer with a decade of experience
+                    launching complex missions into space.
+                </p>
             </div>
 
-
-            <!-- Recent posts widget -->
-            <div class="card mb-3">
-                <div class="card-header py-2">
-                    <h6 class="mb-0">Recent Posts</h6>
+            <!-- Quick Links -->
+            <div class="widget">
+                <div class="widget__header">
+                    <h3 class="widget__title">Quick Links</h3>
                 </div>
-                <div class="card-body py-3">
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-1">
-                            <a href="{{ url_for('main.home') }}" class="text-decoration-none small">
-                                <i class="bi bi-arrow-right me-2"></i>View All Posts
+                <div class="widget__body">
+                    <ul class="widget__list">
+                        <li class="widget__list-item">
+                            <a href="{{ url_for('main.blog') }}" class="widget__link">
+                                <svg class="widget__link-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                </svg>
+                                <span>All Posts</span>
+                            </a>
+                        </li>
+                        <li class="widget__list-item">
+                            <a href="{{ url_for('main.consulting') }}" class="widget__link">
+                                <svg class="widget__link-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                </svg>
+                                <span>Services</span>
+                            </a>
+                        </li>
+                        <li class="widget__list-item">
+                            <a href="{{ url_for('main.contact') }}" class="widget__link">
+                                <svg class="widget__link-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>Contact</span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </aside>
     </div>
+
+    <!-- Post Footer -->
+    <footer class="post-footer">
+        <nav class="post-nav">
+            <a href="{{ url_for('main.home') }}" class="btn btn--ghost">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Back to Home
+            </a>
+            <a href="{{ url_for('main.blog') }}" class="btn btn--secondary">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                </svg>
+                View All Posts
+            </a>
+        </nav>
+    </footer>
 </div>
-
-<style>
-.post-content {
-    font-size: 1.1rem;
-    line-height: 1.8;
-}
-
-.post-content h1, .post-content h2, .post-content h3, 
-.post-content h4, .post-content h5, .post-content h6 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.post-content h1 { font-size: 2.5rem; }
-.post-content h2 { font-size: 2rem; }
-.post-content h3 { font-size: 1.75rem; }
-.post-content h4 { font-size: 1.5rem; }
-.post-content h5 { font-size: 1.25rem; }
-.post-content h6 { font-size: 1rem; }
-
-.post-content p {
-    margin-bottom: 1.5rem;
-}
-
-.post-content ul, .post-content ol {
-    margin-bottom: 1.5rem;
-    padding-left: 2rem;
-}
-
-.post-content li {
-    margin-bottom: 0.5rem;
-}
-
-.post-content blockquote {
-    border-left: 4px solid #0d6efd;
-    padding-left: 1rem;
-    margin: 1.5rem 0;
-    font-style: italic;
-    color: #6c757d;
-}
-
-.post-content code {
-    background-color: #f8f9fa;
-    padding: 0.2rem 0.4rem;
-    border-radius: 0.25rem;
-    font-size: 0.875em;
-}
-
-.post-content pre {
-    background-color: #f8f9fa;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    overflow-x: auto;
-    margin: 1.5rem 0;
-}
-
-.post-content pre code {
-    background-color: transparent;
-    padding: 0;
-}
-
-.post-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
-    margin: 1.5rem 0;
-}
-
-/* Header image styling - easily adjustable */
-.header-image {
-    max-width: 600px !important; /* Change this value to resize */
-    height: auto !important;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-/* Alternative header image sizes - uncomment the one you want */
-/* .header-image { max-width: 400px !important; } */ /* Small */
-/* .header-image { max-width: 800px !important; } */ /* Large */
-/* .header-image { max-width: 100% !important; } */ /* Full width */
-
-/* Styled image containers */
-.post-content div[style*="text-align"] {
-    margin: 1.5rem 0;
-}
-
-.post-content div[style*="text-align"] img {
-    margin: 0;
-    display: block;
-}
-
-.post-content div[style*="text-align: left"] {
-    float: left;
-    margin-right: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.post-content div[style*="text-align: right"] {
-    float: right;
-    margin-left: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.post-content div[style*="text-align: center"] {
-    clear: both;
-    text-align: center;
-}
-
-/* Caption styling */
-.post-content div[style*="text-align"] p[style*="color: #6c757d"] {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: #6c757d;
-    font-style: italic;
-}
-
-.post-content table {
-    width: 100%;
-    margin: 1.5rem 0;
-    border-collapse: collapse;
-}
-
-.post-content th, .post-content td {
-    padding: 0.75rem;
-    border: 1px solid #dee2e6;
-}
-
-.post-content th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-}
-</style>
 {% endblock %}

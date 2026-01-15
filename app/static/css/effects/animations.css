@@ -1,0 +1,403 @@
+/* ==========================================================================
+   Animations — Mission Control Theme
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Fade Animations
+   ------------------------------------------------------------------------- */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Scale Animations
+   ------------------------------------------------------------------------- */
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Pulse & Glow
+   ------------------------------------------------------------------------- */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--accent-amber-glow);
+  }
+  50% {
+    box-shadow: 0 0 20px 5px var(--accent-amber-glow);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px var(--accent-amber));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px var(--accent-amber));
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Typing / Terminal Animations
+   ------------------------------------------------------------------------- */
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.typing-cursor::after {
+  content: '|';
+  display: inline-block;
+  color: var(--accent-amber);
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typewriter 2s steps(40) forwards;
+}
+
+/* -------------------------------------------------------------------------
+   Scan Line Effect
+   ------------------------------------------------------------------------- */
+
+@keyframes scanLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.scan-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(245, 166, 35, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.scan-line:hover::before {
+  opacity: 1;
+  animation: scanLine 0.6s var(--ease-out-expo) forwards;
+}
+
+/* -------------------------------------------------------------------------
+   Data Stream Animation
+   ------------------------------------------------------------------------- */
+
+@keyframes dataStream {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+.data-stream {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--accent-green-glow) 50%,
+    transparent 100%
+  );
+  background-size: 100% 200%;
+  animation: dataStream 2s linear infinite;
+}
+
+/* -------------------------------------------------------------------------
+   Orbit Animation
+   ------------------------------------------------------------------------- */
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(100px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(100px) rotate(-360deg);
+  }
+}
+
+.orbit {
+  animation: orbit 20s linear infinite;
+}
+
+/* -------------------------------------------------------------------------
+   Float Animation
+   ------------------------------------------------------------------------- */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.float--slow {
+  animation-duration: 6s;
+}
+
+.float--fast {
+  animation-duration: 2s;
+}
+
+/* -------------------------------------------------------------------------
+   Shake Animation
+   ------------------------------------------------------------------------- */
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-4px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(4px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* -------------------------------------------------------------------------
+   Spin Animation
+   ------------------------------------------------------------------------- */
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+.spin--slow {
+  animation-duration: 2s;
+}
+
+/* -------------------------------------------------------------------------
+   Bounce Animation
+   ------------------------------------------------------------------------- */
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.bounce {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+/* -------------------------------------------------------------------------
+   Stagger Delays
+   ------------------------------------------------------------------------- */
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+.stagger-7 { animation-delay: 0.7s; }
+.stagger-8 { animation-delay: 0.8s; }
+
+/* -------------------------------------------------------------------------
+   Hover Lift Effect
+   ------------------------------------------------------------------------- */
+
+.hover-lift {
+  transition: transform var(--transition-base) var(--ease-out-expo),
+              box-shadow var(--transition-base);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* -------------------------------------------------------------------------
+   Animation Utilities
+   ------------------------------------------------------------------------- */
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-fade-up {
+  animation: fadeSlideUp 0.5s var(--ease-out-expo) forwards;
+}
+
+.animate-fade-down {
+  animation: fadeSlideDown 0.5s var(--ease-out-expo) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s var(--ease-out-expo) forwards;
+}
+
+/* Fill mode utilities */
+.animate-fill-forwards {
+  animation-fill-mode: forwards;
+}
+
+.animate-fill-both {
+  animation-fill-mode: both;
+}
+
+/* Initially hidden for animation */
+.animate-initial {
+  opacity: 0;
+}
+
+/* Pause animations when reduced motion is preferred */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-initial {
+    opacity: 1;
+  }
+}
