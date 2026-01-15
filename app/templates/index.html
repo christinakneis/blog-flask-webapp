@@ -1,258 +1,334 @@
 {% extends "base.html" %}
 
+{% block title %}Christina Kneis - Systems Engineer & Product Developer{% endblock %}
+
 {% block content %}
-    <!-------------------------------------------------------------------------->
-    <!-- Page header with logo and tagline + image -->
-     <!-------------------------------------------------------------------------->
-    <header class="py-5 bg-light border-bottom mb-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Left side: Image (1/3 width on medium+ screens) -->
-                <div class="col-md-4 mb-4 mb-md-0 text-center">
-                    <img src="{{ url_for('static', filename='assets/home/me.png') }}"
-                        alt="Christina Kneis"
-                        class="img-fluid rounded-circle shadow"
-                        style="max-height: 250px;" />
+<!-- Hero Section -->
+<section class="home-hero">
+    <div class="home-hero__background"></div>
+
+    <div class="container">
+        <div class="home-hero__content">
+            <!-- Profile Image -->
+            <div class="home-hero__image-wrapper">
+                <div class="home-hero__image">
+                    <div class="home-hero__image-glow"></div>
+                    <div class="home-hero__image-frame">
+                        <div class="home-hero__image-inner">
+                            <img src="{{ url_for('static', filename='assets/home/me.png') }}"
+                                 alt="Christina Kneis" />
+                        </div>
+                    </div>
                 </div>
-                <!-- Right side: Text (2/3 width on medium+ screens) -->
-                <div class="col-md-8 text-center text-md-start">
-                    <h1 class="fw-bolder">Christina Kneis</h1>
-                    <p class="lead mb-0">Elegant Problem Solving. Engineering Complex Systems. Driving Operational Excellence.</p>
+            </div>
+
+            <!-- Text Content -->
+            <div class="home-hero__text">
+                <div class="home-hero__greeting">
+                    <span class="home-hero__greeting-dot"></span>
+                    <span>Systems Online</span>
+                </div>
+
+                <h1 class="home-hero__name">Christina Kneis</h1>
+
+                <p class="home-hero__tagline">
+                    I engineer elegant solutions for complex systems.
+                </p>
+
+                <div class="home-hero__credentials">
+                    <a href="{{ url_for('main.about') }}#career" class="credential-badge credential-badge--link">NASA/JPL · 10 Years</a>
+                    <a href="{{ url_for('main.about') }}#education" class="credential-badge credential-badge--link">M.S. & B.S. Engineering, USC</a>
+                    <a href="{{ url_for('main.about') }}#publications" class="credential-badge credential-badge--link">Published Researcher</a>
+                </div>
+
+                <div class="home-hero__actions">
+                    <a href="{{ url_for('main.consulting') }}" class="btn btn--primary btn--lg">
+                        <span>Begin Transmission</span>
+                        <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <a href="{{ url_for('main.about') }}" class="btn btn--ghost btn--lg">
+                        About Me
+                    </a>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 
-    <!-------------------------------------------------------------------------->
-    <!-- Page content -->
-    <!-------------------------------------------------------------------------->
+    <!-- Scroll Indicator -->
+    <div class="home-hero__scroll">
+        <span class="home-hero__scroll-text">Scroll</span>
+        <svg class="home-hero__scroll-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+    </div>
+</section>
+
+<!-- Intro Section with Floating Photos -->
+<section class="home-intro">
     <div class="container">
-        <div class="row">
-            <!-- Blog entries-->
-            <div class="col-lg-8">
-                <!-------------------------------------------------------------------------->
-                <!-- Intro Section (left column only) -->
-                 <!-------------------------------------------------------------------------->
-                <div class="mb-4">
-                    <p class="lead text-center text-md-start">
-                        Hey, I'm Christina 👋. I'm a systems engineer and product developer with a decade of experience launching complex missions into space 🚀, scaling & automating infrastructure 🛠️, and solving high-stakes problems with clarity and grit 💡. 
-                    </p>
-                    <p class="lead text-center text-md-start">
-                        This site is a launch pad (pun intended) for sharing my thoughts, projects, and lessons learned across tech, ops, and life — and for connecting with teams who need sharp consulting, smarter tools, and practical strategies to tame complexity and build what lasts.  
-                    </p>
-                </div>
+        <div class="home-intro__layout">
+            <!-- Text Content -->
+            <div class="home-intro__content reveal">
+                <p class="home-intro__text">
+                    Hey, I'm Christina. I'm a systems and product development engineer with a decade
+                    of experience developing, operating, and managing complex systems in deep space.
+                    I solve high-stakes problems with clarity and grit.
+                </p>
+                <p class="home-intro__text">
+                    This site is a launch pad for sharing my thoughts, projects, and lessons learned
+                    across tech, ops, and life - and for connecting with teams who need elegant solutions to complex problems.
+                </p>
+            </div>
 
-                <!-------------------------------------------------------------------------->
-                <!-- Consulting & Custom Solutions Section -->
-                <!-------------------------------------------------------------------------->
-                <div class="card border-0 shadow-lg mb-5">
-                    <div class="card-body p-5">
-                        <h2 class="text-center mb-4">Consulting & Custom Solutions</h2>
-                        <p class="lead text-center mb-4">
-                            Not everything fits neatly into a box — but sometimes you need a fresh set of eyes or a custom tool to cut through the chaos. I help teams tame complexity, automate the boring stuff, and build systems that actually work for them.
-                        </p>
-                        
-                        <div class="text-center mb-5">
-                            <a href="{{ url_for('main.consulting') }}" class="btn btn-primary btn-lg">
-                                <i class="bi bi-lightbulb me-2"></i>Explore How We Can Work Together
-                            </a>
-                        </div>
-                        
-                        <!-- Services Grid -->
-                        <div class="row g-4">
-                            <!-- Quick Fix -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card border-0 shadow-sm h-100">
-                                    <div class="card-body text-center p-4">
-                                        <h5 class="card-title text-dark mb-3">🌱 Quick Fix</h5>
-                                        <p class="card-text">Short, sharp engagements to solve nagging problems</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Level-Up -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card border-0 shadow-sm h-100">
-                                    <div class="card-body text-center p-4">
-                                        <h5 class="card-title text-dark mb-3">⚙️ Level-Up</h5>
-                                        <p class="card-text">Polish and streamline your current setup</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Big Build -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card border-0 shadow-sm h-100">
-                                    <div class="card-body text-center p-4">
-                                        <h5 class="card-title text-dark mb-3">🚀 Big Build</h5>
-                                        <p class="card-text">Ambitious projects with cloud hosting & security</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- On Call -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card border-0 shadow-sm h-100">
-                                    <div class="card-body text-center p-4">
-                                        <h5 class="card-title text-dark mb-3">🔮 On Call</h5>
-                                        <p class="card-text">Keep me in your corner as you grow</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Floating Photos -->
+            <div class="home-intro__photos">
+                <div class="floating-photo floating-photo--1">
+                    <img src="{{ url_for('static', filename='assets/home/mars2020.png') }}" alt="Mars 2020 Landing" />
+                </div>
+                <div class="floating-photo floating-photo--2">
+                    <img src="{{ url_for('static', filename='assets/home/MS_sys.png') }}" alt="M.S. Graduation" />
+                </div>
+                <div class="floating-photo floating-photo--3">
+                    <img src="{{ url_for('static', filename='assets/home/clipper.png') }}" alt="Europa Clipper" />
+                </div>
+                <div class="floating-photo floating-photo--4">
+                    <img src="{{ url_for('static', filename='assets/home/bunny.png') }}" alt="Cleanroom" />
+                </div>
+                <div class="floating-photo floating-photo--5">
+                    <img src="{{ url_for('static', filename='assets/home/incus.png') }}" alt="INCUS" />
+                </div>
+                <div class="floating-photo floating-photo--6">
+                    <img src="{{ url_for('static', filename='assets/home/rocket.png') }}" alt="Rocket Launch" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="home-services">
+    <div class="container">
+        <header class="home-services__header reveal">
+            <span class="overline label-amber">// Consulting</span>
+            <h2 class="home-services__title h2">Consulting & Custom Solutions</h2>
+            <p class="home-services__subtitle lead">
+                I offer consulting and custom solutions for system development, operations, and management.
+                I use systems engineering principles to understand what you actually need, build the right thing,
+                and make sure it works.
+            </p>
+        </header>
+
+        <div class="home-services__grid reveal-stagger">
+            <!-- Quick Fix -->
+            <div class="service-card">
+                <div class="service-card__icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h3 class="service-card__title">Quick Fix</h3>
+                <p class="service-card__description">
+                    Diagnose the problem, deliver a targeted solution - in hours
+                </p>
+            </div>
+
+            <!-- Level-Up -->
+            <div class="service-card">
+                <div class="service-card__icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                </div>
+                <h3 class="service-card__title">Level-Up</h3>
+                <p class="service-card__description">
+                    Optimize your systems or build tools that integrate - in weeks
+                </p>
+            </div>
+
+            <!-- Big Build -->
+            <div class="service-card">
+                <div class="service-card__icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                    </svg>
+                </div>
+                <h3 class="service-card__title">Big Build</h3>
+                <p class="service-card__description">
+                    Full-scale strategy and implementation - from roadmap to production
+                </p>
+            </div>
+
+            <!-- On Call -->
+            <div class="service-card">
+                <div class="service-card__icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+                    </svg>
+                </div>
+                <h3 class="service-card__title">On Call</h3>
+                <p class="service-card__description">
+                    Ongoing partnership for continuous improvement and support
+                </p>
+            </div>
+        </div>
+
+        <div class="home-services__cta reveal">
+            <a href="{{ url_for('main.consulting') }}" class="btn btn--secondary btn--lg">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+                Explore How We Can Work Together
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Posts Section -->
+<section class="home-posts">
+    <div class="container">
+        <header class="home-posts__header reveal">
+            <div class="home-posts__title-group">
+                <div class="home-posts__icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="overline label-amber">// Transmissions</span>
+                    <h2 class="h3">Latest Blog Posts</h2>
+                </div>
+            </div>
+            <a href="{{ url_for('main.blog') }}" class="link-arrow">
+                <span>View All</span>
+                <svg class="link-arrow__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </header>
+
+        <div class="home-posts__grid reveal-stagger">
+            {% for post in posts %}
+            <article class="post-card">
+                {% if post.image %}
+                <a href="{{ url_for('main.post', slug=post.slug) }}" class="post-card__image">
+                    <img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" />
+                </a>
+                {% endif %}
+                <div class="post-card__content">
+                    <div class="post-card__meta">
+                        {% if post.show_dates %}
+                        <span class="post-card__date">{{ post.created_at.strftime('%Y.%m.%d') }}</span>
+                        {% endif %}
+                        {% if post.featured %}
+                        <span class="badge badge--primary badge--dot">Featured</span>
+                        {% endif %}
+                    </div>
+                    <h3 class="post-card__title">
+                        <a href="{{ url_for('main.post', slug=post.slug) }}">{{ post.title }}</a>
+                    </h3>
+                    <p class="post-card__excerpt">{{ post.preview }}</p>
+                    <div class="post-card__footer">
+                        <a href="{{ url_for('main.post', slug=post.slug) }}" class="link-arrow">
+                            <span>Read more</span>
+                            <svg class="link-arrow__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
-                <!-------------------------------------------------------------------------->
-                <!-- Blog Section -->
-                <!-------------------------------------------------------------------------->
-                <div class="card border-0 shadow-lg mb-5">
-                    <div class="card-body p-5">
-                        <h2 class="text-center mb-4">Latest Blog Posts</h2>
-                <!-------------------------------------------------------------------------->
-                <!-- Blog Grid-->
-                 <!-------------------------------------------------------------------------->
-                <!-- Blog Grid -->
-                <div class="row">
-                    {% for post in posts %}
-                    <div class="col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="{{ url_for('main.post', slug=post.slug) }}">
-                                <img class="card-img-top" src="{{ url_for('static', filename=post.image) }}" alt="..." />
-                            </a>
-                            <div class="card-body">
-                                {% if post.show_dates %}
-                                <div class="small text-muted">{{ post.created_at.strftime('%B %d, %Y') }}</div>
-                                {% endif %}
-                                <h5 class="card-title">{{ post.title }}</h5>
-                                <p class="card-text">{{ post.preview }}</p>
-                                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.post', slug=post.slug) }}">Read more →</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+<!-- Connect Section -->
+<section class="home-connect">
+    <div class="container">
+        <div class="home-connect__content reveal-stagger">
+            <!-- Connect Widget -->
+            <div class="widget">
+                <div class="widget__header">
+                    <h3 class="widget__title">Let's Connect</h3>
                 </div>
-                
-                <!-- View All Posts Link -->
-                <div class="text-center mt-4">
-                    <a href="{{ url_for('main.blog') }}" class="btn btn-outline-primary">
-                        <i class="bi bi-chevron-right me-2"></i>View All Posts
-                    </a>
-                </div>
-
-                <!-- More blog posts (shortened for brevity) -->
-                <!-- You can keep all your existing cards here unchanged -->
-
-                <!-- Pagination -->
-               <!--  <nav aria-label="Pagination">
-                    <hr class="my-0" />
-                    <ul class="pagination justify-content-center my-4">
-                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                    </ul>
-                </nav> -->
+                <div class="widget__body">
+                    <div class="flex flex--col flex--gap-3">
+                        <a href="https://www.linkedin.com/in/christina-kneis" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--linkedin btn--full">
+                            <svg class="btn__icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://discord.gg/BaRFPtDJ" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--discord btn--full">
+                            <svg class="btn__icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+                            </svg>
+                            Discord
+                        </a>
+                        <a href="https://calendly.com/christina-m-kneis" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--full">
+                            <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            Schedule a Call
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-------------------------------------------------------------------------->
-            <!-- Sidebar widgets ------------------------------------------------------->
-            <!-------------------------------------------------------------------------->
-            <div class="col-lg-4">
-                <!-------------------------------------------------------------------------->
-                <!-- Connect widget -->
-                <!-------------------------------------------------------------------------->
-                <div class="card mb-4">
-                    <div class="card-header">Let's Connect</div>
-                    <div class="card-body text-center">
-                        <a href="https://www.linkedin.com/in/christina-kneis" target="_blank" class="btn btn-outline-primary mb-2" style="width: 90%;">
-                            <i class="bi bi-linkedin me-2"></i>LinkedIn
-                        </a><br>
-                        <a href="https://discord.gg/BaRFPtDJ" target="_blank" class="btn btn-outline-info mb-2" style="width: 90%;">
-                            <i class="bi bi-discord me-2"></i>Discord
-                        </a><br>
-                        <a href="https://calendly.com/christina-m-kneis" target="_blank" class="btn btn-outline-success" style="width: 90%;">
-                            <i class="bi bi-calendar me-2"></i>Calendly
-                        </a>
-                    </div>
+            <!-- Publications Widget -->
+            <div class="widget">
+                <div class="widget__header">
+                    <h3 class="widget__title">Publications</h3>
                 </div>
-                <!-------------------------------------------------------------------------->
-                <!-- Publictions Widget -->
-                <!-------------------------------------------------------------------------->
-                <div class="card mb-4">
-                    <div class="card-header">Publications and Articles</div>
-                    <div class="card-body text-center">
-                        <a href="https://link.springer.com/chapter/10.1007/978-3-031-51928-4_96" target="_blank" class="btn btn-outline-dark mb-2" style="width: 90%;">
-                            <i class="bi bi-journal-text"></i> Mars MIMUs (AAS ’22)
-                        </a><br>
-                        <a href="https://ntrs.nasa.gov/citations/20240003411" target="_blank" class="btn btn-outline-secondary mb-2" style="width: 90%;">
-                            <i class="bi bi-journal-text"></i> Lunar Ops (NASA '24)
-                        </a><br>
-                        <a href="https://www.jpl.nasa.gov/images/pia23723-cheering-for-perseverance-landing/" target="_blank" class="btn btn-outline-primary" style="width: 90%;">
-                            <i class="bi bi-newspaper"></i> Mars 2020 Landing
-                        </a>
-                    </div>
+                <div class="widget__body">
+                    <ul class="widget__list">
+                        <li class="widget__list-item">
+                            <a href="https://link.springer.com/chapter/10.1007/978-3-031-51928-4_96" target="_blank" rel="noopener noreferrer" class="widget__link">
+                                <svg class="widget__link-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                                <span>Mars MIMUs (AAS '22)</span>
+                            </a>
+                        </li>
+                        <li class="widget__list-item">
+                            <a href="https://ntrs.nasa.gov/citations/20240003411" target="_blank" rel="noopener noreferrer" class="widget__link">
+                                <svg class="widget__link-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                                <span>Lunar Ops (NASA '24)</span>
+                            </a>
+                        </li>
+                        <li class="widget__list-item">
+                            <a href="https://www.jpl.nasa.gov/images/pia23723-cheering-for-perseverance-landing/" target="_blank" rel="noopener noreferrer" class="widget__link">
+                                <svg class="widget__link-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                </svg>
+                                <span>Mars 2020 Landing</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <!-------------------------------------------------------------------------->
-                <!-- Work widget -->
-                <!-------------------------------------------------------------------------->
-                <div class="card mb-4">
-                    <div class="card-header">More Links</div>
-                    <div class="card-body text-center">
-                        <a href="https://github.com/christinakneis" target="_blank" class="btn btn-outline-dark mb-2" style="width: 90%;">
-                            <i class="bi bi-github me-2"></i>GitHub
+            </div>
+
+            <!-- More Links Widget -->
+            <div class="widget">
+                <div class="widget__header">
+                    <h3 class="widget__title">More Links</h3>
+                </div>
+                <div class="widget__body">
+                    <div class="flex flex--col flex--gap-3">
+                        <a href="https://github.com/christinakneis" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--github btn--full">
+                            <svg class="btn__icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Personal Photo Row -->
-        <div class="container mt-5">
-            <h3 class="text-center mb-4">Photo Highlights</h3>
-            <div class="row justify-content-center text-center gap-5">
-                <div class="col-6 col-sm-4 col-md-3 mb-3">
-                    <img src="{{ url_for('static', filename='assets/home/mars2020.png') }}"
-                        alt="Christina Kneis"
-                        class="shadow"
-                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
-                </div>
-                <div class="col-6 col-sm-4 col-md-3 mb-3">
-                    <img src="{{ url_for('static', filename='assets/home/incus.png') }}"
-                        alt="Christina Kneis"
-                        class="shadow"
-                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
-                </div>
-                <div class="col-6 col-sm-4 col-md-3 mb-3">
-                    <img src="{{ url_for('static', filename='assets/home/clipper.png') }}"
-                        alt="Christina Kneis"
-                        class="shadow"
-                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
-                </div>
-                <div class="col-6 col-sm-4 col-md-3 mb-3">
-                    <img src="{{ url_for('static', filename='assets/home/rocket.png') }}"
-                        alt="Christina Kneis"
-                        class="shadow"
-                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
-                </div>
-                <div class="col-6 col-sm-4 col-md-3 mb-3">
-                    <img src="{{ url_for('static', filename='assets/home/bunny.png') }}"
-                        alt="Christina Kneis"
-                        class="shadow"
-                        style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
-                </div>
-            </div>
-        </div>
-
-
-</body>
-</html>
-
+</section>
 {% endblock %}
-# Force workflow recognition

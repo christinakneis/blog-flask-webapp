@@ -1,167 +1,159 @@
 {% extends "base.html" %}
 
+{% block title %}Blog - Christina Kneis{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <!-- Blog entries -->
-        <div class="col-lg-8">
-            <!-- Page header -->
-            <header class="mb-4">
-                <h1 class="fw-bolder mb-1">Blog</h1>
-                <p class="lead mb-0">All blog posts and articles</p>
-            </header>
-
-            <!-- Blog posts -->
-            {% if posts.items %}
-                {% for post in posts.items %}
-                <div class="card mb-4">
-                    <div class="row g-0">
-                        {% if post.image %}
-                        <div class="col-md-4">
-                            <a href="{{ url_for('main.post', slug=post.slug) }}">
-                                <img class="img-fluid rounded-start h-100" 
-                                     src="{{ url_for('static', filename=post.image) }}" 
-                                     alt="{{ post.title }}"
-                                     style="object-fit: cover; width: 100%; height: 100%;" />
-                            </a>
-                        </div>
-                        <div class="col-md-8">
-                        {% else %}
-                        <div class="col-12">
-                        {% endif %}
-                            <div class="card-body">
-                                {% if post.show_dates %}
-                                <div class="small text-muted mb-2">
-                                    {{ post.created_at.strftime('%B %d, %Y') }}
-                                    {% if post.featured %}
-                                        <span class="badge bg-warning ms-2">
-                                            <i class="bi bi-star-fill me-1"></i>Featured
-                                        </span>
-                                    {% endif %}
-                                </div>
-                                {% endif %}
-                                
-                                <h2 class="card-title h4">{{ post.title }}</h2>
-                                <p class="card-text">{{ post.preview }}</p>
-                                
-                                <a class="btn btn-primary" href="{{ url_for('main.post', slug=post.slug) }}">
-                                    Read more →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+<!-- Blog Header -->
+<header class="blog-header">
+    <div class="container">
+        <div class="blog-header__content">
+            <div class="blog-header__title-group">
+                <div class="blog-header__icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                    </svg>
                 </div>
-                {% endfor %}
-
-                <!-- Pagination -->
-                {% if posts.pages > 1 %}
-                <nav aria-label="Blog pagination">
-                    <hr class="my-0" />
-                    <ul class="pagination justify-content-center my-4">
-                        {% if posts.has_prev %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ url_for('main.blog', page=posts.prev_num) }}">← Newer</a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <span class="page-link">← Newer</span>
-                            </li>
-                        {% endif %}
-                        
-                        {% for page_num in posts.iter_pages() %}
-                            {% if page_num %}
-                                {% if page_num != posts.page %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="{{ url_for('main.blog', page=page_num) }}">{{ page_num }}</a>
-                                    </li>
-                                {% else %}
-                                    <li class="page-item active" aria-current="page">
-                                        <span class="page-link">{{ page_num }}</span>
-                                    </li>
-                                {% endif %}
-                            {% else %}
-                                <li class="page-item disabled">
-                                    <span class="page-link">...</span>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                        
-                        {% if posts.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ url_for('main.blog', page=posts.next_num) }}">Older →</a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <span class="page-link">Older →</span>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-                {% endif %}
-                
-            {% else %}
-                <div class="text-center py-5">
-                    <i class="bi bi-journal-text text-muted" style="font-size: 4rem;"></i>
-                    <h4 class="text-muted mt-3">No posts yet</h4>
-                    <p class="text-muted">Check back soon for new content!</p>
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- Sidebar widgets -->
-        <div class="col-lg-4">
-            <!-- Connect widget -->
-            <div class="card mb-4">
-                <div class="card-header">Let's Connect</div>
-                <div class="card-body text-center">
-                    <a href="https://www.linkedin.com/in/christina-kneis" target="_blank" class="btn btn-outline-primary mb-2" style="width: 90%;">
-                        <i class="bi bi-linkedin me-2"></i>LinkedIn
-                    </a><br>
-                    <a href="https://discord.gg/BaRFPtDJ" target="_blank" class="btn btn-outline-info mb-2" style="width: 90%;">
-                        <i class="bi bi-discord me-2"></i>Discord
-                    </a><br>
-                    <a href="https://calendly.com/christina-m-kneis" target="_blank" class="btn btn-outline-success" style="width: 90%;">
-                        <i class="bi bi-calendar me-2"></i>Calendly
-                    </a>
+                <div class="blog-header__text">
+                    <span class="overline label-amber">// Transmission Log</span>
+                    <h1 class="h2">Blog</h1>
+                    <p class="blog-header__subtitle">Thoughts on tech, systems, and lessons learned</p>
                 </div>
             </div>
 
-            <!-- Publications Widget -->
-            <div class="card mb-4">
-                <div class="card-header">Publications and Articles</div>
-                <div class="card-body text-center">
-                    <a href="https://link.springer.com/chapter/10.1007/978-3-031-51928-4_96" target="_blank" class="btn btn-outline-dark mb-2" style="width: 90%;">
-                        <i class="bi bi-journal-text"></i> Mars MIMUs (AAS '22)
-                    </a><br>
-                    <a href="https://ntrs.nasa.gov/citations/20240003411" target="_blank" class="btn btn-outline-secondary mb-2" style="width: 90%;">
-                        <i class="bi bi-journal-text"></i> Lunar Ops (NASA '24)
-                    </a><br>
-                    <a href="https://www.jpl.nasa.gov/images/pia23723-cheering-for-perseverance-landing/" target="_blank" class="btn btn-outline-primary" style="width: 90%;">
-                        <i class="bi bi-newspaper"></i> Mars 2020 Landing
-                    </a>
-                </div>
-            </div>
-
-            <!-- Work widget -->
-            <div class="card mb-4">
-                <div class="card-header">More Links</div>
-                <div class="card-body text-center">
-                    <a href="https://github.com/christinakneis" target="_blank" class="btn btn-outline-dark mb-2" style="width: 90%;">
-                        <i class="bi bi-github me-2"></i>GitHub
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Admin Link (subtle) -->
-            <div class="card mb-4">
-                <div class="card-header">Site Management</div>
-                <div class="card-body text-center">
-                    <a href="{{ url_for('admin.login') }}" target="_blank" class="btn btn-outline-secondary btn-sm" style="width: 90%;">
-                        <i class="bi bi-gear me-1"></i>Site Admin
-                    </a>
+            <div class="blog-filters">
+                <div class="blog-search">
+                    <svg class="blog-search__icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text"
+                           class="blog-search__input"
+                           placeholder="// Search posts..."
+                           id="blog-search"
+                           autocomplete="off" />
                 </div>
             </div>
         </div>
     </div>
-</div>
+</header>
+
+<!-- Blog Content -->
+<section class="blog-content">
+    <div class="container">
+        {% if posts.items %}
+        <div class="blog-grid" id="blog-posts">
+            {% for post in posts.items %}
+            <article class="blog-post-card" data-title="{{ post.title|lower }}" data-preview="{{ post.preview|lower }}">
+                {% if post.image %}
+                <a href="{{ url_for('main.post', slug=post.slug) }}" class="blog-post-card__image">
+                    <img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" loading="lazy" />
+                    {% if post.featured %}
+                    <div class="blog-post-card__featured">
+                        <span class="badge badge--solid-primary">
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            Featured
+                        </span>
+                    </div>
+                    {% endif %}
+                </a>
+                {% endif %}
+                <div class="blog-post-card__content">
+                    <div class="blog-post-card__meta">
+                        {% if post.show_dates %}
+                        <span class="blog-post-card__date">{{ post.created_at.strftime('%Y.%m.%d') }}</span>
+                        {% endif %}
+                    </div>
+                    <h2 class="blog-post-card__title">
+                        <a href="{{ url_for('main.post', slug=post.slug) }}">{{ post.title }}</a>
+                    </h2>
+                    <p class="blog-post-card__excerpt">{{ post.preview }}</p>
+                    <div class="blog-post-card__footer">
+                        <a href="{{ url_for('main.post', slug=post.slug) }}" class="link-arrow">
+                            <span>Read transmission</span>
+                            <svg class="link-arrow__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if posts.pages > 1 %}
+        <nav class="blog-pagination" aria-label="Blog pagination">
+            {% if posts.has_prev %}
+            <a href="{{ url_for('main.blog', page=posts.prev_num) }}" class="blog-pagination__btn">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            {% else %}
+            <button class="blog-pagination__btn" disabled>
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            {% endif %}
+
+            <span class="blog-pagination__info">
+                Page {{ posts.page }} of {{ posts.pages }}
+            </span>
+
+            {% if posts.has_next %}
+            <a href="{{ url_for('main.blog', page=posts.next_num) }}" class="blog-pagination__btn">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+            {% else %}
+            <button class="blog-pagination__btn" disabled>
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+            {% endif %}
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <!-- Empty State -->
+        <div class="blog-empty">
+            <div class="blog-empty__icon">
+                <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </div>
+            <h2 class="blog-empty__title h4">No transmissions yet</h2>
+            <p class="blog-empty__text">
+                Blog posts will appear here once they're published. Check back soon for updates.
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Simple search functionality
+    const searchInput = document.getElementById('blog-search');
+    const posts = document.querySelectorAll('.blog-post-card');
+
+    if (searchInput && posts.length > 0) {
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+
+            posts.forEach(post => {
+                const title = post.dataset.title || '';
+                const preview = post.dataset.preview || '';
+                const matches = title.includes(query) || preview.includes(query);
+
+                post.style.display = matches ? '' : 'none';
+            });
+        });
+    }
+</script>
 {% endblock %}

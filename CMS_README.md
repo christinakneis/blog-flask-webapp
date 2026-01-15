@@ -194,3 +194,7 @@ For issues or questions:
 **Enjoy your new CMS!** 🎉
 
 Your blog is now much easier to manage and update. Create new posts, edit existing ones, and control your site's appearance all through a user-friendly web interface.
+
+
+
+

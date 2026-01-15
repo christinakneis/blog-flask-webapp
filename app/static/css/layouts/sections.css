@@ -1,0 +1,346 @@
+/* ==========================================================================
+   Section Layouts — Mission Control Theme
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Base Section
+   ------------------------------------------------------------------------- */
+
+.section {
+  position: relative;
+}
+
+/* Section backgrounds */
+.section--void {
+  background-color: var(--bg-void);
+}
+
+.section--panel {
+  background-color: var(--bg-panel);
+}
+
+.section--elevated {
+  background-color: var(--bg-elevated);
+}
+
+/* -------------------------------------------------------------------------
+   Hero Section
+   ------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-16);
+  overflow: hidden;
+}
+
+.hero--short {
+  min-height: 60vh;
+}
+
+.hero--auto {
+  min-height: auto;
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Hero text animations */
+.hero__title {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideUp 0.6s var(--ease-out-expo) forwards;
+  animation-delay: 0.2s;
+}
+
+.hero__subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideUp 0.6s var(--ease-out-expo) forwards;
+  animation-delay: 0.4s;
+}
+
+.hero__description {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideUp 0.6s var(--ease-out-expo) forwards;
+  animation-delay: 0.5s;
+}
+
+.hero__actions {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideUp 0.6s var(--ease-out-expo) forwards;
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Page Header (for non-hero pages)
+   ------------------------------------------------------------------------- */
+
+.page-header {
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-header__overline {
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.page-header__title {
+  margin-bottom: var(--space-4);
+}
+
+.page-header__description {
+  max-width: 600px;
+  color: var(--text-secondary);
+}
+
+/* -------------------------------------------------------------------------
+   Content Sections
+   ------------------------------------------------------------------------- */
+
+.content-section {
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-12);
+}
+
+@media (min-width: 768px) {
+  .content-section {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+}
+
+.content-section + .content-section {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.content-section__header {
+  margin-bottom: var(--space-8);
+}
+
+.content-section__title {
+  margin-bottom: var(--space-2);
+}
+
+.content-section__subtitle {
+  color: var(--text-secondary);
+}
+
+/* -------------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------------- */
+
+.footer {
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-12);
+  background-color: var(--bg-panel);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footer__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .footer__container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.footer__brand-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-bright);
+}
+
+.footer__brand-dot {
+  color: var(--accent-amber);
+}
+
+.footer__copyright {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  letter-spacing: var(--tracking-wide);
+}
+
+.footer__links {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.footer__link {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.footer__link:hover {
+  color: var(--accent-amber);
+}
+
+/* -------------------------------------------------------------------------
+   Dividers
+   ------------------------------------------------------------------------- */
+
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-medium) 20%,
+    var(--border-medium) 80%,
+    transparent
+  );
+  margin: var(--space-8) 0;
+}
+
+.divider--accent {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-amber-dim) 20%,
+    var(--accent-amber) 50%,
+    var(--accent-amber-dim) 80%,
+    transparent
+  );
+}
+
+.divider--vertical {
+  width: 1px;
+  height: 100%;
+  background: var(--border-medium);
+  margin: 0 var(--space-4);
+}
+
+/* -------------------------------------------------------------------------
+   Scroll Indicator
+   ------------------------------------------------------------------------- */
+
+.scroll-indicator {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.scroll-indicator__text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scroll-indicator__arrow {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-amber);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Page Transitions
+   ------------------------------------------------------------------------- */
+
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s var(--ease-out-expo);
+}
+
+/* Section reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s var(--ease-out-expo);
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s var(--ease-out-expo);
+}
+
+.reveal-stagger--visible > *:nth-child(1) { transition-delay: 0.1s; }
+.reveal-stagger--visible > *:nth-child(2) { transition-delay: 0.2s; }
+.reveal-stagger--visible > *:nth-child(3) { transition-delay: 0.3s; }
+.reveal-stagger--visible > *:nth-child(4) { transition-delay: 0.4s; }
+.reveal-stagger--visible > *:nth-child(5) { transition-delay: 0.5s; }
+.reveal-stagger--visible > *:nth-child(6) { transition-delay: 0.6s; }
+
+.reveal-stagger--visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}

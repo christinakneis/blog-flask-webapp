@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Design Tokens — Mission Control Theme
+   ========================================================================== */
+
+:root {
+  /* -------------------------------------------------------------------------
+     COLOR SYSTEM
+     ------------------------------------------------------------------------- */
+
+  /* Deep space backgrounds */
+  --bg-void: #0a0a0f;
+  --bg-panel: #12121a;
+  --bg-elevated: #1a1a24;
+  --bg-hover: #222230;
+
+  /* Mission control blue (primary accent) */
+  --accent-amber: #5eb8ff;
+  --accent-amber-bright: #8fd3ff;
+  --accent-amber-dim: #4a9ad9;
+  --accent-amber-glow: rgba(94, 184, 255, 0.15);
+  --accent-amber-subtle: rgba(94, 184, 255, 0.08);
+
+  /* Terminal green (secondary accent) */
+  --accent-green: #00ff88;
+  --accent-green-bright: #33ffaa;
+  --accent-green-dim: #00cc6a;
+  --accent-green-glow: rgba(0, 255, 136, 0.12);
+  --accent-green-subtle: rgba(0, 255, 136, 0.06);
+
+  /* Data blue (tertiary) */
+  --accent-blue: #4da6ff;
+  --accent-blue-bright: #7abfff;
+  --accent-blue-dim: #3d8acc;
+  --accent-blue-glow: rgba(77, 166, 255, 0.12);
+
+  /* Text hierarchy */
+  --text-bright: #ffffff;
+  --text-primary: #e0e0e8;
+  --text-secondary: #9898a8;
+  --text-muted: #606070;
+  --text-faint: #404050;
+
+  /* Status colors */
+  --status-nominal: #00ff88;
+  --status-warning: #ffcc00;
+  --status-alert: #ff4455;
+  --status-offline: #666680;
+
+  /* Borders and lines */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --border-accent: var(--accent-amber);
+
+  /* Grid overlay */
+  --grid-line: rgba(255, 255, 255, 0.025);
+  --grid-line-accent: rgba(94, 184, 255, 0.05);
+
+  /* -------------------------------------------------------------------------
+     TYPOGRAPHY
+     ------------------------------------------------------------------------- */
+
+  /* Font families */
+  --font-display: 'Space Mono', 'SF Mono', 'Monaco', monospace;
+  --font-body: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+
+  /* Font sizes — fluid scale */
+  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
+  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+  --text-base: clamp(0.95rem, 0.9rem + 0.25vw, 1rem);
+  --text-lg: clamp(1.05rem, 1rem + 0.25vw, 1.125rem);
+  --text-xl: clamp(1.15rem, 1.1rem + 0.35vw, 1.25rem);
+  --text-2xl: clamp(1.35rem, 1.2rem + 0.5vw, 1.5rem);
+  --text-3xl: clamp(1.75rem, 1.5rem + 0.75vw, 2rem);
+  --text-4xl: clamp(2.25rem, 1.8rem + 1.25vw, 2.75rem);
+  --text-5xl: clamp(2.75rem, 2rem + 2vw, 3.5rem);
+  --text-6xl: clamp(3.25rem, 2.5rem + 2.5vw, 4.5rem);
+
+  /* Font weights */
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line heights */
+  --leading-none: 1;
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+  --leading-loose: 1.8;
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* -------------------------------------------------------------------------
+     SPACING
+     ------------------------------------------------------------------------- */
+
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+
+  /* -------------------------------------------------------------------------
+     LAYOUT
+     ------------------------------------------------------------------------- */
+
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1200px;
+  --container-2xl: 1400px;
+
+  --content-width: 720px;
+  --sidebar-width: 300px;
+
+  /* -------------------------------------------------------------------------
+     EFFECTS
+     ------------------------------------------------------------------------- */
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
+  --shadow-glow-amber: 0 0 20px var(--accent-amber-glow), 0 0 40px var(--accent-amber-subtle);
+  --shadow-glow-green: 0 0 20px var(--accent-green-glow), 0 0 40px var(--accent-green-subtle);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-slower: 600ms ease;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* -------------------------------------------------------------------------
+     Z-INDEX SCALE
+     ------------------------------------------------------------------------- */
+
+  --z-base: 0;
+  --z-elevated: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-tooltip: 600;
+}
+
+/* Dark mode is default — light mode override if needed */
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Could add light mode overrides here, but mission control stays dark */
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+    --transition-slower: 0ms;
+  }
+}
