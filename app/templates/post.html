@@ -45,15 +45,21 @@
         <!-- Sidebar -->
         <aside class="post-sidebar">
             <!-- Author Card -->
-            <div class="post-author">
-                <div class="post-author__image">
-                    <img src="{{ url_for('static', filename='assets/home/me.png') }}" alt="Christina Kneis" />
+            <div class="consulting-profile">
+                <div class="consulting-profile__image">
+                    <img src="{{ url_for('static', filename='assets/home/me.png') }}" alt="Christina Kneis Wolfenden" />
                 </div>
-                <h3 class="post-author__name">Christina Kneis</h3>
-                <p class="post-author__bio">
-                    Systems engineer and product developer with a decade of experience
-                    launching complex missions into space.
+                <h3 class="consulting-profile__name">Christina Kneis Wolfenden</h3>
+                <p class="consulting-profile__bio">
+                    Product and systems engineering leader. A decade of delivery at NASA/JPL.
+                    <br/><br/>
+                    M.S. Product Development Systems Engineering, USC
+                    <br/>B.S. Mechanical Engineering, USC
+                    <br/>Published researcher
                 </p>
+                <a href="{{ url_for('main.about') }}" class="btn btn--ghost btn--full">
+                    Learn More About Me
+                </a>
             </div>
 
             <!-- Quick Links -->
