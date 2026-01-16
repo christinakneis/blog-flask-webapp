@@ -129,11 +129,15 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if post.published %}
-                                    <span class="badge bg-success">Published</span>
-                                {% else %}
-                                    <span class="badge bg-secondary">Draft</span>
-                                {% endif %}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input publish-toggle" type="checkbox"
+                                           id="publish{{ post.id }}"
+                                           data-post-id="{{ post.id }}"
+                                           {% if post.published %}checked{% endif %}>
+                                    <label class="form-check-label small" for="publish{{ post.id }}">
+                                        <span class="status-label">{{ 'Published' if post.published else 'Draft' }}</span>
+                                    </label>
+                                </div>
                             </td>
                             <td>
                                 {% if post.featured %}
@@ -213,6 +217,35 @@ function confirmDelete(postId, postTitle) {
     const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
     deleteModal.show();
 }
+
+// Publish toggle handlers
+document.querySelectorAll('.publish-toggle').forEach(toggle => {
+    toggle.addEventListener('change', function() {
+        const postId = this.dataset.postId;
+        const label = this.nextElementSibling.querySelector('.status-label');
+
+        fetch(`/admin/posts/${postId}/toggle-publish`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                label.textContent = this.checked ? 'Published' : 'Draft';
+            } else {
+                // Revert on error
+                this.checked = !this.checked;
+                alert('Failed to update post status');
+            }
+        })
+        .catch(error => {
+            this.checked = !this.checked;
+            alert('Failed to update post status');
+        });
+    });
+});
 </script>
 {% endblock %}
 

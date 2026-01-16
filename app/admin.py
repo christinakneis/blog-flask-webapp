@@ -106,22 +106,30 @@ def posts():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
+        # Determine publish status from button clicked
+        action = request.form.get('action', 'draft')
+        is_published = (action == 'publish')
+
         post = Post(
             title=form.title.data,
             content=form.content.data,
             content_type=form.content_type.data,
             preview=form.preview.data,
             image=form.image.data,
-            published=form.published.data,
+            published=is_published,
             featured=form.featured.data,
             show_dates=form.show_dates.data,
             display_order=form.display_order.data or 0
         )
         db.session.add(post)
         db.session.commit()
-        flash('Post created successfully!', 'success')
+
+        if is_published:
+            flash('Post published!', 'success')
+        else:
+            flash('Draft saved!', 'success')
         return redirect(url_for('admin.posts'))
-    
+
     return render_template('admin/post_form.html', form=form, title='New Post')
 
 @admin_bp.route('/posts/<int:id>/edit', methods=['GET', 'POST'])
@@ -129,23 +137,31 @@ def new_post():
 def edit_post(id):
     post = Post.query.get_or_404(id)
     form = PostForm(obj=post)
-    
+
     if form.validate_on_submit():
+        # Determine publish status from button clicked
+        action = request.form.get('action', 'draft')
+        is_published = (action == 'publish')
+
         post.title = form.title.data
         post.content = form.content.data
         post.content_type = form.content_type.data
         post.preview = form.preview.data
         post.image = form.image.data
-        post.published = form.published.data
+        post.published = is_published
         post.featured = form.featured.data
         post.show_dates = form.show_dates.data
         post.display_order = form.display_order.data or 0
         post.update_content(form.content.data)
-        
+
         db.session.commit()
-        flash('Post updated successfully!', 'success')
+
+        if is_published:
+            flash('Post published!', 'success')
+        else:
+            flash('Draft saved!', 'success')
         return redirect(url_for('admin.posts'))
-    
+
     return render_template('admin/post_form.html', form=form, post=post, title='Edit Post')
 
 @admin_bp.route('/posts/<int:id>/delete', methods=['POST'])
@@ -163,8 +179,18 @@ def toggle_publish(id):
     post = Post.query.get_or_404(id)
     post.published = not post.published
     db.session.commit()
-    
+
     status = 'published' if post.published else 'unpublished'
+
+    # Return JSON for AJAX requests
+    if request.headers.get('Content-Type') == 'application/json' or request.is_json:
+        return jsonify({
+            'success': True,
+            'published': post.published,
+            'status': status
+        })
+
+    # Regular form submission - redirect
     flash(f'Post {status} successfully!', 'success')
     return redirect(url_for('admin.posts'))
 

@@ -71,11 +71,15 @@
                                 <small class="text-muted">{{ post.slug }}</small>
                             </td>
                             <td>
-                                {% if post.published %}
-                                    <span class="badge bg-success">Published</span>
-                                {% else %}
-                                    <span class="badge bg-secondary">Draft</span>
-                                {% endif %}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input publish-toggle" type="checkbox"
+                                           id="publish{{ post.id }}"
+                                           data-post-id="{{ post.id }}"
+                                           {% if post.published %}checked{% endif %}>
+                                    <label class="form-check-label small" for="publish{{ post.id }}">
+                                        <span class="status-label">{{ 'Published' if post.published else 'Draft' }}</span>
+                                    </label>
+                                </div>
                             </td>
                             <td>
                                 {% if post.featured %}
@@ -96,27 +100,15 @@
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{{ url_for('admin.edit_post', id=post.id) }}" 
+                                    <a href="{{ url_for('admin.edit_post', id=post.id) }}"
                                        class="btn btn-outline-primary" title="Edit">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-                                    
                                     <a href="{{ url_for('admin.preview_post', id=post.id) }}"
-                                       target="_blank" class="btn btn-outline-info" title="View">
+                                       target="_blank" class="btn btn-outline-info" title="Preview">
                                         <i class="bi bi-eye"></i>
                                     </a>
-                                    
-                                    <form method="POST" action="{{ url_for('admin.toggle_publish', id=post.id) }}" 
-                                          class="d-inline" id="publishForm{{ post.id }}">
-                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-outline-{{ 'warning' if post.published else 'success' }}" 
-                                                title="{{ 'Unpublish' if post.published else 'Publish' }}"
-                                                onclick="console.log('Publish button clicked for post {{ post.id }}');">
-                                            <i class="bi bi-{{ 'eye-slash' if post.published else 'eye' }}"></i>
-                                        </button>
-                                    </form>
-                                    
-                                    <button type="button" class="btn btn-outline-danger" 
+                                    <button type="button" class="btn btn-outline-danger"
                                             onclick="confirmDelete({{ post.id }}, '{{ post.title }}')" title="Delete">
                                         <i class="bi bi-trash"></i>
                                     </button>
@@ -234,6 +226,35 @@ document.getElementById('searchInput').addEventListener('keypress', function(e) 
     if (e.key === 'Enter') {
         document.getElementById('searchBtn').click();
     }
+});
+
+// Publish toggle handlers
+document.querySelectorAll('.publish-toggle').forEach(toggle => {
+    toggle.addEventListener('change', function() {
+        const postId = this.dataset.postId;
+        const label = this.nextElementSibling.querySelector('.status-label');
+
+        fetch(`/admin/posts/${postId}/toggle-publish`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                label.textContent = this.checked ? 'Published' : 'Draft';
+            } else {
+                // Revert on error
+                this.checked = !this.checked;
+                alert('Failed to update post status');
+            }
+        })
+        .catch(error => {
+            this.checked = !this.checked;
+            alert('Failed to update post status');
+        });
+    });
 });
 </script>
 {% endblock %}
