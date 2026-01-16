@@ -37,6 +37,12 @@
                         </svg>
                         Published Researcher
                     </a>
+                    <a href="#awards" class="credential-badge credential-badge--link">
+                        <svg class="credential-badge__icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15l-2 5h4l-2-5zM8 9a4 4 0 108 0V4H8v5zM4 4h4M16 4h4M4 4v3a2 2 0 002 2h1M20 4v3a2 2 0 01-2 2h-1"/>
+                        </svg>
+                        Award-Winning Leadership
+                    </a>
                     <a href="{{ url_for('main.contact') }}" class="credential-badge credential-badge--link">
                         <svg class="credential-badge__icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -118,6 +124,24 @@
                             </svg>
                             <span>Skills & Tools</span>
                             <span class="resume-nav__meta">Technical stack</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#awards" class="resume-nav__link">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15l-2 5h4l-2-5zM8 9a4 4 0 108 0V4H8v5zM4 4h4M16 4h4M4 4v3a2 2 0 002 2h1M20 4v3a2 2 0 01-2 2h-1"/>
+                            </svg>
+                            <span>Awards</span>
+                            <span class="resume-nav__meta">10 honors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#photos" class="resume-nav__link">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span>Photos</span>
+                            <span class="resume-nav__meta">Gallery</span>
                         </a>
                     </li>
                 </ul>
@@ -327,7 +351,7 @@
                 </div>
                 <div class="resume-card__body">
                     <div class="resume-edu">
-                        <div class="resume-edu__degree">M.S. Product Development Engineering</div>
+                        <div class="resume-edu__degree">M.S. Product Development Engineering (Systems, Management)</div>
                         <div class="resume-edu__school">University of Southern California, Viterbi School of Engineering</div>
                         <div class="resume-edu__year">May 2024</div>
                     </div>
@@ -389,10 +413,13 @@
                     <span class="badge">MATLAB</span>
                     <span class="badge">Perl</span>
                     <span class="badge">C</span>
-                    <span class="badge">HTML</span>
+                    <span class="badge">HTML/CSS</span>
                     <span class="badge">Flask</span>
                     <span class="badge">Docker</span>
                     <span class="badge">Git</span>
+                    <span class="badge">Claude Code</span>
+                    <span class="badge">Cursor</span>
+                    <span class="badge">AI-Assisted Development</span>
                 </div>
             </div>
 
@@ -433,14 +460,145 @@
                     <span class="badge">Process Optimization</span>
                 </div>
             </div>
+
+            <div class="resume-skill-group reveal">
+                <h4 class="resume-skill-group__title">Product Management</h4>
+                <div class="resume-skill-group__items">
+                    <span class="badge">Product Lifecycle</span>
+                    <span class="badge">Roadmap Planning</span>
+                    <span class="badge">Trade Studies</span>
+                    <span class="badge">Decision Analysis</span>
+                    <span class="badge">Backlog Prioritization</span>
+                    <span class="badge">User-Centered Design</span>
+                    <span class="badge">Technical Communication</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Awards & Recognition -->
+<section id="awards" class="resume-section">
+    <div class="container">
+        <div class="resume-section__header">
+            <div class="resume-section__icon">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15l-2 5h4l-2-5zM8 9a4 4 0 108 0V4H8v5zM4 4h4M16 4h4M4 4v3a2 2 0 002 2h1M20 4v3a2 2 0 01-2 2h-1"/>
+                </svg>
+            </div>
+            <h2 class="h2">Awards & Recognition</h2>
+        </div>
+
+        <p class="resume-awards-intro">Recipient of multiple NASA Jet Propulsion Laboratory Voyager, Honors, Group Achievement, and Directorate awards recognizing leadership, dedication, and outstanding engineering contributions across various missions.</p>
+
+        <div class="resume-awards-grid">
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Voyager Award</span>
+                    <span class="resume-award__date">September 2024</span>
+                </div>
+                <h4 class="resume-award__title">Europa Clipper Mission Support</h4>
+                <p class="resume-award__citation">"For exceptional dedication and effort in providing critical support for the Clipper Mission System re-architecture work in preparation for Launch."</p>
+                <span class="resume-award__org">NASA Jet Propulsion Laboratory</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Honors Award</span>
+                    <span class="resume-award__date">August 2023</span>
+                </div>
+                <h4 class="resume-award__title">Lunar Flashlight Mission Leadership</h4>
+                <p class="resume-award__citation">"For Outstanding Leadership and Support as Mission Manager of the Lunar Flashlight Mission."</p>
+                <span class="resume-award__org">NASA Jet Propulsion Laboratory</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Group Achievement Award</span>
+                    <span class="resume-award__date">March 2023</span>
+                </div>
+                <h4 class="resume-award__title">Near-Earth Asteroid Scout Team</h4>
+                <p class="resume-award__citation">"For outstanding accomplishments in the design, development, and delivery of the Near-Earth Asteroid Scout Spacecraft for flight on Artemis I."</p>
+                <span class="resume-award__org">NASA Honors</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Group Achievement Award</span>
+                    <span class="resume-award__date">April 2023</span>
+                </div>
+                <h4 class="resume-award__title">Mars 2020 Engineering Operations Development Team</h4>
+                <p class="resume-award__citation">"For exemplary development of the Mars 2020 engineering operations systems and processes, culminating in a successful test campaign and readiness for surface operations."</p>
+                <span class="resume-award__org">NASA Honors</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Group Achievement Award</span>
+                    <span class="resume-award__date">April 2023</span>
+                </div>
+                <h4 class="resume-award__title">Mars 2020 Entry, Descent and Landing Team</h4>
+                <p class="resume-award__citation">"For outstanding achievement in developing and delivering Mars 2020's robust and uniquely capable landing system, resulting in the safe landing of the Perseverance rover on Mars."</p>
+                <span class="resume-award__org">NASA Honors</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Group Achievement Award</span>
+                    <span class="resume-award__date">April 2023</span>
+                </div>
+                <h4 class="resume-award__title">Mars 2020 LCAE Mission Operations Team</h4>
+                <p class="resume-award__citation">"For the planning, development, and execution of launch, cruise, approach, and EDL (LCAE) in the face of significant challenges, resulting in the successful landing of Perseverance."</p>
+                <span class="resume-award__org">NASA Honors</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Group Achievement Award</span>
+                    <span class="resume-award__date">April 2023</span>
+                </div>
+                <h4 class="resume-award__title">Mars 2020 Mission Ops Systems Development</h4>
+                <p class="resume-award__citation">"For developing and implementing an uplink and execution process post-launch in response to critical issues to accomplish the shortest Cruise to date."</p>
+                <span class="resume-award__org">NASA Honors</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Group Achievement Award</span>
+                    <span class="resume-award__date">January 2020</span>
+                </div>
+                <h4 class="resume-award__title">MRO Relay Throughput Anomaly Investigation Team</h4>
+                <p class="resume-award__citation">"For outstanding innovative effort during the investigation of the MRO Relay Throughput Anomaly, resulting in a successful resolution."</p>
+                <span class="resume-award__org">NASA Honors</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Directorate Award</span>
+                    <span class="resume-award__date">April 2019</span>
+                </div>
+                <h4 class="resume-award__title">MaROS Team Award</h4>
+                <p class="resume-award__citation">"For working tirelessly in developing a test paradigm to significantly increase the testing, test automation and tracking efficiency."</p>
+                <span class="resume-award__org">NASA JPL Interplanetary Network Directorate</span>
+            </div>
+
+            <div class="resume-award reveal">
+                <div class="resume-award__header">
+                    <span class="resume-award__type">Voyager Award</span>
+                    <span class="resume-award__date">September 2018</span>
+                </div>
+                <h4 class="resume-award__title">MRO Flight Data Analysis</h4>
+                <p class="resume-award__citation">"For Outstanding Engineering Analysis of MRO Flight Data in Support of the MRO HiRISE Image Blur Working Group and the MRO Battery Working Group."</p>
+                <span class="resume-award__org">NASA JPL Mars Exploration Directorate</span>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- Photo Gallery Carousel -->
-<section class="resume-carousel">
+<section id="photos" class="resume-carousel">
     <div class="resume-carousel__header">
-        <h2 class="h3">Mission Highlights</h2>
+        <h2 class="h3">Photo Highlights</h2>
     </div>
     <div class="resume-carousel__track-wrapper">
         <div class="resume-carousel__gradient resume-carousel__gradient--left"></div>
@@ -545,26 +703,26 @@
 /* Resume Page Styles */
 
 /* Smooth scroll offset for anchor links */
-#experience, #education, #publications, #skills {
+#experience, #education, #publications, #skills, #awards, #photos {
     scroll-margin-top: 100px;
 }
 
 .resume-header {
-    padding: var(--space-10) 0 var(--space-8);
+    padding: var(--space-4) 0 var(--space-2);
     background: linear-gradient(180deg, rgba(var(--color-primary-rgb), 0.05) 0%, transparent 100%);
 }
 
 .resume-header__content {
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-2);
 }
 
 /* Overview Section Layout */
 .resume-overview {
     display: grid;
     grid-template-columns: 1fr 200px;
-    gap: var(--space-10);
-    margin-top: var(--space-10);
+    gap: var(--space-4);
+    margin-top: var(--space-4);
     align-items: center;
 }
 
@@ -576,7 +734,7 @@
 .resume-header__tagline {
     font-size: var(--text-base);
     color: var(--text-bright);
-    margin: 0 0 var(--space-6);
+    margin: var(--space-2) 0 var(--space-2);
     text-align: center;
     font-weight: 300;
     letter-spacing: 0.02em;
@@ -596,11 +754,11 @@
 /* Resume Navigation Panel */
 .resume-nav {
     border-left: 1px solid var(--color-border);
-    padding-left: var(--space-6);
+    padding-left: var(--space-5);
 }
 
 .resume-nav__header {
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
 }
 
 .resume-nav__label {
@@ -617,14 +775,14 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    gap: 2px;
 }
 
 .resume-nav__link {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-2) 0;
+    gap: var(--space-2);
+    padding: 0.2rem 0;
     text-decoration: none;
     color: var(--color-text-tertiary);
     transition: all 0.2s ease;
@@ -663,12 +821,13 @@
     }
 
     .resume-nav {
-        order: 1;
-        border-left: none;
-        border-top: 1px solid var(--color-border);
-        padding-left: 0;
-        padding-top: var(--space-6);
-        margin-top: var(--space-4);
+        display: none;
+    }
+
+    .floating-nav {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
     }
 }
 
@@ -676,9 +835,9 @@
 .resume-header__badges {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-6);
-    margin-bottom: var(--space-2);
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    margin-bottom: 0;
 }
 
 .resume-header__badges .credential-badge {
@@ -963,7 +1122,11 @@
 }
 
 .resume-section {
-    padding: var(--space-12) 0;
+    padding: var(--space-6) 0;
+}
+
+#experience {
+    padding-top: var(--space-10);
 }
 
 .resume-section--alt {
@@ -974,7 +1137,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-4);
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-5);
     flex-wrap: wrap;
 }
 
@@ -998,7 +1161,7 @@
 .resume-jobs {
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-5);
 }
 
 .resume-job {
@@ -1184,6 +1347,88 @@
     gap: var(--space-2);
 }
 
+/* Awards Section */
+.resume-awards-intro {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    line-height: 1.7;
+}
+
+.resume-awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-6);
+}
+
+.resume-award {
+    padding: var(--space-5);
+    background: var(--color-surface-elevated);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.resume-award:hover {
+    border-color: var(--accent-amber-dim);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.resume-award__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.resume-award__type {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: var(--accent-amber-subtle);
+    border: 1px solid var(--accent-amber-dim);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--accent-amber);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.resume-award__date {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+}
+
+.resume-award__title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-3);
+}
+
+.resume-award__citation {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 var(--space-3);
+    font-style: italic;
+}
+
+.resume-award__org {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+    .resume-awards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .resume-cta {
     padding: var(--space-16) 0;
     text-align: center;
@@ -1212,8 +1457,282 @@
         margin-left: 0;
         margin-top: var(--space-2);
     }
+
+    .resume-header__badges .credential-badge {
+        padding: var(--space-1) var(--space-3);
+        font-size: var(--text-xs);
+    }
+
+    .resume-section__icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .resume-section__icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .resume-job {
+        padding: var(--space-4);
+    }
+
+    .resume-cta {
+        padding: var(--space-10) 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .resume-nav__list {
+        grid-template-columns: repeat(2, auto);
+    }
+
+    .resume-header__badges {
+        justify-content: center;
+    }
+
+    .resume-skill-group {
+        padding: var(--space-4);
+    }
+
+    .resume-award {
+        padding: var(--space-4);
+    }
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    width: 44px;
+    height: 44px;
+    background: var(--accent-amber);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--accent-amber-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.back-to-top svg {
+    width: 20px;
+    height: 20px;
+    color: var(--bg-void);
+}
+
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: var(--space-4);
+        right: var(--space-4);
+        width: 40px;
+        height: 40px;
+    }
+
+    .back-to-top svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Floating Nav Button */
+.floating-nav {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.floating-nav.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.floating-nav.is-shifted {
+    bottom: calc(var(--space-6) + 54px);
+}
+
+.floating-nav__toggle {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-blue);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.floating-nav__toggle:hover {
+    background: var(--accent-blue-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.floating-nav__toggle svg {
+    width: 20px;
+    height: 20px;
+    color: var(--bg-void);
+    transition: transform 0.3s ease;
+}
+
+.floating-nav.is-open .floating-nav__toggle svg {
+    transform: rotate(45deg);
+}
+
+.floating-nav__menu {
+    position: absolute;
+    bottom: calc(100% + var(--space-3));
+    right: 0;
+    background: rgba(var(--color-surface-elevated-rgb, 30, 30, 35), 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    min-width: 180px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.2s ease;
+}
+
+.floating-nav.is-open .floating-nav__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.floating-nav__menu a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    border-radius: var(--radius-md);
+    transition: all 0.15s ease;
+}
+
+.floating-nav__menu a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-blue);
+}
+
+.floating-nav__menu a svg {
+    width: 16px;
+    height: 16px;
+    opacity: 0.6;
+}
+
+.floating-nav__menu a:hover svg {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .floating-nav {
+        bottom: var(--space-4);
+        right: var(--space-4);
+    }
+
+    .floating-nav.is-shifted {
+        bottom: calc(var(--space-4) + 50px);
+    }
+
+    .floating-nav__toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .floating-nav__toggle svg {
+        width: 18px;
+        height: 18px;
+    }
 }
 </style>
+
+<!-- Floating Nav -->
+<div class="floating-nav" id="floatingNav">
+    <div class="floating-nav__menu">
+        <a href="#experience">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            Experience
+        </a>
+        <a href="#education">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+            </svg>
+            Education
+        </a>
+        <a href="#publications">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            Publications
+        </a>
+        <a href="#skills">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            Skills
+        </a>
+        <a href="#awards">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15l-2 5h4l-2-5zM8 9a4 4 0 108 0V4H8v5zM4 4h4M16 4h4M4 4v3a2 2 0 002 2h1M20 4v3a2 2 0 01-2 2h-1"/>
+            </svg>
+            Awards
+        </a>
+        <a href="#photos">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Photos
+        </a>
+    </div>
+    <button class="floating-nav__toggle" aria-label="Quick navigation">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+    </button>
+</div>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+    </svg>
+</button>
 {% endblock %}
 
 {% block scripts %}
@@ -1329,6 +1848,89 @@
 
     // Auto-advance every 3 seconds
     setInterval(nextSlide, 3000);
+})();
+
+// Floating Buttons (Back to Top + Nav)
+(function() {
+    const backToTop = document.getElementById('backToTop');
+    const floatingNav = document.getElementById('floatingNav');
+    if (!floatingNav) return;
+
+    const toggle = floatingNav.querySelector('.floating-nav__toggle');
+    const menu = floatingNav.querySelector('.floating-nav__menu');
+    const links = menu.querySelectorAll('a');
+    const scrollThreshold = 400;
+    const narrowBreakpoint = 1024;
+
+    function isNarrowScreen() {
+        return window.innerWidth <= narrowBreakpoint;
+    }
+
+    function updateButtons() {
+        const scrolledPastThreshold = window.scrollY > scrollThreshold;
+        const narrow = isNarrowScreen();
+
+        // Back to top: show after scrolling threshold
+        if (backToTop) {
+            if (scrolledPastThreshold) {
+                backToTop.classList.add('is-visible');
+            } else {
+                backToTop.classList.remove('is-visible');
+            }
+        }
+
+        // Floating nav visibility
+        if (narrow) {
+            // Always visible on narrow screens
+            floatingNav.classList.add('is-visible');
+        } else if (scrolledPastThreshold) {
+            floatingNav.classList.add('is-visible');
+        } else {
+            floatingNav.classList.remove('is-visible');
+            floatingNav.classList.remove('is-open');
+        }
+
+        // Shift nav up when back-to-top is visible
+        if (scrolledPastThreshold && (narrow || floatingNav.classList.contains('is-visible'))) {
+            floatingNav.classList.add('is-shifted');
+        } else {
+            floatingNav.classList.remove('is-shifted');
+        }
+    }
+
+    window.addEventListener('scroll', updateButtons);
+    window.addEventListener('resize', updateButtons);
+    updateButtons(); // Initial check
+
+    // Back to top click
+    if (backToTop) {
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Toggle menu
+    toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        floatingNav.classList.toggle('is-open');
+    });
+
+    // Close when clicking a link
+    links.forEach(function(link) {
+        link.addEventListener('click', function() {
+            floatingNav.classList.remove('is-open');
+        });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!floatingNav.contains(e.target)) {
+            floatingNav.classList.remove('is-open');
+        }
+    });
 })();
 </script>
 {% endblock %}
