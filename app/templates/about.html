@@ -150,34 +150,40 @@
             </div>
 
             <!-- Recognition -->
-            <div class="about-section reveal">
+            <div id="recognition" class="about-section reveal">
                 <div class="about-section__title">
                     <div class="about-section__icon">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15l-2 5h4l-2-5zM8 9a4 4 0 108 0V4H8v5zM4 4h4M16 4h4M4 4v3a2 2 0 002 2h1M20 4v3a2 2 0 01-2 2h-1"/>
                         </svg>
                     </div>
                     <h2 class="h3">Recognition</h2>
                 </div>
                 <div class="about-stats">
                     <div class="about-stat">
-                        <div class="about-stat__value">3+</div>
-                        <div class="about-stat__label">Individual Awards</div>
+                        <div class="about-stat__value">10</div>
+                        <div class="about-stat__label">NASA/JPL Awards</div>
                     </div>
                     <div class="about-stat">
-                        <div class="about-stat__value">5+</div>
-                        <div class="about-stat__label">Group Awards</div>
+                        <div class="about-stat__value">6</div>
+                        <div class="about-stat__label">Missions Recognized</div>
                     </div>
                 </div>
                 <p class="about-section__text" style="margin-top: var(--space-6);">
-                    Voyager Award (Europa Clipper), Honors Award (Lunar Flashlight), and Directorate-level recognition across MRO and MaRos. Consistently recognized for leadership, outstanding engineering analysis, dedication, and innovative problem-solving.
+                    Recipient of multiple NASA Voyager, Honors, Group Achievement, and Directorate awards spanning Europa Clipper, Lunar Flashlight, Mars 2020, NEA Scout, and MRO. Consistently recognized for <strong>leadership</strong>, <strong>outstanding engineering analysis</strong>, <strong>dedication</strong>, and <strong>innovative problem-solving</strong> in mission-critical environments.
                 </p>
+                <a href="{{ url_for('main.resume') }}#awards" class="link-arrow" style="margin-top: var(--space-4); display: inline-flex;">
+                    <span>View Full Awards List</span>
+                    <svg class="link-arrow__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
             </div>
         </div>
 
         <!-- Sidebar -->
         <aside class="about-sidebar">
-            <!-- Resume & GitHub Widget -->
+            <!-- Resume, GitHub & Connect Widget -->
             <div class="widget reveal">
                 <div class="widget__body">
                     <div class="flex flex--col flex--gap-3">
@@ -193,6 +199,12 @@
                             </svg>
                             Check Out My GitHub
                         </a>
+                        <a href="{{ url_for('main.contact') }}" class="btn btn--secondary btn--full">
+                            <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                            Let's Connect
+                        </a>
                     </div>
                 </div>
             </div>
@@ -200,10 +212,10 @@
             <!-- Photo Gallery Widget -->
             <div class="widget reveal">
                 <div class="widget__header">
-                    <h3 class="widget__title">Mission Highlights</h3>
+                    <h3 class="widget__title">Photo Highlights</h3>
                 </div>
                 <div class="widget__body">
-                    <div class="about-gallery">
+                    <div class="about-gallery" id="aboutGallery">
                         <div class="about-gallery__item">
                             <img src="{{ url_for('static', filename='assets/home/mars2020.png') }}" alt="Mars 2020 Landing" />
                         </div>
@@ -226,29 +238,265 @@
                 </div>
             </div>
 
-            <!-- Connect Widget -->
-            <div class="widget reveal">
-                <div class="widget__header">
-                    <h3 class="widget__title">Let's Connect</h3>
-                </div>
-                <div class="widget__body">
-                    <div class="flex flex--col flex--gap-3">
-                        <a href="https://www.linkedin.com/in/christina-kneis" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--linkedin btn--full">
-                            <svg class="btn__icon" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                            LinkedIn
-                        </a>
-                        <a href="https://calendly.com/christina-m-kneis" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--full">
-                            <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            Schedule a Call
-                        </a>
-                    </div>
-                </div>
-            </div>
         </aside>
     </div>
 </section>
+
+<style>
+/* ============================================
+   PHOTO GALLERY - CINEMATIC MISSION VIEWER
+   ============================================ */
+
+/* Gallery Grid */
+.widget:has(.about-gallery) {
+    position: relative;
+    overflow: hidden;
+}
+
+.about-gallery__item {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.about-gallery__item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.1) 0%,
+        transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.about-gallery__item:hover::before {
+    opacity: 1;
+}
+
+.about-gallery__item img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about-gallery__item:hover img {
+    transform: scale(1.08);
+}
+
+/* Cinematic Lightbox Overlay */
+.gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.gallery-lightbox.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dark cinematic backdrop with vignette */
+.gallery-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.85) 100%),
+        rgba(8, 10, 15, 0.97);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Subtle scan lines for mission control feel */
+.gallery-lightbox__backdrop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.008) 2px,
+        rgba(255,255,255,0.008) 4px
+    );
+    pointer-events: none;
+}
+
+/* Image container */
+.gallery-lightbox__content {
+    position: relative;
+    max-width: 85vw;
+    max-height: 80vh;
+    transform: scale(0.92) translateY(20px);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-lightbox.is-active .gallery-lightbox__content {
+    transform: scale(1) translateY(0);
+}
+
+/* The image itself */
+.gallery-lightbox__image {
+    display: block;
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 25px 80px -12px rgba(0,0,0,0.6),
+        0 0 120px -20px rgba(100, 140, 200, 0.15);
+}
+
+/* Caption bar */
+.gallery-lightbox__caption {
+    position: absolute;
+    bottom: -48px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.4s ease 0.15s;
+}
+
+.gallery-lightbox.is-active .gallery-lightbox__caption {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.gallery-lightbox__caption::before {
+    content: '◆';
+    margin-right: 0.75em;
+    color: rgba(180, 140, 100, 0.6);
+    font-size: 0.5em;
+    vertical-align: middle;
+}
+
+.gallery-lightbox__caption::after {
+    content: '◆';
+    margin-left: 0.75em;
+    color: rgba(180, 140, 100, 0.6);
+    font-size: 0.5em;
+    vertical-align: middle;
+}
+
+/* Close hint */
+.gallery-lightbox__hint {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    opacity: 0;
+    transition: opacity 0.4s ease 0.6s;
+}
+
+.gallery-lightbox.is-active .gallery-lightbox__hint {
+    opacity: 1;
+}
+
+/* Corner accents for that technical/mission control feel */
+.gallery-lightbox__content::before,
+.gallery-lightbox__content::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(255,255,255,0.15);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.2s;
+}
+
+.gallery-lightbox.is-active .gallery-lightbox__content::before,
+.gallery-lightbox.is-active .gallery-lightbox__content::after {
+    opacity: 1;
+}
+
+.gallery-lightbox__content::before {
+    top: -12px;
+    left: -12px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.gallery-lightbox__content::after {
+    bottom: -12px;
+    right: -12px;
+    border-left: none;
+    border-top: none;
+}
+</style>
+
+<script>
+// Cinematic Photo Gallery Lightbox
+(function() {
+    const gallery = document.getElementById('aboutGallery');
+    if (!gallery) return;
+
+    // Create lightbox structure
+    const lightbox = document.createElement('div');
+    lightbox.className = 'gallery-lightbox';
+    lightbox.innerHTML = `
+        <div class="gallery-lightbox__backdrop"></div>
+        <div class="gallery-lightbox__content">
+            <img class="gallery-lightbox__image" src="" alt="" />
+            <div class="gallery-lightbox__caption"></div>
+        </div>
+        <div class="gallery-lightbox__hint">click anywhere to close</div>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector('.gallery-lightbox__image');
+    const lightboxCaption = lightbox.querySelector('.gallery-lightbox__caption');
+    const items = gallery.querySelectorAll('.about-gallery__item');
+
+    // Open lightbox
+    items.forEach(item => {
+        item.addEventListener('click', function() {
+            const img = this.querySelector('img');
+            if (!img) return;
+
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightboxCaption.textContent = img.alt;
+            lightbox.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close lightbox
+    function closeLightbox() {
+        lightbox.classList.remove('is-active');
+        document.body.style.overflow = '';
+    }
+
+    lightbox.addEventListener('click', closeLightbox);
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('is-active')) {
+            closeLightbox();
+        }
+    });
+})();
+</script>
 {% endblock %}
