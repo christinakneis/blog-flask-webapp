@@ -1,13 +1,42 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, abort, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, abort, jsonify, current_app
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from app.models import Post, User, SiteConfig
 from app.forms import PostForm, LoginForm, UserForm
 from app import db, csrf
 from datetime import datetime
 import os
+import uuid
+
+# Try to import PIL for image optimization (optional)
+try:
+    from PIL import Image
+    HAS_PIL = True
+except ImportError:
+    HAS_PIL = False
 
 admin_bp = Blueprint('admin', __name__)
+
+# Image upload configuration
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'}
+MAX_IMAGE_SIZE = 10 * 1024 * 1024  # 10MB
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def get_upload_folder():
+    """Get the upload folder path, creating it if needed"""
+    upload_folder = os.path.join(current_app.root_path, 'static', 'assets', 'uploads')
+    if not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
+    return upload_folder
+
+def generate_unique_filename(filename):
+    """Generate a unique filename while preserving the extension"""
+    ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else 'png'
+    unique_name = f"{uuid.uuid4().hex[:12]}_{secure_filename(filename)}"
+    return unique_name
 
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -225,6 +254,146 @@ def reorder_posts():
     # GET request - show reorder interface
     posts = Post.query.filter_by(published=True).order_by(Post.display_order, Post.created_at.desc()).all()
     return render_template('admin/reorder_posts.html', posts=posts)
+
+@admin_bp.route('/upload-image', methods=['POST'])
+@login_required
+def upload_image():
+    """Handle image uploads for blog posts"""
+    if 'image' not in request.files:
+        return jsonify({'success': False, 'error': 'No image file provided'}), 400
+
+    file = request.files['image']
+
+    if file.filename == '':
+        return jsonify({'success': False, 'error': 'No file selected'}), 400
+
+    if not allowed_file(file.filename):
+        return jsonify({'success': False, 'error': f'File type not allowed. Allowed: {", ".join(ALLOWED_EXTENSIONS)}'}), 400
+
+    # Check file size
+    file.seek(0, 2)  # Seek to end
+    size = file.tell()
+    file.seek(0)  # Reset to beginning
+
+    if size > MAX_IMAGE_SIZE:
+        return jsonify({'success': False, 'error': 'File too large. Maximum size is 10MB'}), 400
+
+    try:
+        upload_folder = get_upload_folder()
+        filename = generate_unique_filename(file.filename)
+        filepath = os.path.join(upload_folder, filename)
+
+        # Save the file
+        file.save(filepath)
+
+        # Optimize image if PIL is available and it's not SVG
+        if HAS_PIL and not filename.lower().endswith('.svg'):
+            try:
+                with Image.open(filepath) as img:
+                    # Convert to RGB if necessary (for PNG with transparency, keep RGBA)
+                    if img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info):
+                        pass  # Keep transparency
+                    elif img.mode != 'RGB':
+                        img = img.convert('RGB')
+
+                    # Resize if too large (max 1920px width)
+                    max_width = 1920
+                    if img.width > max_width:
+                        ratio = max_width / img.width
+                        new_height = int(img.height * ratio)
+                        img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
+
+                    # Save optimized
+                    if filename.lower().endswith(('.jpg', '.jpeg')):
+                        img.save(filepath, 'JPEG', quality=85, optimize=True)
+                    elif filename.lower().endswith('.png'):
+                        img.save(filepath, 'PNG', optimize=True)
+                    elif filename.lower().endswith('.webp'):
+                        img.save(filepath, 'WEBP', quality=85)
+            except Exception as e:
+                print(f"Image optimization failed: {e}")
+                # Continue with original file if optimization fails
+
+        # Return the URL path
+        url = f'/static/assets/uploads/{filename}'
+
+        return jsonify({
+            'success': True,
+            'url': url,
+            'filename': filename,
+            'message': 'Image uploaded successfully'
+        })
+
+    except Exception as e:
+        print(f"Upload error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@admin_bp.route('/images')
+@login_required
+def image_gallery():
+    """Get list of all uploaded images for the gallery"""
+    images = []
+
+    # Scan upload folder
+    upload_folder = get_upload_folder()
+    if os.path.exists(upload_folder):
+        for filename in os.listdir(upload_folder):
+            if allowed_file(filename):
+                filepath = os.path.join(upload_folder, filename)
+                stat = os.stat(filepath)
+                images.append({
+                    'filename': filename,
+                    'url': f'/static/assets/uploads/{filename}',
+                    'size': stat.st_size,
+                    'modified': stat.st_mtime
+                })
+
+    # Also scan other asset folders
+    asset_folders = ['home', 'sysengwebsite', 'lfl', 'devops']
+    for folder in asset_folders:
+        folder_path = os.path.join(current_app.root_path, 'static', 'assets', folder)
+        if os.path.exists(folder_path):
+            for filename in os.listdir(folder_path):
+                if allowed_file(filename):
+                    filepath = os.path.join(folder_path, filename)
+                    stat = os.stat(filepath)
+                    images.append({
+                        'filename': filename,
+                        'url': f'/static/assets/{folder}/{filename}',
+                        'folder': folder,
+                        'size': stat.st_size,
+                        'modified': stat.st_mtime
+                    })
+
+    # Sort by modification time (newest first)
+    images.sort(key=lambda x: x['modified'], reverse=True)
+
+    return jsonify({'success': True, 'images': images})
+
+
+@admin_bp.route('/delete-image', methods=['POST'])
+@login_required
+def delete_image():
+    """Delete an uploaded image"""
+    data = request.get_json()
+    if not data or 'filename' not in data:
+        return jsonify({'success': False, 'error': 'No filename provided'}), 400
+
+    filename = secure_filename(data['filename'])
+    upload_folder = get_upload_folder()
+    filepath = os.path.join(upload_folder, filename)
+
+    # Only allow deleting from uploads folder for safety
+    if os.path.exists(filepath) and os.path.dirname(filepath) == upload_folder:
+        try:
+            os.remove(filepath)
+            return jsonify({'success': True, 'message': 'Image deleted'})
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)}), 500
+
+    return jsonify({'success': False, 'error': 'Image not found or cannot be deleted'}), 404
+
 
 @admin_bp.route('/settings', methods=['GET', 'POST'])
 @login_required
