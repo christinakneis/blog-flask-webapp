@@ -80,7 +80,8 @@ class Post(db.Model):
             }
             
             # Convert markdown to HTML
-            html = markdown(self.content, extensions=['fenced_code', 'tables', 'codehilite'])
+            # md_in_html allows markdown inside HTML blocks (like divs)
+            html = markdown(self.content, extensions=['fenced_code', 'tables', 'codehilite', 'md_in_html'])
             
             # Clean the HTML
             clean_html = bleach.clean(

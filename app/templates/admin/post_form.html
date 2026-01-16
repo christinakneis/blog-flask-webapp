@@ -763,8 +763,9 @@ document.addEventListener('DOMContentLoaded', function() {
             progress.classList.remove('show');
             if (data.success) {
                 coverPreview.src = data.url;
-                coverImagePath.value = data.url;
-                manualImagePath.value = data.url;
+                // Use storage_path for the form field (relative to static folder)
+                coverImagePath.value = data.storage_path;
+                manualImagePath.value = data.storage_path;
                 uploadPlaceholder.style.display = 'none';
                 imagePreviewContainer.style.display = 'block';
                 coverImageUpload.classList.add('has-image');
@@ -809,7 +810,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         container.innerHTML = images.map(img => `
-            <div class="gallery-item" data-url="${img.url}" data-filename="${img.filename}">
+            <div class="gallery-item" data-url="${img.url}" data-storage-path="${img.storage_path}" data-filename="${img.filename}">
                 <img src="${img.url}" alt="${img.filename}" loading="lazy">
                 <span class="item-name">${img.filename}</span>
             </div>
@@ -851,9 +852,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const selected = document.querySelector('#coverImageGallery .gallery-item.selected');
         if (selected) {
             const url = selected.dataset.url;
+            const storagePath = selected.dataset.storagePath;
             coverPreview.src = url;
-            coverImagePath.value = url;
-            manualImagePath.value = url;
+            // Use storage_path for the form field (relative to static folder)
+            coverImagePath.value = storagePath;
+            manualImagePath.value = storagePath;
             uploadPlaceholder.style.display = 'none';
             imagePreviewContainer.style.display = 'block';
             coverImageUpload.classList.add('has-image');
@@ -972,13 +975,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Generate markdown
+        // Generate markdown - always use standard markdown image syntax
+        // Size is controlled via CSS classes on a wrapper div
         let markdown;
         if (size === 'full') {
             markdown = `![${altText}](${imageUrl})`;
         } else {
-            const widths = { small: '300px', medium: '500px', large: '800px' };
-            markdown = `<img src="${imageUrl}" alt="${altText}" style="max-width: ${widths[size]}; display: block; margin: 1rem auto; border-radius: 8px;">`;
+            // Use a div wrapper with class for sizing
+            // markdown="1" tells the md_in_html extension to process markdown inside
+            markdown = `<div class="img-${size}" markdown="1">\n\n![${altText}](${imageUrl})\n\n</div>`;
         }
 
         // Insert into editor
