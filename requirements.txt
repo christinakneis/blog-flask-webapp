@@ -10,3 +10,5 @@ python-slugify==8.0.1
 python-dotenv==1.0.0
 bleach==6.1.0
 email-validator==2.1.0
+# Pillow is optional - enables image optimization on upload
+# Install separately: pip install Pillow

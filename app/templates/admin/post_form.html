@@ -43,6 +43,113 @@
     .EasyMDEContainer .editor-statusbar {
         border-radius: 0 0 8px 8px;
     }
+
+    /* Cover Image Upload */
+    .cover-image-upload {
+        border: 2px dashed #dee2e6;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: #fafbfc;
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .cover-image-upload:hover {
+        border-color: #0d6efd;
+        background: #f0f7ff;
+    }
+    .cover-image-upload.dragover {
+        border-color: #0d6efd;
+        background: #e7f1ff;
+        transform: scale(1.02);
+    }
+    .cover-image-upload.has-image {
+        padding: 10px;
+        border-style: solid;
+        border-color: #28a745;
+    }
+    .cover-image-upload .upload-icon {
+        font-size: 2.5rem;
+        color: #6c757d;
+        margin-bottom: 10px;
+    }
+    .cover-image-upload .upload-text {
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+    .cover-image-upload .upload-hint {
+        font-size: 0.8rem;
+        color: #adb5bd;
+    }
+    .cover-image-preview {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    .cover-image-actions {
+        margin-top: 10px;
+    }
+
+    /* Image Gallery */
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+    }
+    .gallery-item {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        aspect-ratio: 1;
+        background: #f8f9fa;
+    }
+    .gallery-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .gallery-item.selected {
+        ring: 3px solid #0d6efd;
+        box-shadow: 0 0 0 3px #0d6efd;
+    }
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .gallery-item .item-name {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        font-size: 0.65rem;
+        padding: 4px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    /* Upload progress */
+    .upload-progress {
+        display: none;
+        margin-top: 10px;
+    }
+    .upload-progress.show {
+        display: block;
+    }
+
     /* HTML editor styling */
     #htmlEditor {
         display: none;
@@ -53,12 +160,19 @@
         line-height: 1.5;
         min-height: 400px;
     }
-    .editor-mode-toggle {
-        margin-bottom: 1rem;
+
+    /* Tabs */
+    .upload-tabs .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
-    .content-type-badge {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.5rem;
+
+    /* Toast notifications */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
     }
 </style>
 
@@ -71,17 +185,20 @@
     </div>
 </div>
 
+<!-- Toast Container -->
+<div class="toast-container"></div>
+
 <div class="card">
     <div class="card-body">
-        <form method="POST" id="postForm">
+        <form method="POST" id="postForm" enctype="multipart/form-data">
             {{ csrf_token() }}
             {{ form.hidden_tag() }}
 
             <div class="row">
                 <div class="col-lg-8">
                     <!-- Title -->
-                    <div class="mb-3">
-                        {{ form.title.label(class="form-label") }}
+                    <div class="mb-4">
+                        {{ form.title.label(class="form-label fw-bold") }}
                         {{ form.title(class="form-control form-control-lg", placeholder="Enter post title") }}
                         {% if form.title.errors %}
                             <div class="text-danger">
@@ -93,21 +210,16 @@
                     </div>
 
                     <!-- Content Type Toggle -->
-                    <div class="mb-3 editor-mode-toggle">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                {{ form.content_type.label(class="form-label mb-0 me-3") }}
-                                {{ form.content_type(class="form-select form-select-sm", style="width: auto; display: inline-block;") }}
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-sm btn-outline-primary" id="imageHelperBtn">
-                                    <i class="bi bi-image me-1"></i>Insert Image
-                                </button>
-                            </div>
+                    <div class="mb-3 d-flex align-items-center justify-content-between">
+                        <div>
+                            {{ form.content_type.label(class="form-label mb-0 me-2") }}
+                            {{ form.content_type(class="form-select form-select-sm", style="width: auto; display: inline-block;") }}
                         </div>
-                        <small class="text-muted mt-1 d-block" id="editorHint">
-                            <i class="bi bi-lightbulb me-1"></i>Use the toolbar above the editor for quick formatting, or type markdown directly.
-                        </small>
+                        <div>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="insertImageBtn">
+                                <i class="bi bi-image me-1"></i>Insert Image
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Markdown Editor -->
@@ -132,6 +244,59 @@
                 </div>
 
                 <div class="col-lg-4">
+                    <!-- Cover Image Upload -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="bi bi-image me-2"></i>Cover Image</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="cover-image-upload" id="coverImageUpload">
+                                <div class="upload-placeholder" id="uploadPlaceholder">
+                                    <i class="bi bi-cloud-arrow-up upload-icon"></i>
+                                    <p class="upload-text mb-1">Drag & drop an image here</p>
+                                    <p class="upload-hint">or click to browse</p>
+                                    <small class="text-muted">PNG, JPG, WebP up to 10MB</small>
+                                </div>
+                                <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
+                                    <img src="" alt="Cover preview" class="cover-image-preview" id="coverPreview">
+                                    <div class="cover-image-actions">
+                                        <button type="button" class="btn btn-sm btn-outline-danger" id="removeCoverImage">
+                                            <i class="bi bi-trash me-1"></i>Remove
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="changeCoverImage">
+                                            <i class="bi bi-pencil me-1"></i>Change
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="upload-progress" id="coverUploadProgress">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                                </div>
+                                <small class="text-muted">Uploading...</small>
+                            </div>
+                            <input type="file" id="coverImageInput" accept="image/*" style="display: none;">
+                            <input type="hidden" id="coverImagePath" name="cover_image_path" value="{{ form.image.data or '' }}">
+
+                            <div class="mt-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary w-100" id="browseCoverImages">
+                                    <i class="bi bi-folder me-1"></i>Browse Existing Images
+                                </button>
+                            </div>
+
+                            <!-- Manual path input (collapsible) -->
+                            <div class="mt-2">
+                                <a class="text-muted small" data-bs-toggle="collapse" href="#manualPathInput">
+                                    <i class="bi bi-pencil-square me-1"></i>Or enter path manually
+                                </a>
+                                <div class="collapse mt-2" id="manualPathInput">
+                                    {{ form.image(class="form-control form-control-sm", placeholder="e.g., assets/home/image.png", id="manualImagePath") }}
+                                    <small class="text-muted">Path relative to static folder</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Post Settings -->
                     <div class="card mb-3">
                         <div class="card-header">
@@ -151,23 +316,9 @@
                                 {% endif %}
                             </div>
 
-                            <!-- Image Path -->
-                            <div class="mb-3">
-                                {{ form.image.label(class="form-label") }}
-                                {{ form.image(class="form-control", placeholder="e.g., assets/home/image.png") }}
-                                {% if form.image.errors %}
-                                    <div class="text-danger">
-                                        {% for error in form.image.errors %}
-                                            <small>{{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                                <small class="text-muted">Path relative to static folder</small>
-                            </div>
-
                             <!-- Published Status -->
                             <div class="mb-3">
-                                <div class="form-check">
+                                <div class="form-check form-switch">
                                     {{ form.published(class="form-check-input") }}
                                     {{ form.published.label(class="form-check-label") }}
                                 </div>
@@ -175,7 +326,7 @@
 
                             <!-- Featured Status -->
                             <div class="mb-3">
-                                <div class="form-check">
+                                <div class="form-check form-switch">
                                     {{ form.featured(class="form-check-input") }}
                                     {{ form.featured.label(class="form-check-label") }}
                                 </div>
@@ -183,25 +334,18 @@
 
                             <!-- Show Dates -->
                             <div class="mb-3">
-                                <div class="form-check">
+                                <div class="form-check form-switch">
                                     {{ form.show_dates(class="form-check-input") }}
                                     {{ form.show_dates.label(class="form-check-label") }}
                                 </div>
-                                <small class="text-muted">Control whether publication and update dates are displayed on the post</small>
+                                <small class="text-muted">Show publication/update dates on the post</small>
                             </div>
 
                             <!-- Display Order -->
                             <div class="mb-3">
                                 {{ form.display_order.label(class="form-label") }}
                                 {{ form.display_order(class="form-control", placeholder="0", type="number", min="0") }}
-                                <small class="text-muted">Lower numbers appear first. Use 0, 1, 2, etc.</small>
-                                {% if form.display_order.errors %}
-                                    <div class="text-danger">
-                                        {% for error in form.display_order.errors %}
-                                            <small>{{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
+                                <small class="text-muted">Lower numbers appear first</small>
                             </div>
                         </div>
                     </div>
@@ -209,25 +353,21 @@
                     <!-- Keyboard Shortcuts -->
                     <div class="card mb-3">
                         <div class="card-header">
-                            <h6 class="mb-0"><i class="bi bi-keyboard me-2"></i>Keyboard Shortcuts</h6>
+                            <h6 class="mb-0"><i class="bi bi-keyboard me-2"></i>Shortcuts</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-2">
                             <small class="text-muted">
-                                <code>Ctrl/Cmd + B</code> Bold<br>
-                                <code>Ctrl/Cmd + I</code> Italic<br>
-                                <code>Ctrl/Cmd + K</code> Link<br>
-                                <code>Ctrl/Cmd + H</code> Heading<br>
-                                <code>Ctrl/Cmd + '</code> Code<br>
-                                <code>Ctrl/Cmd + L</code> Unordered list<br>
-                                <code>Ctrl/Cmd + Alt + L</code> Ordered list<br>
-                                <code>F9</code> Side-by-side preview<br>
+                                <code>Ctrl+B</code> Bold |
+                                <code>Ctrl+I</code> Italic |
+                                <code>Ctrl+K</code> Link<br>
+                                <code>F9</code> Side-by-side |
                                 <code>F11</code> Fullscreen
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Submit Buttons -->
             <div class="row mt-4">
                 <div class="col-12">
@@ -235,14 +375,17 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             {% if post %}
-                                <a href="{{ url_for('main.post', slug=post.slug) }}" target="_blank" class="btn btn-outline-info">
-                                    <i class="bi bi-eye me-2"></i>View Post
+                                <a href="{{ url_for('admin.preview_post', id=post.id) }}" target="_blank" class="btn btn-outline-info">
+                                    <i class="bi bi-eye me-2"></i>Preview
                                 </a>
                             {% endif %}
                         </div>
                         <div>
                             <a href="{{ url_for('admin.posts') }}" class="btn btn-outline-secondary me-2">Cancel</a>
-                            {{ form.submit(class="btn btn-primary") }}
+                            <button type="submit" class="btn btn-success" name="save_draft" value="1">
+                                <i class="bi bi-save me-1"></i>Save Draft
+                            </button>
+                            {{ form.submit(class="btn btn-primary ms-2") }}
                         </div>
                     </div>
                 </div>
@@ -251,93 +394,129 @@
     </div>
 </div>
 
-<!-- Image Helper Modal -->
-<div class="modal fade" id="imageHelperModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+<!-- Image Insert Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="bi bi-image me-2"></i>Insert Image</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <ul class="nav nav-tabs mb-3" role="tablist">
+                <ul class="nav nav-tabs upload-tabs mb-3" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="simple-tab" data-bs-toggle="tab" data-bs-target="#simple" type="button" role="tab">Simple</button>
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#uploadTab" type="button">
+                            <i class="bi bi-cloud-arrow-up me-1"></i>Upload New
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="advanced-tab" data-bs-toggle="tab" data-bs-target="#advanced" type="button" role="tab">Advanced</button>
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#galleryTab" type="button">
+                            <i class="bi bi-images me-1"></i>Gallery
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#urlTab" type="button">
+                            <i class="bi bi-link-45deg me-1"></i>From URL
+                        </button>
                     </li>
                 </ul>
+
                 <div class="tab-content">
-                    <!-- Simple Tab -->
-                    <div class="tab-pane fade show active" id="simple" role="tabpanel">
+                    <!-- Upload Tab -->
+                    <div class="tab-pane fade show active" id="uploadTab">
                         <div class="row">
-                            <div class="col-md-8">
-                                <div class="mb-3">
-                                    <label class="form-label">Image Path</label>
-                                    <input type="text" class="form-control" id="simpleImagePath" placeholder="/static/assets/blog/your-image.png">
-                                    <small class="text-muted">Path to image in your static folder</small>
+                            <div class="col-md-6">
+                                <div class="cover-image-upload" id="inlineImageUpload" style="min-height: 200px;">
+                                    <div class="upload-placeholder">
+                                        <i class="bi bi-cloud-arrow-up upload-icon"></i>
+                                        <p class="upload-text mb-1">Drag & drop an image here</p>
+                                        <p class="upload-hint">or click to browse</p>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Alt Text (for accessibility)</label>
-                                    <input type="text" class="form-control" id="simpleImageAlt" placeholder="Description of the image">
+                                <input type="file" id="inlineImageInput" accept="image/*" style="display: none;">
+                                <div class="upload-progress mt-2" id="inlineUploadProgress">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="border rounded p-3 bg-light">
-                                    <strong class="d-block mb-2">Quick Markdown:</strong>
-                                    <code id="simpleMarkdown" class="text-break">![alt](path)</code>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Alt Text</label>
+                                    <input type="text" class="form-control" id="uploadAltText" placeholder="Description of the image">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Size</label>
+                                    <select class="form-select" id="uploadImageSize">
+                                        <option value="full">Full width</option>
+                                        <option value="large">Large (800px)</option>
+                                        <option value="medium" selected>Medium (500px)</option>
+                                        <option value="small">Small (300px)</option>
+                                    </select>
+                                </div>
+                                <div id="uploadedImagePreview" style="display: none;">
+                                    <label class="form-label">Preview</label>
+                                    <img src="" class="img-fluid rounded" id="uploadedPreviewImg">
+                                    <input type="hidden" id="uploadedImageUrl">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Advanced Tab -->
-                    <div class="tab-pane fade" id="advanced" role="tabpanel">
+
+                    <!-- Gallery Tab -->
+                    <div class="tab-pane fade" id="galleryTab">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="gallerySearch" placeholder="Search images...">
+                        </div>
+                        <div class="image-gallery" id="imageGallery">
+                            <div class="text-center py-4 text-muted">
+                                <div class="spinner-border spinner-border-sm me-2"></div>
+                                Loading images...
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="mb-3">
+                                <label class="form-label">Alt Text</label>
+                                <input type="text" class="form-control" id="galleryAltText" placeholder="Description of the image">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Size</label>
+                                <select class="form-select" id="galleryImageSize">
+                                    <option value="full">Full width</option>
+                                    <option value="large">Large (800px)</option>
+                                    <option value="medium" selected>Medium (500px)</option>
+                                    <option value="small">Small (300px)</option>
+                                </select>
+                            </div>
+                            <input type="hidden" id="selectedGalleryImage">
+                        </div>
+                    </div>
+
+                    <!-- URL Tab -->
+                    <div class="tab-pane fade" id="urlTab">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Image Path</label>
-                                    <input type="text" class="form-control" id="imagePath" placeholder="/static/assets/...">
+                                    <label class="form-label">Image URL</label>
+                                    <input type="url" class="form-control" id="imageUrlInput" placeholder="https://example.com/image.png">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Alt Text</label>
-                                    <input type="text" class="form-control" id="imageAlt" placeholder="Description of image">
+                                    <input type="text" class="form-control" id="urlAltText" placeholder="Description of the image">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Size</label>
-                                    <select class="form-select" id="imageSize">
-                                        <option value="small">Small (200px)</option>
-                                        <option value="medium" selected>Medium (400px)</option>
-                                        <option value="large">Large (600px)</option>
+                                    <select class="form-select" id="urlImageSize">
                                         <option value="full">Full width</option>
-                                        <option value="custom">Custom</option>
+                                        <option value="large">Large (800px)</option>
+                                        <option value="medium" selected>Medium (500px)</option>
+                                        <option value="small">Small (300px)</option>
                                     </select>
-                                </div>
-                                <div class="mb-3" id="customSizeDiv" style="display: none;">
-                                    <label class="form-label">Custom Width (px)</label>
-                                    <input type="number" class="form-control" id="customWidth" placeholder="300">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Alignment</label>
-                                    <select class="form-select" id="imageAlign">
-                                        <option value="center" selected>Center</option>
-                                        <option value="left">Left</option>
-                                        <option value="right">Right</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Caption</label>
-                                    <input type="text" class="form-control" id="imageCaption" placeholder="Optional caption">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h6>Preview</h6>
-                                <div id="imagePreview" class="border rounded p-3 bg-light text-center" style="min-height: 150px;">
-                                    <p class="text-muted">Image preview will appear here</p>
-                                </div>
-                                <h6 class="mt-3">Generated Code</h6>
-                                <div class="border rounded p-2 bg-light" style="max-height: 150px; overflow-y: auto;">
-                                    <code id="generatedMarkdown" class="text-muted" style="white-space: pre-wrap; font-size: 11px;">Code will appear here</code>
+                                <div id="urlImagePreview" class="text-center">
+                                    <p class="text-muted">Enter a URL to preview</p>
                                 </div>
                             </div>
                         </div>
@@ -346,7 +525,38 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="insertImageBtn"><i class="bi bi-plus-circle me-1"></i>Insert Image</button>
+                <button type="button" class="btn btn-primary" id="insertImageConfirm">
+                    <i class="bi bi-plus-circle me-1"></i>Insert Image
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cover Image Gallery Modal -->
+<div class="modal fade" id="coverGalleryModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-images me-2"></i>Select Cover Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="coverGallerySearch" placeholder="Search images...">
+                </div>
+                <div class="image-gallery" id="coverImageGallery">
+                    <div class="text-center py-4 text-muted">
+                        <div class="spinner-border spinner-border-sm me-2"></div>
+                        Loading images...
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="selectCoverImage">
+                    <i class="bi bi-check-circle me-1"></i>Select Image
+                </button>
             </div>
         </div>
     </div>
@@ -358,14 +568,19 @@
 <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Elements
     const markdownTextarea = document.getElementById('markdownContent');
     const markdownEditorDiv = document.getElementById('markdownEditor');
     const htmlEditorDiv = document.getElementById('htmlEditor');
     const htmlContent = document.getElementById('htmlContent');
     const contentTypeSelect = document.getElementById('content_type');
-    const imageHelperBtn = document.getElementById('imageHelperBtn');
-    const imageHelperModal = new bootstrap.Modal(document.getElementById('imageHelperModal'));
-    const editorHint = document.getElementById('editorHint');
+    const coverImageUpload = document.getElementById('coverImageUpload');
+    const coverImageInput = document.getElementById('coverImageInput');
+    const coverImagePath = document.getElementById('coverImagePath');
+    const manualImagePath = document.getElementById('manualImagePath');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const coverPreview = document.getElementById('coverPreview');
 
     // Initialize EasyMDE
     const easyMDE = new EasyMDE({
@@ -376,186 +591,399 @@ document.addEventListener('DOMContentLoaded', function() {
             uniqueId: 'blog-post-{{ post.id if post else "new" }}',
             delay: 5000
         },
-        placeholder: 'Start writing your post...\n\nYou can use the toolbar above, keyboard shortcuts (Ctrl+B for bold, etc.), or just type markdown directly.',
+        placeholder: 'Start writing your post...\n\nUse the toolbar above or keyboard shortcuts for formatting.',
         toolbar: [
             'bold', 'italic', 'strikethrough', '|',
             'heading-1', 'heading-2', 'heading-3', '|',
             'quote', 'unordered-list', 'ordered-list', '|',
-            'link', 'image', 'table', '|',
+            'link', {
+                name: 'image',
+                action: function() {
+                    document.getElementById('insertImageBtn').click();
+                },
+                className: 'fa fa-image',
+                title: 'Insert Image'
+            }, 'table', '|',
             'code', 'horizontal-rule', '|',
             'preview', 'side-by-side', 'fullscreen', '|',
-            'guide',
-            {
-                name: 'custom-image',
-                action: function(editor) {
-                    imageHelperModal.show();
-                },
-                className: 'fa fa-picture-o',
-                title: 'Insert Image with Options'
-            }
+            'guide'
         ],
         sideBySideFullscreen: false,
-        status: ['autosave', 'lines', 'words', 'cursor'],
-        renderingConfig: {
-            codeSyntaxHighlighting: true
-        },
-        shortcuts: {
-            toggleBold: 'Cmd-B',
-            toggleItalic: 'Cmd-I',
-            drawLink: 'Cmd-K',
-            toggleHeadingSmaller: 'Cmd-H',
-            toggleCodeBlock: "Cmd-'",
-            toggleUnorderedList: 'Cmd-L',
-            toggleOrderedList: 'Cmd-Alt-L',
-            togglePreview: 'Cmd-P',
-            toggleSideBySide: 'F9',
-            toggleFullScreen: 'F11'
-        }
+        status: ['autosave', 'lines', 'words', 'cursor']
     });
 
-    // Store initial content for HTML mode
-    let initialContent = markdownTextarea.value;
+    // Toast notification helper
+    function showToast(message, type = 'success') {
+        const toastContainer = document.querySelector('.toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast show align-items-center text-white bg-${type} border-0`;
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        `;
+        toastContainer.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
 
-    // Content type change handler
+    // Content type toggle
     contentTypeSelect.addEventListener('change', function() {
-        const isHtml = this.value === 'html';
-
-        if (isHtml) {
-            // Switch to HTML mode
+        if (this.value === 'html') {
             markdownEditorDiv.style.display = 'none';
             htmlEditorDiv.style.display = 'block';
             htmlContent.value = easyMDE.value();
-            editorHint.innerHTML = '<i class="bi bi-code me-1"></i>HTML mode - write raw HTML for full control over styling.';
         } else {
-            // Switch to Markdown mode
             htmlEditorDiv.style.display = 'none';
             markdownEditorDiv.style.display = 'block';
             easyMDE.value(htmlContent.value || easyMDE.value());
-            editorHint.innerHTML = '<i class="bi bi-lightbulb me-1"></i>Use the toolbar above the editor for quick formatting, or type markdown directly.';
         }
     });
 
-    // Sync HTML editor content back to the form before submission
+    // Sync content before form submission
     document.getElementById('postForm').addEventListener('submit', function() {
         if (contentTypeSelect.value === 'html') {
-            // Copy HTML content back to the original textarea
             easyMDE.value(htmlContent.value);
         }
+        // Sync cover image path
+        if (coverImagePath.value) {
+            manualImagePath.value = coverImagePath.value;
+        }
     });
 
-    // Image Helper button click
-    imageHelperBtn.addEventListener('click', function() {
-        imageHelperModal.show();
-    });
+    // ============ Cover Image Upload ============
 
-    // Simple image inputs
-    const simpleImagePath = document.getElementById('simpleImagePath');
-    const simpleImageAlt = document.getElementById('simpleImageAlt');
-    const simpleMarkdown = document.getElementById('simpleMarkdown');
-
-    function updateSimpleMarkdown() {
-        const path = simpleImagePath.value || 'path';
-        const alt = simpleImageAlt.value || 'alt';
-        simpleMarkdown.textContent = `![${alt}](${path})`;
+    // Initialize cover image if exists
+    const initialImagePath = '{{ form.image.data or "" }}';
+    if (initialImagePath) {
+        const imgUrl = initialImagePath.startsWith('/') ? initialImagePath : '/static/' + initialImagePath;
+        coverPreview.src = imgUrl;
+        coverImagePath.value = initialImagePath;
+        uploadPlaceholder.style.display = 'none';
+        imagePreviewContainer.style.display = 'block';
+        coverImageUpload.classList.add('has-image');
     }
 
-    simpleImagePath.addEventListener('input', updateSimpleMarkdown);
-    simpleImageAlt.addEventListener('input', updateSimpleMarkdown);
-
-    // Advanced image settings
-    document.getElementById('imageSize').addEventListener('change', function() {
-        const customDiv = document.getElementById('customSizeDiv');
-        customDiv.style.display = this.value === 'custom' ? 'block' : 'none';
-        updateImagePreview();
+    // Click to upload
+    coverImageUpload.addEventListener('click', function(e) {
+        if (!e.target.closest('.cover-image-actions')) {
+            coverImageInput.click();
+        }
     });
 
-    function updateImagePreview() {
-        const path = document.getElementById('imagePath').value;
-        const alt = document.getElementById('imageAlt').value;
-        const size = document.getElementById('imageSize').value;
-        const align = document.getElementById('imageAlign').value;
-        const caption = document.getElementById('imageCaption').value;
+    // Drag and drop
+    coverImageUpload.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
 
-        if (path) {
-            let width = '400px';
-            if (size === 'small') width = '200px';
-            else if (size === 'large') width = '600px';
-            else if (size === 'full') width = '100%';
-            else if (size === 'custom') {
-                const customWidth = document.getElementById('customWidth').value;
-                width = customWidth ? customWidth + 'px' : '300px';
+    coverImageUpload.addEventListener('dragleave', function() {
+        this.classList.remove('dragover');
+    });
+
+    coverImageUpload.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            uploadCoverImage(file);
+        }
+    });
+
+    // File input change
+    coverImageInput.addEventListener('change', function() {
+        if (this.files[0]) {
+            uploadCoverImage(this.files[0]);
+        }
+    });
+
+    // Remove cover image
+    document.getElementById('removeCoverImage').addEventListener('click', function(e) {
+        e.stopPropagation();
+        coverPreview.src = '';
+        coverImagePath.value = '';
+        manualImagePath.value = '';
+        uploadPlaceholder.style.display = 'block';
+        imagePreviewContainer.style.display = 'none';
+        coverImageUpload.classList.remove('has-image');
+    });
+
+    // Change cover image
+    document.getElementById('changeCoverImage').addEventListener('click', function(e) {
+        e.stopPropagation();
+        coverImageInput.click();
+    });
+
+    // Upload cover image function
+    function uploadCoverImage(file) {
+        const progress = document.getElementById('coverUploadProgress');
+        progress.classList.add('show');
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        fetch('{{ url_for("admin.upload_image") }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value
             }
-
-            const previewDiv = document.getElementById('imagePreview');
-            previewDiv.innerHTML = `
-                <img src="${path}" alt="${alt || 'Image'}" style="max-width: ${width}; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                <p class="text-muted" style="display: none;">Image preview not available</p>
-                ${caption ? `<p class="text-muted mt-2 small">${caption}</p>` : ''}
-            `;
-
-            // Generate code
-            let markdown;
-            if (size === 'medium' && align === 'center' && !caption) {
-                markdown = `![${alt || 'Image'}](${path})`;
+        })
+        .then(response => response.json())
+        .then(data => {
+            progress.classList.remove('show');
+            if (data.success) {
+                coverPreview.src = data.url;
+                coverImagePath.value = data.url;
+                manualImagePath.value = data.url;
+                uploadPlaceholder.style.display = 'none';
+                imagePreviewContainer.style.display = 'block';
+                coverImageUpload.classList.add('has-image');
+                showToast('Cover image uploaded!');
             } else {
-                markdown = `<div style="text-align: ${align}; margin: 1rem 0;">
-<img src="${path}" alt="${alt || 'Image'}" style="max-width: ${width}; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
-${caption ? `<p style="color: #6c757d; font-style: italic; margin-top: 0.5rem;">${caption}</p>` : ''}
-</div>`;
+                showToast(data.error || 'Upload failed', 'danger');
             }
-
-            document.getElementById('generatedMarkdown').textContent = markdown;
-        }
+        })
+        .catch(error => {
+            progress.classList.remove('show');
+            showToast('Upload failed: ' + error, 'danger');
+        });
     }
 
-    // Add event listeners for advanced image helper inputs
-    ['imagePath', 'imageAlt', 'imageSize', 'customWidth', 'imageAlign', 'imageCaption'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('input', updateImagePreview);
+    // ============ Image Gallery ============
+
+    let galleryImages = [];
+    let selectedGalleryImage = null;
+
+    function loadGallery(containerId, searchId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '<div class="text-center py-4"><div class="spinner-border"></div></div>';
+
+        fetch('{{ url_for("admin.image_gallery") }}')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    galleryImages = data.images;
+                    renderGallery(containerId, galleryImages);
+                }
+            })
+            .catch(error => {
+                container.innerHTML = '<p class="text-danger">Failed to load images</p>';
+            });
+    }
+
+    function renderGallery(containerId, images) {
+        const container = document.getElementById(containerId);
+        if (images.length === 0) {
+            container.innerHTML = '<p class="text-muted text-center py-4">No images found</p>';
+            return;
+        }
+
+        container.innerHTML = images.map(img => `
+            <div class="gallery-item" data-url="${img.url}" data-filename="${img.filename}">
+                <img src="${img.url}" alt="${img.filename}" loading="lazy">
+                <span class="item-name">${img.filename}</span>
+            </div>
+        `).join('');
+
+        // Add click handlers
+        container.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                container.querySelectorAll('.gallery-item').forEach(i => i.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedGalleryImage = this.dataset.url;
+                document.getElementById('selectedGalleryImage').value = selectedGalleryImage;
+            });
+        });
+    }
+
+    // Gallery search
+    function setupGallerySearch(searchId, containerId) {
+        document.getElementById(searchId).addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const filtered = galleryImages.filter(img =>
+                img.filename.toLowerCase().includes(query) ||
+                (img.folder && img.folder.toLowerCase().includes(query))
+            );
+            renderGallery(containerId, filtered);
+        });
+    }
+
+    // Browse cover images button
+    document.getElementById('browseCoverImages').addEventListener('click', function() {
+        loadGallery('coverImageGallery', 'coverGallerySearch');
+        new bootstrap.Modal(document.getElementById('coverGalleryModal')).show();
     });
 
-    // Insert image button
+    setupGallerySearch('coverGallerySearch', 'coverImageGallery');
+
+    // Select cover image from gallery
+    document.getElementById('selectCoverImage').addEventListener('click', function() {
+        const selected = document.querySelector('#coverImageGallery .gallery-item.selected');
+        if (selected) {
+            const url = selected.dataset.url;
+            coverPreview.src = url;
+            coverImagePath.value = url;
+            manualImagePath.value = url;
+            uploadPlaceholder.style.display = 'none';
+            imagePreviewContainer.style.display = 'block';
+            coverImageUpload.classList.add('has-image');
+            bootstrap.Modal.getInstance(document.getElementById('coverGalleryModal')).hide();
+            showToast('Cover image selected!');
+        }
+    });
+
+    // ============ Insert Image Modal ============
+
+    const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+    let uploadedImageUrl = null;
+
     document.getElementById('insertImageBtn').addEventListener('click', function() {
-        // Check which tab is active
-        const simpleTabActive = document.getElementById('simple').classList.contains('show');
-        let markdown;
-
-        if (simpleTabActive) {
-            const path = simpleImagePath.value || '';
-            const alt = simpleImageAlt.value || '';
-            markdown = `![${alt}](${path})`;
-        } else {
-            markdown = document.getElementById('generatedMarkdown').textContent;
-        }
-
-        if (contentTypeSelect.value === 'html') {
-            // Insert into HTML editor
-            const cursorPos = htmlContent.selectionStart;
-            const textBefore = htmlContent.value.substring(0, cursorPos);
-            const textAfter = htmlContent.value.substring(cursorPos);
-            htmlContent.value = textBefore + markdown + textAfter;
-        } else {
-            // Insert into EasyMDE
-            const cm = easyMDE.codemirror;
-            const cursor = cm.getCursor();
-            cm.replaceRange(markdown, cursor);
-        }
-
-        imageHelperModal.hide();
-
-        // Clear form fields
-        simpleImagePath.value = '';
-        simpleImageAlt.value = '';
-        document.getElementById('imagePath').value = '';
-        document.getElementById('imageAlt').value = '';
-        document.getElementById('imageCaption').value = '';
-        updateSimpleMarkdown();
+        loadGallery('imageGallery', 'gallerySearch');
+        imageModal.show();
     });
 
-    // Initialize based on current content type
-    if (contentTypeSelect.value === 'html') {
-        contentTypeSelect.dispatchEvent(new Event('change'));
+    setupGallerySearch('gallerySearch', 'imageGallery');
+
+    // Inline image upload
+    const inlineImageUpload = document.getElementById('inlineImageUpload');
+    const inlineImageInput = document.getElementById('inlineImageInput');
+
+    inlineImageUpload.addEventListener('click', () => inlineImageInput.click());
+
+    inlineImageUpload.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
+
+    inlineImageUpload.addEventListener('dragleave', function() {
+        this.classList.remove('dragover');
+    });
+
+    inlineImageUpload.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            uploadInlineImage(file);
+        }
+    });
+
+    inlineImageInput.addEventListener('change', function() {
+        if (this.files[0]) {
+            uploadInlineImage(this.files[0]);
+        }
+    });
+
+    function uploadInlineImage(file) {
+        const progress = document.getElementById('inlineUploadProgress');
+        progress.classList.add('show');
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        fetch('{{ url_for("admin.upload_image") }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            progress.classList.remove('show');
+            if (data.success) {
+                uploadedImageUrl = data.url;
+                document.getElementById('uploadedImageUrl').value = data.url;
+                document.getElementById('uploadedPreviewImg').src = data.url;
+                document.getElementById('uploadedImagePreview').style.display = 'block';
+                showToast('Image uploaded!');
+            } else {
+                showToast(data.error || 'Upload failed', 'danger');
+            }
+        })
+        .catch(error => {
+            progress.classList.remove('show');
+            showToast('Upload failed', 'danger');
+        });
     }
+
+    // URL preview
+    document.getElementById('imageUrlInput').addEventListener('input', function() {
+        const url = this.value;
+        const preview = document.getElementById('urlImagePreview');
+        if (url) {
+            preview.innerHTML = `<img src="${url}" class="img-fluid rounded" onerror="this.parentElement.innerHTML='<p class=\\'text-danger\\'>Failed to load image</p>'">`;
+        } else {
+            preview.innerHTML = '<p class="text-muted">Enter a URL to preview</p>';
+        }
+    });
+
+    // Insert image confirm
+    document.getElementById('insertImageConfirm').addEventListener('click', function() {
+        const activeTab = document.querySelector('#imageModal .tab-pane.active').id;
+        let imageUrl, altText, size;
+
+        if (activeTab === 'uploadTab') {
+            imageUrl = document.getElementById('uploadedImageUrl').value;
+            altText = document.getElementById('uploadAltText').value || 'Image';
+            size = document.getElementById('uploadImageSize').value;
+        } else if (activeTab === 'galleryTab') {
+            imageUrl = document.getElementById('selectedGalleryImage').value;
+            altText = document.getElementById('galleryAltText').value || 'Image';
+            size = document.getElementById('galleryImageSize').value;
+        } else {
+            imageUrl = document.getElementById('imageUrlInput').value;
+            altText = document.getElementById('urlAltText').value || 'Image';
+            size = document.getElementById('urlImageSize').value;
+        }
+
+        if (!imageUrl) {
+            showToast('Please select or upload an image first', 'warning');
+            return;
+        }
+
+        // Generate markdown
+        let markdown;
+        if (size === 'full') {
+            markdown = `![${altText}](${imageUrl})`;
+        } else {
+            const widths = { small: '300px', medium: '500px', large: '800px' };
+            markdown = `<img src="${imageUrl}" alt="${altText}" style="max-width: ${widths[size]}; display: block; margin: 1rem auto; border-radius: 8px;">`;
+        }
+
+        // Insert into editor
+        if (contentTypeSelect.value === 'html') {
+            const cursorPos = htmlContent.selectionStart;
+            htmlContent.value = htmlContent.value.slice(0, cursorPos) + markdown + htmlContent.value.slice(cursorPos);
+        } else {
+            const cm = easyMDE.codemirror;
+            cm.replaceRange('\n' + markdown + '\n', cm.getCursor());
+        }
+
+        // Reset and close
+        imageModal.hide();
+        document.getElementById('uploadedImageUrl').value = '';
+        document.getElementById('uploadedImagePreview').style.display = 'none';
+        document.getElementById('selectedGalleryImage').value = '';
+        document.getElementById('imageUrlInput').value = '';
+        uploadedImageUrl = null;
+        selectedGalleryImage = null;
+
+        showToast('Image inserted!');
+    });
+
+    // Sync manual path input with coverImagePath
+    manualImagePath.addEventListener('change', function() {
+        if (this.value) {
+            const imgUrl = this.value.startsWith('/') ? this.value : '/static/' + this.value;
+            coverPreview.src = imgUrl;
+            coverImagePath.value = this.value;
+            uploadPlaceholder.style.display = 'none';
+            imagePreviewContainer.style.display = 'block';
+            coverImageUpload.classList.add('has-image');
+        }
+    });
 });
 </script>
 {% endblock %}
