@@ -222,6 +222,32 @@
   border: 1px solid var(--border-subtle);
 }
 
+/* Image size wrapper classes */
+.post-content .img-small,
+.post-content .img-medium,
+.post-content .img-large {
+  text-align: center;
+  margin: var(--space-6) 0;
+}
+
+.post-content .img-small img {
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+
+.post-content .img-medium img {
+  max-width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+
+.post-content .img-large img {
+  max-width: 800px;
+  margin: 0 auto;
+  display: block;
+}
+
 .post-content figure {
   margin: var(--space-8) 0;
 }

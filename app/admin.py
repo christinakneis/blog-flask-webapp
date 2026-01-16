@@ -340,12 +340,16 @@ def upload_image():
                 print(f"Image optimization failed: {e}")
                 # Continue with original file if optimization fails
 
-        # Return the URL path
+        # Return both the URL path (for preview) and the storage path (for database)
+        # url is the full path for displaying in browser
+        # storage_path is relative to static folder (for use with url_for('static', filename=...))
         url = f'/static/assets/uploads/{filename}'
+        storage_path = f'assets/uploads/{filename}'
 
         return jsonify({
             'success': True,
             'url': url,
+            'storage_path': storage_path,
             'filename': filename,
             'message': 'Image uploaded successfully'
         })
@@ -371,6 +375,7 @@ def image_gallery():
                 images.append({
                     'filename': filename,
                     'url': f'/static/assets/uploads/{filename}',
+                    'storage_path': f'assets/uploads/{filename}',
                     'size': stat.st_size,
                     'modified': stat.st_mtime
                 })
@@ -387,6 +392,7 @@ def image_gallery():
                     images.append({
                         'filename': filename,
                         'url': f'/static/assets/{folder}/{filename}',
+                        'storage_path': f'assets/{folder}/{filename}',
                         'folder': folder,
                         'size': stat.st_size,
                         'modified': stat.st_mtime
