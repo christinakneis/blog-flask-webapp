@@ -190,7 +190,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form method="POST" id="postForm" enctype="multipart/form-data">
+        <form method="POST" id="postForm">
             {{ csrf_token() }}
             {{ form.hidden_tag() }}
 
@@ -316,14 +316,6 @@
                                 {% endif %}
                             </div>
 
-                            <!-- Published Status -->
-                            <div class="mb-3">
-                                <div class="form-check form-switch">
-                                    {{ form.published(class="form-check-input") }}
-                                    {{ form.published.label(class="form-check-label") }}
-                                </div>
-                            </div>
-
                             <!-- Featured Status -->
                             <div class="mb-3">
                                 <div class="form-check form-switch">
@@ -382,10 +374,12 @@
                         </div>
                         <div>
                             <a href="{{ url_for('admin.posts') }}" class="btn btn-outline-secondary me-2">Cancel</a>
-                            <button type="submit" class="btn btn-success" name="save_draft" value="1">
+                            <button type="submit" name="action" value="draft" class="btn btn-secondary me-2" onclick="console.log('Draft clicked'); prepareSubmit();">
                                 <i class="bi bi-save me-1"></i>Save Draft
                             </button>
-                            {{ form.submit(class="btn btn-primary ms-2") }}
+                            <button type="submit" name="action" value="publish" class="btn btn-success" onclick="console.log('Publish clicked'); prepareSubmit();">
+                                <i class="bi bi-send me-1"></i>Publish
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -567,9 +561,26 @@
 <!-- EasyMDE JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
 <script>
+// Global function to prepare form for submission
+function prepareSubmit() {
+    console.log('prepareSubmit called');
+    if (typeof window.easyMDE !== 'undefined' && window.easyMDE) {
+        const content = window.window.easyMDE.value();
+        document.getElementById('markdownContent').value = content;
+        window.window.easyMDE.codemirror.save();
+        console.log('Content synced:', content.substring(0, 50));
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Post form JS loaded');
+
     // Elements
     const markdownTextarea = document.getElementById('markdownContent');
+    if (!markdownTextarea) {
+        console.error('Could not find markdownContent textarea!');
+        return;
+    }
     const markdownEditorDiv = document.getElementById('markdownEditor');
     const htmlEditorDiv = document.getElementById('htmlEditor');
     const htmlContent = document.getElementById('htmlContent');
@@ -582,35 +593,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const imagePreviewContainer = document.getElementById('imagePreviewContainer');
     const coverPreview = document.getElementById('coverPreview');
 
-    // Initialize EasyMDE
-    const easyMDE = new EasyMDE({
-        element: markdownTextarea,
-        spellChecker: false,
-        autosave: {
-            enabled: true,
-            uniqueId: 'blog-post-{{ post.id if post else "new" }}',
-            delay: 5000
-        },
-        placeholder: 'Start writing your post...\n\nUse the toolbar above or keyboard shortcuts for formatting.',
-        toolbar: [
-            'bold', 'italic', 'strikethrough', '|',
-            'heading-1', 'heading-2', 'heading-3', '|',
-            'quote', 'unordered-list', 'ordered-list', '|',
-            'link', {
-                name: 'image',
-                action: function() {
-                    document.getElementById('insertImageBtn').click();
-                },
-                className: 'fa fa-image',
-                title: 'Insert Image'
-            }, 'table', '|',
-            'code', 'horizontal-rule', '|',
-            'preview', 'side-by-side', 'fullscreen', '|',
-            'guide'
-        ],
-        sideBySideFullscreen: false,
-        status: ['autosave', 'lines', 'words', 'cursor']
-    });
+    // Initialize EasyMDE (make it global for prepareSubmit)
+    try {
+        window.easyMDE = new EasyMDE({
+            element: markdownTextarea,
+            spellChecker: false,
+            autosave: {
+                enabled: true,
+                uniqueId: 'blog-post-{{ post.id if post else "new" }}',
+                delay: 5000
+            },
+            placeholder: 'Start writing your post...\n\nUse the toolbar above or keyboard shortcuts for formatting.',
+            toolbar: [
+                'bold', 'italic', 'strikethrough', '|',
+                'heading-1', 'heading-2', 'heading-3', '|',
+                'quote', 'unordered-list', 'ordered-list', '|',
+                'link', {
+                    name: 'image',
+                    action: function() {
+                        document.getElementById('insertImageBtn').click();
+                    },
+                    className: 'fa fa-image',
+                    title: 'Insert Image'
+                }, 'table', '|',
+                'code', 'horizontal-rule', '|',
+                'preview', 'side-by-side', 'fullscreen', '|',
+                'guide'
+            ],
+            sideBySideFullscreen: false,
+            status: ['autosave', 'lines', 'words', 'cursor']
+        });
+        console.log('EasyMDE initialized successfully');
+    } catch (err) {
+        console.error('EasyMDE failed to initialize:', err);
+    }
 
     // Toast notification helper
     function showToast(message, type = 'success') {
@@ -632,23 +648,36 @@ document.addEventListener('DOMContentLoaded', function() {
         if (this.value === 'html') {
             markdownEditorDiv.style.display = 'none';
             htmlEditorDiv.style.display = 'block';
-            htmlContent.value = easyMDE.value();
+            htmlContent.value = window.easyMDE.value();
         } else {
             htmlEditorDiv.style.display = 'none';
             markdownEditorDiv.style.display = 'block';
-            easyMDE.value(htmlContent.value || easyMDE.value());
+            easyMDE.value(htmlContent.value || window.easyMDE.value());
         }
     });
 
     // Sync content before form submission
-    document.getElementById('postForm').addEventListener('submit', function() {
-        if (contentTypeSelect.value === 'html') {
-            easyMDE.value(htmlContent.value);
+    document.getElementById('postForm').addEventListener('submit', function(e) {
+        console.log('Form submit triggered');
+
+        // Force sync EasyMDE content to the hidden textarea
+        const content = contentTypeSelect.value === 'html' ? htmlContent.value : window.easyMDE.value();
+        console.log('Content length:', content.length);
+
+        // EasyMDE hides the original textarea, so we need to update it directly
+        markdownTextarea.value = content;
+
+        // Also update via the codemirror save method
+        if (contentTypeSelect.value !== 'html') {
+            window.easyMDE.codemirror.save();
         }
+
         // Sync cover image path
         if (coverImagePath.value) {
             manualImagePath.value = coverImagePath.value;
         }
+
+        console.log('Form submitting with content:', content.substring(0, 100));
     });
 
     // ============ Cover Image Upload ============
@@ -957,7 +986,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const cursorPos = htmlContent.selectionStart;
             htmlContent.value = htmlContent.value.slice(0, cursorPos) + markdown + htmlContent.value.slice(cursorPos);
         } else {
-            const cm = easyMDE.codemirror;
+            const cm = window.easyMDE.codemirror;
             cm.replaceRange('\n' + markdown + '\n', cm.getCursor());
         }
 
