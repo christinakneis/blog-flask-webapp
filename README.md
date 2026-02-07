@@ -1,4 +1,4 @@
-# Christina Kneis Personal Website
+# Christina Kneis Wolfenden Personal Website
 
 This Flask application will serve as the foundation for my personal website hosted on AWS.
 
