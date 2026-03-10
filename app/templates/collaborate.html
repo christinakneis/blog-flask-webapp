@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Collaborate - Christina Kneis Wolfenden{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="collab-header">
+    <div class="container">
+        <span class="overline label-amber">// Collaborate</span>
+        <h1 class="collab-header__title h1">Establish Two-Way Comms</h1>
+        <p class="collab-header__description">
+            I'm always looking for ways to connect, whether it's mentoring the next generation,
+            thinking through tough problems, or just geeking out about systems and space.
+        </p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<section class="collab-content">
+    <div class="container">
+        <div class="collab-sections">
+
+            <!-- Section 1: Mentorship & Outreach -->
+            <div class="collab-section reveal">
+                <div class="collab-section__icon-wrapper">
+                    <div class="collab-section__icon">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="collab-section__content">
+                    <span class="overline label-amber">// 01</span>
+                    <h2 class="collab-section__title h3">Mentorship & Outreach</h2>
+                    <p class="collab-section__text">
+                        I got into the aerospace industry because smart, kind, awesome people took the time
+                        to talk to me about it. Paying that forward has been one of the most fulfilling
+                        parts of my career.
+                    </p>
+                    <p class="collab-section__text">
+                        If you're a student, a career-changer, or just someone figuring out whether engineering,
+                        aerospace, tech, or product might be your thing, I'd genuinely love to talk. I'm happy
+                        to share what undergrad and grad school were really like, how I ended up at JPL, what
+                        the transition to product management looked like, and whatever else is on your mind.
+                    </p>
+                    <p class="collab-section__text">
+                        I'm also passionate about aerospace outreach and giving back to the community.
+                        If you're doing work that gets young people excited about space, science, or building
+                        things, let's connect. This isn't a formal program. Just an open door.
+                    </p>
+                    <div class="collab-section__cta">
+                        <a href="{{ url_for('main.contact') }}" class="link-arrow">
+                            <span>Get in touch</span>
+                            <svg class="link-arrow__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="collab-divider"></div>
+
+            <!-- Section 2: Advisory -->
+            <div class="collab-section reveal">
+                <div class="collab-section__icon-wrapper">
+                    <div class="collab-section__icon">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="collab-section__content">
+                    <span class="overline label-amber">// 02</span>
+                    <h2 class="collab-section__title h3">Advisory</h2>
+                    <p class="collab-section__text">
+                        I occasionally advise on projects involving systems engineering, product development,
+                        and operational strategy. If you're working on something interesting and think
+                        my background might be helpful, feel free to reach out.
+                    </p>
+                    <p class="collab-section__text collab-section__text--quiet">
+                        I'm selective about what I take on, but always happy to have a conversation.
+                    </p>
+                    <div class="collab-section__cta">
+                        <a href="{{ url_for('main.contact') }}" class="link-arrow">
+                            <span>Get in touch</span>
+                            <svg class="link-arrow__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="collab-divider"></div>
+
+            <!-- Section 3: Yap & Geek Out -->
+            <div class="collab-section reveal">
+                <div class="collab-section__icon-wrapper">
+                    <div class="collab-section__icon">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="collab-section__content">
+                    <span class="overline label-amber">// 03</span>
+                    <h2 class="collab-section__title h3">Yap & Geek Out</h2>
+                    <p class="collab-section__text">
+                        I'm drawn to people who take deep ownership of their work, who want to build things
+                        that matter, use the latest tools, and never stop learning. If that sounds like you,
+                        we should probably be friends.
+                    </p>
+                    <p class="collab-section__text">
+                        Whether you're into systems thinking, aerospace, product craft, or you just
+                        have strong opinions about operations and want to debate them, I'm here for it.
+                    </p>
+                    <div class="collab-section__links">
+                        <a href="https://www.linkedin.com/in/christina-kneis" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--linkedin">
+                            <svg class="btn__icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://discord.gg/ygrWRFkHJq" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--discord">
+                            <svg class="btn__icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+                            </svg>
+                            Discord
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

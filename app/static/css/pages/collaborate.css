@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Collaborate Page — Mission Control Theme
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Header
+   ------------------------------------------------------------------------- */
+
+.collab-header {
+  padding: var(--space-16) 0 var(--space-12);
+  text-align: center;
+}
+
+.collab-header__title {
+  margin-bottom: var(--space-4);
+}
+
+.collab-header__description {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* -------------------------------------------------------------------------
+   Content Container
+   ------------------------------------------------------------------------- */
+
+.collab-content {
+  padding: var(--space-8) 0 var(--space-16);
+}
+
+.collab-sections {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* -------------------------------------------------------------------------
+   Section Block (icon + content layout)
+   ------------------------------------------------------------------------- */
+
+.collab-section {
+  display: flex;
+  gap: var(--space-6);
+  padding: var(--space-8) 0;
+}
+
+.collab-section__icon-wrapper {
+  flex-shrink: 0;
+  padding-top: var(--space-1);
+}
+
+.collab-section__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--accent-amber);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.collab-section:hover .collab-section__icon {
+  border-color: var(--accent-amber-dim);
+  box-shadow: 0 0 20px var(--accent-amber-glow);
+}
+
+.collab-section__icon--accent {
+  color: var(--accent-green);
+}
+
+.collab-section:hover .collab-section__icon--accent {
+  border-color: var(--accent-green-dim);
+  box-shadow: 0 0 20px var(--accent-green-glow);
+}
+
+/* -------------------------------------------------------------------------
+   Section Content
+   ------------------------------------------------------------------------- */
+
+.collab-section__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.collab-section__title {
+  margin-bottom: var(--space-4);
+}
+
+.collab-section__text {
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-4);
+}
+
+.collab-section__text:last-of-type {
+  margin-bottom: var(--space-6);
+}
+
+.collab-section__text--quiet {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------
+   CTAs & Links
+   ------------------------------------------------------------------------- */
+
+.collab-section__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.collab-section__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* -------------------------------------------------------------------------
+   Divider
+   ------------------------------------------------------------------------- */
+
+.collab-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border-medium) 20%,
+    var(--border-medium) 80%,
+    transparent 100%
+  );
+}
+
+/* -------------------------------------------------------------------------
+   Responsive: Stack icon above content on mobile
+   ------------------------------------------------------------------------- */
+
+@media (max-width: 639px) {
+  .collab-section {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+}
