@@ -32,13 +32,34 @@
                 <h1 class="home-hero__name">Christina Kneis Wolfenden</h1>
 
                 <p class="home-hero__tagline">
-                    Driving project success through systems thinking, technical rigor, and operational excellence.
+                    Driving product and project success through systems thinking, technical rigor, and operational excellence.
                 </p>
 
                 <div class="home-hero__credentials">
-                    <a href="{{ url_for('main.about') }}#career" class="credential-badge credential-badge--link">NASA/JPL · 10 Years</a>
-                    <a href="{{ url_for('main.about') }}#education" class="credential-badge credential-badge--link">M.S. & B.S. Engineering, USC</a>
-                    <a href="{{ url_for('main.about') }}#publications" class="credential-badge credential-badge--link">Published Researcher</a>
+                    <a href="{{ url_for('main.about') }}#career" class="credential-badge credential-badge--link">
+                        <svg class="credential-badge__icon" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Planet · Product Management
+                    </a>
+                    <a href="{{ url_for('main.about') }}#career" class="credential-badge credential-badge--link">
+                        <svg class="credential-badge__icon" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                        </svg>
+                        NASA/JPL · 10 Years
+                    </a>
+                    <a href="{{ url_for('main.about') }}#education" class="credential-badge credential-badge--link">
+                        <svg class="credential-badge__icon" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+                        </svg>
+                        M.S. & B.S. Engineering, USC
+                    </a>
+                    <a href="{{ url_for('main.about') }}#publications" class="credential-badge credential-badge--link">
+                        <svg class="credential-badge__icon" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        Published Researcher
+                    </a>
                     <a href="{{ url_for('main.about') }}#recognition" class="credential-badge credential-badge--link">
                         <svg class="credential-badge__icon" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15l-2 5h4l-2-5zM8 9a4 4 0 108 0V4H8v5zM4 4h4M16 4h4M4 4v3a2 2 0 002 2h1M20 4v3a2 2 0 01-2 2h-1"/>
@@ -48,7 +69,7 @@
                 </div>
 
                 <div class="home-hero__actions">
-                    <a href="{{ url_for('main.consulting') }}" class="btn btn--primary btn--lg">
+                    <a href="{{ url_for('main.collaborate') }}" class="btn btn--primary btn--lg">
                         <span>Begin Transmission</span>
                         <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -83,8 +104,8 @@
                     I solve high-stakes problems with clarity and grit.
                 </p>
                 <p class="home-intro__text">
-                    This site is a launch pad for sharing my thoughts, projects, and lessons learned
-                    across tech, ops, and life - and for connecting with teams who need elegant solutions to complex problems.
+                    This site is a launch pad for sharing my work and connecting with fellow systems
+                    and product thinkers across tech, ops, and beyond.
                 </p>
             </div>
 
@@ -113,138 +134,67 @@
     </div>
 </section>
 
-<!-- Services Section -->
+<!-- Collaborate Section -->
 <section class="home-services">
     <div class="container">
         <header class="home-services__header reveal">
-            <span class="overline label-amber">// Consulting</span>
-            <h2 class="home-services__title h2">Consulting & Custom Solutions</h2>
+            <span class="overline label-amber">// Collaborate</span>
+            <h2 class="home-services__title h2">Establish Two-Way Comms</h2>
             <p class="home-services__subtitle lead">
-                Driving project success through systems thinking, technical rigor, and operational excellence.
-                I help teams solve the right problems, solve them well, and deliver results.
+                Whether you're figuring out your path, building something meaningful,
+                or just want to geek out about systems and space, I'm here for it.
             </p>
         </header>
 
-        <div class="home-services__grid reveal-stagger">
-            <!-- Diagnostic & Direction -->
+        <div class="home-services__grid home-services__grid--3 reveal-stagger">
+            <!-- Mentorship & Outreach -->
             <div class="service-card">
                 <div class="service-card__icon">
                     <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
                 </div>
-                <h3 class="service-card__title">Diagnostic & Direction</h3>
+                <h3 class="service-card__title">Mentorship & Outreach</h3>
                 <p class="service-card__description">
-                    Focused problem diagnosis and actionable recommendations to get unstuck
+                    Helping students and career-changers navigate engineering, aerospace, tech, and product
                 </p>
             </div>
 
-            <!-- Process & Systems Optimization -->
+            <!-- Advisory -->
             <div class="service-card">
                 <div class="service-card__icon">
                     <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                     </svg>
                 </div>
-                <h3 class="service-card__title">Process & Systems Optimization</h3>
+                <h3 class="service-card__title">Advisory</h3>
                 <p class="service-card__description">
-                    Better processes, documentation, and team alignment
+                    Occasional guidance on systems engineering, product development, and operational strategy
                 </p>
             </div>
 
-            <!-- Product & Program Strategy -->
+            <!-- Yap & Geek Out -->
             <div class="service-card">
                 <div class="service-card__icon">
                     <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/>
                     </svg>
                 </div>
-                <h3 class="service-card__title">Product & Program Strategy</h3>
+                <h3 class="service-card__title">Yap & Geek Out</h3>
                 <p class="service-card__description">
-                    Full lifecycle ownership from concept through operations
-                </p>
-            </div>
-
-            <!-- Fractional Leadership -->
-            <div class="service-card">
-                <div class="service-card__icon">
-                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
-                    </svg>
-                </div>
-                <h3 class="service-card__title">Fractional Leadership</h3>
-                <p class="service-card__description">
-                    Ongoing systems or product leadership without full-time overhead
+                    Fellow systems thinkers, aerospace nerds, and builders. Let's connect and trade ideas
                 </p>
             </div>
         </div>
 
         <div class="home-services__cta reveal">
-            <a href="{{ url_for('main.consulting') }}" class="btn btn--secondary btn--lg">
+            <a href="{{ url_for('main.collaborate') }}" class="btn btn--secondary btn--lg">
                 <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                </svg>
-                Explore How We Can Work Together
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Recent Posts Section -->
-<section class="home-posts">
-    <div class="container">
-        <header class="home-posts__header reveal">
-            <div class="home-posts__title-group">
-                <div class="home-posts__icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-                    </svg>
-                </div>
-                <div>
-                    <span class="overline label-amber">// Transmissions</span>
-                    <h2 class="h3">Latest Blog Posts</h2>
-                </div>
-            </div>
-            <a href="{{ url_for('main.blog') }}" class="link-arrow">
-                <span>View All</span>
-                <svg class="link-arrow__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
+                See How We Can Connect
             </a>
-        </header>
-
-        <div class="home-posts__grid reveal-stagger">
-            {% for post in posts %}
-            <article class="post-card">
-                {% if post.image %}
-                <a href="{{ url_for('main.post', slug=post.slug) }}" class="post-card__image">
-                    <img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }}" />
-                </a>
-                {% endif %}
-                <div class="post-card__content">
-                    <div class="post-card__meta">
-                        {% if post.show_dates %}
-                        <span class="post-card__date">{{ post.created_at.strftime('%Y.%m.%d') }}</span>
-                        {% endif %}
-                        {% if post.featured %}
-                        <span class="badge badge--primary badge--dot">Featured</span>
-                        {% endif %}
-                    </div>
-                    <h3 class="post-card__title">
-                        <a href="{{ url_for('main.post', slug=post.slug) }}">{{ post.title }}</a>
-                    </h3>
-                    <p class="post-card__excerpt">{{ post.preview }}</p>
-                    <div class="post-card__footer">
-                        <a href="{{ url_for('main.post', slug=post.slug) }}" class="link-arrow">
-                            <span>Read more</span>
-                            <svg class="link-arrow__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </article>
-            {% endfor %}
         </div>
     </div>
 </section>
@@ -266,7 +216,7 @@
                             </svg>
                             LinkedIn
                         </a>
-                        <a href="https://discord.gg/9DkgrpPV" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--discord btn--full">
+                        <a href="https://discord.gg/ygrWRFkHJq" target="_blank" rel="noopener noreferrer" class="btn btn--social btn--discord btn--full">
                             <svg class="btn__icon" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
                             </svg>
@@ -336,4 +286,21 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Hide scroll indicator once user starts scrolling
+    (function() {
+        const scroll = document.querySelector('.home-hero__scroll');
+        if (!scroll) return;
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                scroll.style.cssText = 'opacity: 0 !important; pointer-events: none;';
+            } else {
+                scroll.style.cssText = '';
+            }
+        }, { passive: true });
+    })();
+</script>
 {% endblock %}

@@ -21,9 +21,13 @@ def home():
 def about():
     return render_template("about.html")
 
+@main_bp.route("/collaborate")
+def collaborate():
+    return render_template("collaborate.html")
+
 @main_bp.route("/consulting")
 def consulting():
-    return render_template("consulting.html")
+    return redirect(url_for('main.collaborate'), code=301)
 
 @main_bp.route("/contact")
 def contact():

@@ -53,11 +53,8 @@
                         </a>
                     </div>
                 </div>
-                <a href="{{ url_for('main.consulting') }}" class="nav__link {% if request.endpoint == 'main.consulting' %}nav__link--active{% endif %}">
-                    Consulting
-                </a>
-                <a href="{{ url_for('main.blog') }}" class="nav__link {% if request.endpoint == 'main.blog' or request.endpoint == 'main.post' %}nav__link--active{% endif %}">
-                    Blog
+                <a href="{{ url_for('main.collaborate') }}" class="nav__link {% if request.endpoint == 'main.collaborate' %}nav__link--active{% endif %}">
+                    Collaborate
                 </a>
                 <a href="{{ url_for('main.contact') }}" class="nav__link {% if request.endpoint == 'main.contact' %}nav__link--active{% endif %}">
                     Contact
@@ -69,9 +66,7 @@
                 <span class="nav__sector-label">Sector:</span>
                 <span class="nav__sector-value">
                     {% if request.endpoint == 'main.home' %}HOME
-                    {% elif request.endpoint == 'main.consulting' %}CONSULTING
-                    {% elif request.endpoint == 'main.blog' %}BLOG
-                    {% elif request.endpoint == 'main.post' %}TRANSMISSION
+                    {% elif request.endpoint == 'main.collaborate' %}COLLABORATE
                     {% elif request.endpoint == 'main.about' %}ABOUT
                     {% elif request.endpoint == 'main.contact' %}CONTACT
                     {% elif request.endpoint == 'main.resume' %}RESUME
@@ -123,11 +118,8 @@
                     </a>
                 </div>
             </div>
-            <a href="{{ url_for('main.consulting') }}" class="nav__mobile-link {% if request.endpoint == 'main.consulting' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
-                Consulting
-            </a>
-            <a href="{{ url_for('main.blog') }}" class="nav__mobile-link {% if request.endpoint == 'main.blog' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
-                Blog
+            <a href="{{ url_for('main.collaborate') }}" class="nav__mobile-link {% if request.endpoint == 'main.collaborate' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
+                Collaborate
             </a>
             <a href="{{ url_for('main.contact') }}" class="nav__mobile-link {% if request.endpoint == 'main.contact' %}nav__mobile-link--active{% endif %}" onclick="toggleMobileNav()">
                 Contact
@@ -149,7 +141,7 @@
             <div class="footer__container">
                 <div class="footer__brand">
                     <span class="footer__brand-name">CHRISTINA KNEIS<span class="footer__brand-dot">.</span></span>
-                    <span class="footer__copyright">// {{ 2025 }} All systems nominal</span>
+                    <span class="footer__copyright">// {{ 2026 }} All systems nominal</span>
                 </div>
                 <div class="footer__links">
                     <a href="https://www.linkedin.com/in/christina-kneis" target="_blank" rel="noopener noreferrer" class="footer__link">
